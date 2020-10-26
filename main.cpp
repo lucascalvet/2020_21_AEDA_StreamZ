@@ -25,8 +25,5 @@ int main() {
     cout << v0.name << "  " << v0.id << endl;
     cout << v1.name << "  " << v1.id << endl;
 
-
-
-
     return 0;
 }

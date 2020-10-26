@@ -1,5 +1,6 @@
 #ifndef STREAMZ_AEDA2020_21_STREAM_H
 #define STREAMZ_AEDA2020_21_STREAM_H
+
 #include <vector>
 #include <string>
 
@@ -11,31 +12,27 @@ enum Language{
 
 class Stream {
 public:
-    Stream();
+    Stream(string title, Language lang);
     ~Stream();
     string title;
     Language lang;
     unsigned min_age;
     unsigned total_viewers;
+    unsigned likes;
+    unsigned dislikes;
 };
-
-Stream::Stream() {
-}
-
-Stream::~Stream() {
-}
 
 class PublicStream : public Stream{
 public:
-    PublicStream();
+    PublicStream(string title, Language lang);
     ~PublicStream();
 };
 
 class PrivateStream : public Stream{
 public:
-    PrivateStream();
+    PrivateStream(string title, Language lang);
     ~PrivateStream();
-    vector<unsigned > autorized_viewers;  //autorized_viewers through id
+    vector<unsigned> autorized_viewers;  //autorized_viewers through id
     vector<string> comments;
     unsigned capacity;
 };

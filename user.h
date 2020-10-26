@@ -21,7 +21,9 @@ public:
     Date birthday;
     unsigned min_age;
     User(string name, Date birthday){
+        cout << "HERE";
         id = counter++;
+        cout << id << endl;
     }
     //~User();
 };

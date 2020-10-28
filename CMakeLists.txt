@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.17)
-project(streamz_aeda2020_21)
+project(StreamZ_AEDA_2020_21)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(streamz_aeda2020_21 main.cpp streamz.cpp stream.cpp streamz.h stream.h)
+add_executable(StreamZ_AEDA_2020_21 main.cpp streamz.cpp stream.cpp streamz.h stream.h utils.h)

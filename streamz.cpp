@@ -1,6 +1,3 @@
-//
-// Created by sergi on 26/10/2020.
-//
 #include "streamz.h"
 #include <iostream>
 
@@ -49,7 +46,7 @@ StreamZ::~StreamZ() {
 
 bool StreamZ::activeStream(Streamer &streamer, string title, Language lang, unsigned min_age){
     if(streamer.s == NULL && getActiveStreams() <= capacity){
-        Stream s(title, lang);
+        Stream s(title, lang, min_age);
         streamer.s = &s;
         return true;
     }
@@ -85,9 +82,11 @@ unsigned StreamZ::getActiveStreams() const {
 
 bool Streamer::endStream(StreamZ platform) {  //removes stream from system and return true is success
     if (platform.removeActiveStream(*this)) {
-        cout << this->name << " ended the stream " << this->s->title << endl;
+        cout << this->name << " ended the stream " << this->s->getTitle() << endl;
+        return true;
     } else {
         cout << "Stream already endend!" << endl;
+        return false;
     }
 }
 
@@ -115,4 +114,5 @@ bool Viewer::enterStream(Stream *s, StreamZ platform) {
     else{
 
     }
+    return true;
 }

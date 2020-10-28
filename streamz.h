@@ -6,16 +6,11 @@
 #include <algorithm>
 #include <map>
 #include "stream.h"
+#include "utils.h"
 
 using namespace std;
 
 class StreamZ;
-
-struct Date {
-    unsigned day;
-    unsigned month;
-    unsigned year;
-};
 
 class User {
 public:

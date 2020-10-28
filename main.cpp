@@ -3,7 +3,21 @@
 using namespace std;
 
 int main() {
-    std::cout << "Hello, World!" << std::endl;
+    /* TEST STREAM INITIALISATION
+    string title;
+    Language lang;
+    Age min_age;
+    cout << "Input the stream's title: "; cin >> title;
+    cout << "Input the stream's language: "; cin >> lang;
+    cout << "Input the stream's minimum age: "; cin >> min_age;
+    try {
+        Stream s1(title, lang, min_age);
+        cout << "Title: " << s1.getTitle() << "\tLanguage: " << s1.getLanguage() <<
+        "\tMinimum age: " << s1.getMinAge() << "\tStarting date: " << s1.getDate();
+    }
+    catch(Stream::InvalidLanguage&) {cout << "Invalid language!";}
+    */
+
 
     //TEST TO THE STATIC ID
 

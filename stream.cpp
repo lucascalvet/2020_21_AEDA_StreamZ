@@ -16,11 +16,12 @@ const vector<Language> Stream::langs = {"AB", "AA", "AF", "AK", "SQ", "AM", "AR"
                           "ZA", "ZU"};
 
 
-Stream::Stream(string title, Language lang, unsigned min_age) {
+Stream::Stream(const string& title, const Language& lang, unsigned min_age) {
     this->title = title;
-    if(find(langs.begin(), langs.end(), lang) == langs.end())
+    string lang_upper = strToUpper(lang);
+    if(find(langs.begin(), langs.end(), lang_upper) == langs.end())
         throw InvalidLanguage(lang);
-    this->lang = lang;
+    this->lang = lang_upper;
     this->min_age = min_age;
     time_t current_time;
     time(&current_time);
@@ -30,19 +31,27 @@ Stream::Stream(string title, Language lang, unsigned min_age) {
     this->starting_date.year = date->tm_year + 1900;
 }
 
-string Stream::getTitle() {
+string Stream::strToUpper(const string& str) {
+    string::const_iterator it;
+    string ret_str;
+    for (it = str.begin(); it != str.end(); it++)
+        ret_str.push_back(toupper(*it));
+    return ret_str;
+}
+
+string Stream::getTitle() const{
     return this->title;
 }
 
-Date Stream::getDate() {
+Date Stream::getDate() const{
     return this->starting_date;
 }
 
-Language Stream::getLanguage() {
+Language Stream::getLanguage() const{
     return this->lang;
 }
 
-Age Stream::getMinAge() {
+Age Stream::getMinAge() const {
     return this->min_age;
 }
 

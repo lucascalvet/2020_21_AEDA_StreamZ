@@ -19,20 +19,21 @@ private:
     static const vector<Language> langs;
     Language lang;
     Age min_age;
-    unsigned total_viewers;
-    unsigned likes;
-    unsigned dislikes;
+    unsigned num_viewers = 0;
+    unsigned likes = 0;
+    unsigned dislikes = 0;
+    static string strToUpper(const string& str) ;
 public:
-    Stream(string title, Language lang, unsigned min_age);
+    Stream(const string& title, const Language& lang, unsigned min_age);
     class InvalidLanguage{
     public:
         Language lang;
-        InvalidLanguage(Language lang) {this->lang = lang;}
+        explicit InvalidLanguage(Language lang) {this->lang = lang;}
     };
-    string getTitle();
-    Date getDate();
-    Language getLanguage();
-    Age getMinAge();
+    string getTitle() const;
+    Date getDate() const;
+    Language getLanguage() const;
+    Age getMinAge() const;
 };
 
 class PublicStream : public Stream{
@@ -45,7 +46,7 @@ class PrivateStream : public Stream{
 public:
     PrivateStream(string title, Language lang, Age min_age);
     ~PrivateStream();
-    vector<unsigned> autorized_viewers;  //autorized_viewers through id
+    vector<unsigned> authorized_viewers;  //authorized_viewers through id (or vector<Users*>?)
     vector<string> comments;
     unsigned capacity;
 };

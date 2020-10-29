@@ -13,28 +13,32 @@ using namespace std;
 class StreamZ;
 
 class User {
-public:
+private:
     static int counter;
     int id;
-    bool viweingStream = false;
-    string name;
     Date birthday;
-    unsigned min_age;
-    User(string name, Date birthday);
+protected:
+    bool viewingStream = false;
+    string nickname;
+public:
+    string getName() const;
+    int getID() const;
+    Date getBirthday() const;
+    User(string nickname, Date birthday);
     ~User();
 };
 
 class Viewer : public User {
 public:
-    Viewer(string name, Date birthday);
+    Viewer(string nickname, Date birthday);
     ~Viewer();
     bool enterStream(Stream* s, StreamZ platform);  //can only be in one stream at the time
-    bool exitStream(Stream* s, StreamZ platform);    //they can exit at any time
+    bool exitStream(Stream* s, StreamZ platform);    //they can exit at any time (needs to check if the stream should be added to the top 10)
 };
 
 class Streamer : public User {
 public:
-    Streamer(string name, Date birthday);
+    Streamer(string nickname, Date birthday);
     Stream* s = NULL;
     ~Streamer();
     vector<Viewer*> total_viewers;
@@ -52,6 +56,7 @@ public:
     vector<Stream*> active_streams;
     vector<Stream*> best_streams;
     //map<int, vector<Stream*>> history; ;  //history per id of streamer
+    bool addUser(bool streamer, string nickname, Date birthday); // or addStreamer and addViewer?...
     bool activeStream(Streamer &streamer, string title, Language lang, unsigned min_age);
     bool removeActiveStream(const Streamer& streamer);
     bool isStreamActive(const Stream* s, vector<Stream*>::iterator &it);

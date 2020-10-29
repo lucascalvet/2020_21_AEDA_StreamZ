@@ -3,6 +3,9 @@
 
 #include <iostream>
 
+#define VIEWER_MIN_AGE 12
+#define STREAMER_MIN_AGE 15
+
 struct Date {
     unsigned day;
     unsigned month;

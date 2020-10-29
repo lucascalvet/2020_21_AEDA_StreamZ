@@ -7,7 +7,8 @@ int main() {
     string title;
     Language lang;
     Age min_age;
-    cout << "Input the stream's title: "; cin >> title;
+    cout << "Input the stream's title: ";
+    getline(cin, title);
     cout << "Input the stream's language: "; cin >> lang;
     cout << "Input the stream's minimum age: "; cin >> min_age;
     try {
@@ -15,8 +16,8 @@ int main() {
         cout << "Title: " << s1.getTitle() << "\tLanguage: " << s1.getLanguage() <<
         "\tMinimum age: " << s1.getMinAge() << "\tStarting date: " << s1.getDate();
     }
-    catch(Stream::InvalidLanguage&) {cout << "Invalid language!";}
-    */
+    catch(Stream::InvalidLanguage& il) {cout << "\"" << il.lang << "\" is an invalid language!";}
+*/
 
 
     //TEST TO THE STATIC ID
@@ -31,13 +32,13 @@ int main() {
     Streamer s4("jo4444ASDa", d);
     Viewer v1("V111", d);
 
-    cout << s.name << "  " << s.id << endl;
-    cout << s1.name << "  " << s1.id << endl;
-    cout << s2.name << "  " << s2.id << endl;
-    cout << s3.name << "  " << s3.id << endl;
-    cout << s4.name << "  " << s4.id << endl;
-    cout << v0.name << "  " << v0.id << endl;
-    cout << v1.name << "  " << v1.id << endl;
+    cout << s.getName() << "  " << s.getID() << endl;
+    cout << s1.getName() << "  " << s1.getID() << endl;
+    cout << s2.getName() << "  " << s2.getID() << endl;
+    cout << s3.getName() << "  " << s3.getID() << endl;
+    cout << s4.getName() << "  " << s4.getID() << endl;
+    cout << v0.getName() << "  " << v0.getID() << endl;
+    cout << v1.getName() << "  " << v1.getID() << endl;
 
     return 0;
 }

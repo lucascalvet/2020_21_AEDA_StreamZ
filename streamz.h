@@ -49,6 +49,11 @@ public:
     bool endStream(StreamZ platform);  //when stream is endend by streamer, stream is added to history after total viewers data is added to stream
 };
 
+class Admin : public User {
+    Admin(string nickname, Date birthday);
+    ~Admin();
+};
+
 class StreamZ {
 public:
     unsigned capacity;   //how many streams can be active at same time

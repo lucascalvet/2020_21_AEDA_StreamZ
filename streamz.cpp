@@ -51,6 +51,11 @@ StreamZ::StreamZ(unsigned capacity) {
     this->capacity = capacity;
 }
 
+Admin::Admin(string nickname, Date birthday) : User(nickname , birthday){}
+
+Admin::~Admin(){
+}
+
 StreamZ::~StreamZ() {
 }
 

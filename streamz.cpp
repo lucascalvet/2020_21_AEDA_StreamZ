@@ -3,66 +3,18 @@
 
 using namespace std;
 
-//Static member to have unique id's to each user
-int User::counter = 0;
-
-User::User(string nickname, Date birthday){
-    this->nickname = nickname;
-    this->birthday = birthday;
-    id = counter++;
-}
-
-User::~User(){
-}
-
-string User::getName() const {
-    return nickname;
-}
-
-int User::getID() const {
-    return id;
-}
-
-Date User::getBirthday() const {
-    return birthday;
-}
-
-Viewer::Viewer(string nickname, Date birthday) : User(nickname , birthday){
-}
-
-Viewer::~Viewer() {
-}
-
-Streamer::Streamer(string nickname, Date birthday) : User(nickname, birthday){
-}
-
-Streamer::~Streamer() {
-}
-
-unsigned Streamer::getTotalViews() const {
-    return total_viewers.size();
-}
-
-unsigned Streamer::getActiveViewers() const {
-    return active_viewers.size();
-}
-
 StreamZ::StreamZ(unsigned capacity) {
     this->capacity = capacity;
-}
-
-Admin::Admin(string nickname, Date birthday) : User(nickname , birthday){}
-
-Admin::~Admin(){
 }
 
 StreamZ::~StreamZ() {
 }
 
-bool StreamZ::activeStream(Streamer &streamer, string title, Language lang, unsigned min_age){
+bool StreamZ::startStream(Streamer &streamer, string title, Language lang, unsigned min_age){
     if(streamer.s == NULL && getActiveStreams() <= capacity){
         Stream s(title, lang, min_age);
         streamer.s = &s;
+        active_streams.push_back(&s);
         return true;
     }
     else{
@@ -80,7 +32,7 @@ bool StreamZ::isStreamActive(const Stream* s, vector<Stream*>::iterator &it) {
         return false;
 }
 
-bool StreamZ::removeActiveStream(const Streamer& streamer){
+bool StreamZ::stopStream(const Streamer& streamer){
     vector<Stream*>::iterator it;
     if (isStreamActive(streamer.s, it))
     {
@@ -95,39 +47,25 @@ unsigned StreamZ::getActiveStreams() const {
     return active_streams.size();
 }
 
-bool Streamer::endStream(StreamZ platform) {  //removes stream from system and return true is success
-    if (platform.removeActiveStream(*this)) {
-        cout << this->nickname << " ended the stream " << this->s->getTitle() << endl;
-        return true;
-    } else {
-        cout << "Stream already endend!" << endl;
-        return false;
-    }
-}
-
-bool Streamer::newStream(StreamZ platform, string title, Language lang, unsigned min_age){
-    if(s != NULL)
-        return false;
-    else{
-        if(platform.activeStream(*this, title, lang, min_age))
-            return true;
-        else
-            return false;
-    }
-}
-
-bool Viewer::enterStream(Stream *s, StreamZ platform) {
+bool StreamZ::enterStream(Stream *s, Viewer *v) {
     vector<Stream*>::iterator it;
-    if(viewingStream) {
+    if(v->viewingStream) {
         cout << "Already viewing a stream!" << endl;
         return false;
     }
-    else if(!platform.isStreamActive(s, it)){
+    else if(isStreamActive(s, it)){
         cout << "Stream has been deactivated!" << endl;
         return false;
     }
     else{
-
+        v->viewingStream = true;
     }
     return true;
+}
+
+bool StreamZ::exitStream(Stream* s, Viewer *v){
+    if(!v->viewingStream)
+        cout << "User is not viewing any stream!" << endl;
+    else
+        v->viewingStream = false;
 }

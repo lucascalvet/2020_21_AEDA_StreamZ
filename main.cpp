@@ -3,6 +3,15 @@
 using namespace std;
 
 int main() {
+    // TEST SAVE TO FILE
+    StreamZ sz1(30);
+    User* strmr1 = sz1.addUser(true, "Ana", Date(1,1,2000));
+    User* strmr2 = sz1.addUser(true, "Peter", Date(1,1,2000));
+    sz1.startStream(*(Streamer*) strmr1, "A minha stream", "PT", 15);
+    sz1.startStream(*(Streamer*) strmr2, "Peter's Stream", "EN", 18);
+    sz1.saveStreams("streams.txt");
+
+
     /* TEST STREAM INITIALISATION
     string title;
     Language lang;
@@ -20,7 +29,7 @@ int main() {
 */
 
 
-    //TEST TO THE STATIC ID
+    /*TEST TO THE STATIC ID
 
     Date d;
 
@@ -41,4 +50,5 @@ int main() {
     cout << v1.getName() << "  " << v1.getID() << endl;
 
     return 0;
+     */
 }

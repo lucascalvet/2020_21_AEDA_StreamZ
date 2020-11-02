@@ -3,11 +3,33 @@
 
 using namespace std;
 
+Age StreamZ::calculateAge(const Date& birthday) {
+    time_t current_time;
+    time(&current_time);
+    tm* date = localtime(&current_time);
+    if (date->tm_mon + 1 > birthday.month || date->tm_mon + 1 == birthday.month && date->tm_mday >= birthday.day)
+        return date->tm_year - birthday.year;
+    return date->tm_year - birthday.year - 1;
+}
+
 StreamZ::StreamZ(unsigned capacity) {
     this->capacity = capacity;
 }
 
 StreamZ::~StreamZ() {
+}
+
+bool StreamZ::addUser(bool streamer, string nickname, Date birthday) {
+    Age age = calculateAge(birthday);
+    if (streamer && age >= MIN_AGE_STREAMER) {
+        users.push_back(new Streamer(nickname, birthday));
+        return true;
+    }
+    if (!streamer && age >= MIN_AGE_VIEWER) {
+        users.push_back(new Viewer(nickname, birthday));
+        return true;
+    }
+    return false;
 }
 
 bool StreamZ::startStream(Streamer &streamer, string title, Language lang, unsigned min_age){

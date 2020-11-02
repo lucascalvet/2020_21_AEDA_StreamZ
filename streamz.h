@@ -5,11 +5,15 @@
 #include <string>
 #include <algorithm>
 #include <map>
+#include "utils.h"
 #include "user.h"
+#include "stream.h"
 
 using namespace std;
 
 class StreamZ {
+private:
+    static Age calculateAge(const Date& birthday);
 public:
     unsigned capacity;   //how many streams can be active at same time
     vector<User*> users;

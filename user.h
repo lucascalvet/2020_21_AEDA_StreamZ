@@ -1,10 +1,7 @@
-//
-// Created by sergi on 01/11/2020.
-//
+#ifndef USER_H
+#define USER_H
 
-#ifndef STREAMZ_AEDA_2020_21_USER_H
-#define STREAMZ_AEDA_2020_21_USER_H
-
+#include "utils.h"
 #include "stream.h"
 
 class User {
@@ -46,4 +43,4 @@ class Admin : public User {
 };
 
 
-#endif //STREAMZ_AEDA_2020_21_USER_H
+#endif //USER_H

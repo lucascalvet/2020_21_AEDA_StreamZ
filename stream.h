@@ -5,6 +5,7 @@
 #include <string>
 #include <algorithm>
 #include <ctime>
+#include <sstream>
 #include "utils.h"
 
 using namespace std;
@@ -22,7 +23,7 @@ private:
     unsigned num_viewers = 0;
     unsigned likes = 0;
     unsigned dislikes = 0;
-    static string strToUpper(const string& str) ;
+    static string strToUpper(const string& str);
 public:
     Stream(const string& title, const Language& lang, unsigned min_age);
     class InvalidLanguage{

@@ -55,6 +55,11 @@ Age Stream::getMinAge() const {
     return this->min_age;
 }
 
+string Stream::getInfo() const {
+    ostringstream info
+    return std::__cxx11::string();
+}
+
 
 PublicStream::PublicStream(string title, Language lang, Age min_age) : Stream( title, lang, min_age){
 }

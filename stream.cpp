@@ -26,9 +26,7 @@ Stream::Stream(const string& title, const Language& lang, unsigned min_age) {
     time_t current_time;
     time(&current_time);
     tm* date = localtime(&current_time);
-    this->starting_date.day = date->tm_mday;
-    this->starting_date.month = date->tm_mon + 1;
-    this->starting_date.year = date->tm_year + 1900;
+    starting_date = Date(date->tm_mday, date->tm_mon + 1, date->tm_year + 1900);
 }
 
 string Stream::strToUpper(const string& str) {
@@ -56,10 +54,11 @@ Age Stream::getMinAge() const {
 }
 
 string Stream::getInfo() const {
-    ostringstream info
-    return std::__cxx11::string();
+    ostringstream info;
+    info << "Title: " << this->title << "\tStarting Date: " << this->starting_date <<
+    "\tLanguage: " << this->lang << "\tMin Age: " << this->min_age;
+    return info.str();
 }
-
 
 PublicStream::PublicStream(string title, Language lang, Age min_age) : Stream( title, lang, min_age){
 }

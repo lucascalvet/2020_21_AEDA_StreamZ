@@ -35,6 +35,7 @@ public:
     Date getDate() const;
     Language getLanguage() const;
     Age getMinAge() const;
+    string getInfo() const;
 };
 
 class PublicStream : public Stream{

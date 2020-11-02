@@ -7,6 +7,8 @@
 #define MIN_AGE_VIEWER 15
 
 struct Date {
+    Date() = default;
+    Date(unsigned day, unsigned month, unsigned year);
     unsigned day;
     unsigned month;
     unsigned year;

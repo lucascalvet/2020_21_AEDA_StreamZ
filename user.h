@@ -12,7 +12,7 @@ private:
 protected:
     string nickname;
 public:
-    Stream *s = NULL;
+    Stream *s = nullptr;
     string getName() const;
     int getID() const;
     Date getBirthday() const;

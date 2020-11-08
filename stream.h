@@ -22,6 +22,8 @@ private:
     unsigned num_viewers = 0;
     unsigned likes = 0;
     unsigned dislikes = 0;
+    vector<unsigned> viewers_liked;
+    vector<unsigned> viewers_disliked;
     static string strToUpper(const string& str) ;
 public:
     Stream(const string& title, const Language& lang, unsigned min_age);
@@ -34,6 +36,10 @@ public:
     Date getDate() const;
     Language getLanguage() const;
     Age getMinAge() const;
+    void addLike();
+    void addDislike();
+    void remLike();
+    void remDislike();
 };
 
 class PublicStream : public Stream{

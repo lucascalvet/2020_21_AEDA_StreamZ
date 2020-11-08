@@ -55,6 +55,21 @@ Age Stream::getMinAge() const {
     return this->min_age;
 }
 
+void Stream::addLike() {
+    likes++;
+}
+
+void Stream::addDislike() {
+    dislikes++;
+}
+
+void Stream::remLike() {
+    likes--;
+}
+
+void Stream::remDislike() {
+    dislikes--;
+}
 
 PublicStream::PublicStream(string title, Language lang, Age min_age) : Stream( title, lang, min_age){
 }

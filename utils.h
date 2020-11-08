@@ -4,10 +4,12 @@
 #include <string>
 #include <iostream>
 
-#define VIEWER_MIN_AGE 12
-#define STREAMER_MIN_AGE 15
+#define MIN_AGE_STREAMER 12
+#define MIN_AGE_VIEWER 15
 
 struct Date {
+    Date() = default;
+    Date(unsigned day, unsigned month, unsigned year);
     unsigned day;
     unsigned month;
     unsigned year;

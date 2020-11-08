@@ -5,11 +5,15 @@
 #include <string>
 #include <algorithm>
 #include <map>
+#include "utils.h"
 #include "user.h"
+#include "stream.h"
 
 using namespace std;
 
 class StreamZ {
+private:
+    static Age calculateAge(const Date& birthday);
 public:
     static int counter;
     unsigned id;
@@ -39,6 +43,8 @@ public:
     void printActiveStreams();
     StreamZ(unsigned capacity);
     ~StreamZ();
+    vector<Stream*> getStreams(const Language& lang, Age min_age) const;
+    bool saveStreams(const string& filename) const;
 };
 
 void streamz_framework();

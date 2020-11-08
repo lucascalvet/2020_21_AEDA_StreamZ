@@ -5,6 +5,7 @@
 #include <string>
 #include <algorithm>
 #include <ctime>
+#include <sstream>
 #include "utils.h"
 
 using namespace std;
@@ -40,6 +41,7 @@ public:
     void addDislike();
     void remLike();
     void remDislike();
+    string getInfo() const;
 };
 
 class PublicStream : public Stream{

@@ -1,10 +1,20 @@
 #include "streamz.h"
+#include <fstream>
 #include <iostream>
 #include "menu.h"
 
 using namespace std;
 
 int StreamZ::counter = 0;
+
+Age StreamZ::calculateAge(const Date &birthday) {
+    time_t current_time;
+    time(&current_time);
+    tm *date = localtime(&current_time);
+    if (date->tm_mon + 1 > birthday.month || date->tm_mon + 1 == birthday.month && date->tm_mday >= birthday.day)
+        return date->tm_year - birthday.year;
+    return date->tm_year - birthday.year - 1;
+}
 
 StreamZ::StreamZ(unsigned capacity) {
     id = counter++;
@@ -19,8 +29,7 @@ bool StreamZ::startStream(Streamer *streamer, string title, Language lang, unsig
         Stream s(title, lang, min_age);
         streamer->s = &s;
         return true;
-    }
-    else{
+    } else {
         return false;  //already has a stream
     }
 }
@@ -29,8 +38,7 @@ bool StreamZ::stopStream(Streamer* streamer){
     if (streamer->isActive()){
         streamer->s = NULL;
         return true;
-    }
-    else
+    } else
         return false;
 }
 
@@ -559,4 +567,28 @@ void streamz_framework() {
             }
         }
     }
+
+vector<Stream *> StreamZ::getStreams(const Language &lang = "", Age min_age = UINT_MAX) const {
+    vector<Stream *> ret_streams;
+    vector<Stream *>::const_iterator stream;
+    for (stream = this->active_streams.begin(); stream != this->active_streams.end(); stream++) {
+        if (lang.empty() || lang == (*stream)->getLanguage() && min_age >= (*stream)->getMinAge())
+            ret_streams.push_back(*stream);
+    }
+    return ret_streams;
 }
+
+bool StreamZ::saveStreams(const string &filename) const{
+    ofstream streams_file;
+    streams_file.open(filename, ofstream::trunc);
+    if (streams_file.fail())
+        return false;
+    vector<Stream*>::const_iterator stream;
+    for (stream = active_streams.begin(); stream != active_streams.end(); stream++){
+        streams_file << (*stream)->getTitle() << '\t' << (*stream)->getDate() << '\t' <<
+        (*stream)->getLanguage() << '\t' << (*stream)->getMinAge() << '\n';
+    }
+    return true;
+}
+
+

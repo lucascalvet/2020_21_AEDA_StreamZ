@@ -1,10 +1,7 @@
-//
-// Created by sergi on 01/11/2020.
-//
+#ifndef USER_H
+#define USER_H
 
-#ifndef STREAMZ_AEDA_2020_21_USER_H
-#define STREAMZ_AEDA_2020_21_USER_H
-
+#include "utils.h"
 #include "stream.h"
 
 class User {
@@ -15,7 +12,7 @@ private:
 protected:
     string nickname;
 public:
-    Stream *s = NULL;
+    Stream *s = nullptr;
     string getName() const;
     int getID() const;
     Date getBirthday() const;
@@ -50,4 +47,4 @@ class Admin : public User {  //maybe not appropriate because its a framework so 
 };
 
 
-#endif //STREAMZ_AEDA_2020_21_USER_H
+#endif //USER_H

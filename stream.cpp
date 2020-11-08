@@ -53,6 +53,21 @@ Age Stream::getMinAge() const {
     return this->min_age;
 }
 
+void Stream::addLike() {
+    likes++;
+}
+
+void Stream::addDislike() {
+    dislikes++;
+}
+
+void Stream::remLike() {
+    likes--;
+}
+
+void Stream::remDislike() {
+    dislikes--;
+
 string Stream::getInfo() const {
     ostringstream info;
     info << "Title: " << this->title << "\tStarting Date: " << this->starting_date <<

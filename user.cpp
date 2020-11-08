@@ -34,6 +34,16 @@ Viewer::Viewer(string nickname, Date birthday) : User(nickname , birthday){
 Viewer::~Viewer() {
 }
 
+void Viewer::printInfo() {
+    cout << "Name: " << nickname << endl;
+    cout << "Id: " << to_string(getID()) << endl;
+    cout << "Birthday: " << getBirthday() << endl;
+    cout << "Viewing: " << to_string(isActive()) << endl;
+    if(isActive()) {
+        cout << "Stream name: " << s->getTitle() << endl;
+    }
+}
+
 Streamer::Streamer(string nickname, Date birthday) : User(nickname, birthday){
 }
 
@@ -46,6 +56,24 @@ unsigned Streamer::getTotalViews() const {
 
 unsigned Streamer::getActiveViewers() const {
     return active_viewers.size();
+}
+
+bool User::isActive() const{
+    if(s == NULL)
+        return false;
+    else
+        return true;
+}
+
+void Streamer::printInfo(){
+    cout << "Name: " << nickname << endl;
+    cout << "Id: " << to_string(getID()) << endl;
+    cout << "Birthday: " << getBirthday() << endl;
+    cout << "Streaming: " << to_string(isActive()) << endl;
+    if(isActive()) {
+        cout << "Stream name: " << s->getTitle() << endl;
+        cout << "Active viewers: " << to_string(getActiveViewers()) << endl;
+    }
 }
 
 Admin::Admin(string nickname, Date birthday) : User(nickname , birthday){}

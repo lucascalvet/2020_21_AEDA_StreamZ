@@ -23,7 +23,9 @@ private:
     unsigned num_viewers = 0;
     unsigned likes = 0;
     unsigned dislikes = 0;
-    static string strToUpper(const string& str);
+    vector<unsigned> viewers_liked;
+    vector<unsigned> viewers_disliked;
+    static string strToUpper(const string& str) ;
 public:
     Stream(const string& title, const Language& lang, unsigned min_age);
     class InvalidLanguage{
@@ -35,6 +37,10 @@ public:
     Date getDate() const;
     Language getLanguage() const;
     Age getMinAge() const;
+    void addLike();
+    void addDislike();
+    void remLike();
+    void remDislike();
     string getInfo() const;
 };
 

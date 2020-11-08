@@ -17,13 +17,16 @@ public:
     int getID() const;
     Date getBirthday() const;
     User(string nickname, Date birthday);
+    bool isActive() const;
     ~User();
 };
 
 class Viewer : public User {
 public:
-    bool viewingStream = false;
+    bool alreadyLiked = false;
+    bool alreadyDisliked = false;
     Viewer(string nickname, Date birthday);
+    void printInfo();
     ~Viewer();
 };
 
@@ -35,9 +38,10 @@ public:
     vector<Viewer*> active_viewers;
     unsigned getTotalViews() const;
     unsigned getActiveViewers() const;
+    void printInfo();
 };
 
-class Admin : public User {
+class Admin : public User {  //maybe not appropriate because its a framework so the people controling it is the admin
     Admin(string nickname, Date birthday);
     ~Admin();
 };

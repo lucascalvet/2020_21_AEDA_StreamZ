@@ -24,8 +24,6 @@ private:
     Language lang;
     Age min_age;
     unsigned num_viewers = 0;
-    unsigned likes = 0;
-    unsigned dislikes = 0;
     std::vector<unsigned> viewers_liked;
     std::vector<unsigned> viewers_disliked;
 public:
@@ -39,10 +37,11 @@ public:
     Date getDate() const;
     Language getLanguage() const;
     Age getMinAge() const;
-    void addLike();
-    void addDislike();
-    void remLike();
-    void remDislike();
+    bool addLike(unsigned id);
+    bool addDislike(unsigned id);
+    bool remLike(unsigned id);
+    bool remDislike(unsigned id);
+    bool alreadyLikedOrDisliked(unsigned id);
     std::string getInfo() const;
 };
 

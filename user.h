@@ -21,6 +21,7 @@ public:
     Date getBirthday() const;
     User(std::string nickname, Date birthday);
     bool isActive() const;
+    std::string getInfo();
     ~User();
 };
 
@@ -32,7 +33,7 @@ public:
     bool alreadyLiked = false;
     bool alreadyDisliked = false;
     Viewer(std::string nickname, Date birthday);
-    void printInfo();
+    std::string getInfo();
     ~Viewer();
 };
 
@@ -47,7 +48,7 @@ public:
     std::vector<Viewer*> active_viewers;
     unsigned getTotalViews() const;
     unsigned getActiveViewers() const;
-    void printInfo();
+    std::string getInfo();
 };
 
 /**

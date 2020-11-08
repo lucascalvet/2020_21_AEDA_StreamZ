@@ -48,6 +48,19 @@ Date User::getBirthday() const {
 }
 
 /**
+ * Prints the user's information
+ *
+ * @return a string with the user's name, id, and date of birth
+ */
+string User::getInfo() {
+    ostringstream info;
+    info << "Name: " << nickname;
+    info << "\tId: " << to_string(getID());
+    info << "\tBirthday: " << getBirthday() << endl;
+    return info.str();
+}
+
+/**
  * Constructs a viewer object
  *
  * @param nickname the viewer's nickname
@@ -61,15 +74,17 @@ Viewer::~Viewer() {
 
 /**
  * Prints the viewer's information
+ *
+ * @return a string with the viewer's information
  */
-void Viewer::printInfo() {
-    cout << "Name: " << nickname << endl;
-    cout << "Id: " << to_string(getID()) << endl;
-    cout << "Birthday: " << getBirthday() << endl;
-    cout << "Viewing: " << to_string(isActive()) << endl;
+string Viewer::getInfo() {
+    ostringstream info;
+    info << User::getInfo();
+    info << "Viewing: " << to_string(isActive()) << endl;
     if(isActive()) {
-        cout << "Stream name: " << s->getTitle() << endl;
+        info << "Stream: " << s->getInfo() << endl;
     }
+    return info.str();
 }
 
 /**
@@ -117,16 +132,18 @@ bool User::isActive() const{
 
 /**
  * Prints the streamer's information
+ *
+ * @return a string with the viewer's information
  */
-void Streamer::printInfo(){
-    cout << "Name: " << nickname << endl;
-    cout << "Id: " << to_string(getID()) << endl;
-    cout << "Birthday: " << getBirthday() << endl;
-    cout << "Streaming: " << to_string(isActive()) << endl;
+string Streamer::getInfo(){
+    ostringstream info;
+    info << User::getInfo();
+    info << "Streaming: " << to_string(isActive()) << endl;
     if(isActive()) {
-        cout << "Stream name: " << s->getTitle() << endl;
-        cout << "Active viewers: " << to_string(getActiveViewers()) << endl;
+        info << "Stream: " << s->getInfo() << endl;
+        info << "Active viewers: " << to_string(getActiveViewers()) << endl;
     }
+    return info.str();
 }
 
 /**

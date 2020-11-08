@@ -1,6 +1,7 @@
 #include "streamz.h"
 #include <fstream>
 #include <iostream>
+#include <algorithm>
 #include "menu.h"
 
 using namespace std;
@@ -135,8 +136,9 @@ bool StreamZ::exitStream(Viewer *v){
  * @param s the streamer to be added
  * @return true if the operation was successful, false otherwise
  */
-bool StreamZ::addStreamer(Streamer* s) {
-    streamers.push_back(s);
+bool StreamZ::addStreamer(const string& nickname, const Date& birthday) {
+    Streamer *s1 = new Streamer(nickname, birthday);
+    streamers.push_back(s1);
 }
 
 /**
@@ -145,8 +147,9 @@ bool StreamZ::addStreamer(Streamer* s) {
  * @param s the streamer to be added
  * @return true if the operation was successful, false otherwise
  */
-bool StreamZ::addViewer(Viewer* v) {
-    viewers.push_back(v);
+bool StreamZ::addViewer(const string& nickname, const Date& birthday) {
+    Viewer *v1 = new Viewer(nickname, birthday);
+    viewers.push_back(v1);
 }
 
 /**
@@ -158,11 +161,8 @@ bool StreamZ::addViewer(Viewer* v) {
  * @return true if the operation was successful, false otherwise
  */
 bool StreamZ::likeStream(Viewer *v) {
-    if(v->alreadyLiked || v->alreadyDisliked)
-        return false;
-    else
-        v->s->addLike();
-    return true;
+    if(!v->isActive()) return false;
+    return v->s->addLike(v->getID());
 }
 
 /**
@@ -174,11 +174,8 @@ bool StreamZ::likeStream(Viewer *v) {
  * @return true if the operation was successful, false otherwise
  */
 bool StreamZ::dislikeStream(Viewer *v) {
-    if(v->alreadyDisliked || v->alreadyLiked)
-        return false;
-    else
-        v->s->addDislike();
-    return true;
+    if(!v->isActive()) return false;
+    return v->s->addDislike(v->getID());
 }
 
 /**
@@ -190,13 +187,8 @@ bool StreamZ::dislikeStream(Viewer *v) {
  * @return true if the operation was successful, false otherwise
  */
 bool StreamZ::remlikeStream(Viewer *v) {
-    if(v->alreadyLiked) {
-        v->s->remLike();
-        v->alreadyLiked = true;
-        return true;
-    }
-    else
-        return false;
+    if(!v->isActive()) return false;
+    return v->s->remLike(v->getID());
 }
 
 /**
@@ -208,13 +200,8 @@ bool StreamZ::remlikeStream(Viewer *v) {
  * @return true if the operation was successful, false otherwise
  */
 bool StreamZ::remdislikeStream(Viewer *v) {
-    if(v->alreadyDisliked) {
-        v->s->remDislike();
-        v->alreadyDisliked = false;
-        return true;
-    }
-    else
-        return false;
+    if(!v->isActive()) return false;
+    return v->s->remDislike(v->getID());
 }
 
 /**
@@ -401,8 +388,7 @@ void streamz_framework() {
                                     cout << "Enter the streamer birthday in the format dd-mm-yy: ";
                                     cin >> date;
 
-                                    Streamer *s1 = new Streamer(nickname, birthday);
-                                    sz_selected->addStreamer(s1);
+                                    sz_selected->addStreamer(nickname, birthday);
                                     cout << "Streamer created successfully, go back to work with it!" << endl;
                                     cout << "To create another one input anything, to go back input 'e'" << endl;
                                     cout << "Input: ";
@@ -437,7 +423,7 @@ void streamz_framework() {
 
                                     switch (streamerMenu.selected) {
                                         case 0: {
-                                            s_selected->printInfo();
+                                            cout << s_selected->getInfo();
                                             break;
                                         }
                                         case 1: {
@@ -493,8 +479,7 @@ void streamz_framework() {
                                     cout << "Enter the viewer birthday in the format dd-mm-yy: ";
                                     cin >> date;
 
-                                    Viewer *v1 = new Viewer(nickname, birthday);
-                                    sz_selected->addViewer(v1);
+                                    sz_selected->addViewer(nickname, birthday);
                                     cout << "Viewer created successfully, go back to work with it!" << endl;
                                     cout << "To create another one input anything, to go back input 'e'" << endl;
                                     cout << "Input: ";
@@ -527,7 +512,7 @@ void streamz_framework() {
                                     viewerMenu.startMenu();
                                     switch (viewerMenu.selected) {
                                         case 0: {
-                                            v_selected->printInfo();
+                                            cout << v_selected->getInfo();
                                             break;
                                         }
                                         case 1: {
@@ -558,7 +543,7 @@ void streamz_framework() {
                                             } else {
                                                 unsigned choice;
                                                 sz_selected->exitStream(v_selected);
-                                                cout << "Exintig stream successfully!" << endl;
+                                                cout << "Exiting stream successfully!" << endl;
                                             }
                                             stopConsole();
                                             break;

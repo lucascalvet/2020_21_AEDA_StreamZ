@@ -67,26 +67,75 @@ Language Stream::getLanguage() const{
 
 /**
  * Gets the stream's minimum viewing age
+ *
  * @return the stream's minimum viewing age
  */
 Age Stream::getMinAge() const {
     return this->min_age;
 }
 
-void Stream::addLike() {
-    likes++;
+/**
+ * Add a like to the stream
+ *
+ * @param id the viewer's id
+ * @return
+ */
+bool Stream::addLike(unsigned id) {
+    if(alreadyLikedOrDisliked(id)) return false;
+    viewers_liked.push_back(id);
+    return true;
 }
 
-void Stream::addDislike() {
-    dislikes++;
+/**
+ * Add a dislike to the stream
+ *
+ * @param id the viewer's id
+ * @return
+ */
+bool Stream::addDislike(unsigned id) {
+    if(alreadyLikedOrDisliked(id)) return false;
+    viewers_disliked.push_back(id);
+    return true;
 }
 
-void Stream::remLike() {
-    likes--;
+/**
+ * Remove a like from the stream
+ *
+ * @param id the viewer's id
+ * @return
+ */
+bool Stream::remLike(unsigned id) {
+    vector<unsigned>::iterator viewer = find(viewers_liked.begin(), viewers_liked.end(), id);
+    if(viewer == viewers_liked.end()) return false;
+    viewers_liked.erase(viewer);
+    return true;
 }
 
-void Stream::remDislike() {
-    dislikes--;
+/**
+ * Remove a dislike from the stream
+ *
+ * @param id the viewer's id
+ * @return
+ */
+bool Stream::remDislike(unsigned id) {
+    vector<unsigned>::iterator viewer = find(viewers_disliked.begin(), viewers_disliked.end(), id);
+    if(viewer == viewers_disliked.end()) return false;
+    viewers_disliked.erase(viewer);
+    return true;
+}
+
+/**
+ * Checks if a viewer has already liked or disliked the stream
+ *
+ * @param id the viewer's id
+ * @return true if a viewer has already liked or disliked the stream, false otherwise
+ */
+bool Stream::alreadyLikedOrDisliked(unsigned id) {
+    if(find(viewers_liked.begin(), viewers_liked.end(), id)!=viewers_liked.end())
+        return true;
+    if(find(viewers_disliked.begin(), viewers_disliked.end(), id)!=viewers_disliked.end())
+        return true;
+    return false;
 }
 
 /**
@@ -100,6 +149,8 @@ string Stream::getInfo() const {
     "\tLanguage: " << this->lang << "\tMin Age: " << this->min_age;
     return info.str();
 }
+
+
 
 /**
  * Constructs a public stream

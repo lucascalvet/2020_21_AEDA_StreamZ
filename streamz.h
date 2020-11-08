@@ -23,8 +23,8 @@ public:
     std::vector<Viewer*> viewers;
     std::vector<Stream*> best_streams;
     //map<int, std::vector<Stream*>> history; ;  //history per id of streamer
-    bool addStreamer(Streamer* s);
-    bool addViewer(Viewer* v);
+    bool addStreamer(const std::string& nickname, const Date& birthday);
+    bool addViewer(const std::string& nickname, const Date& birthday);
     //when stream is endend by streamer, stream is added to history after total viewers data is added to stream
     // for streamers
     bool startStream(Streamer *streamer, std::string title, Language lang, unsigned min_age);
@@ -32,10 +32,10 @@ public:
     //for viewers
     bool enterStream(Streamer* streamer, Viewer *v);  //can only be in one stream at the time
     bool exitStream(Viewer *v);   //they can exit at any time (needs to check if the stream should be added to the top 10)
-    bool likeStream(Viewer * v);
-    bool dislikeStream(Viewer *v);
-    bool remlikeStream(Viewer * v);
-    bool remdislikeStream(Viewer *v);
+    static bool likeStream(Viewer * v);
+    static bool dislikeStream(Viewer *v);
+    static bool remlikeStream(Viewer * v);
+    static bool remdislikeStream(Viewer *v);
     unsigned getStreamers() const;
     unsigned getViewers() const;
     Streamer* getStreamerByID(unsigned id);

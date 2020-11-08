@@ -4,4 +4,4 @@ project(StreamZ_AEDA_2020_21)
 set(CMAKE_CXX_STANDARD 14)
 
 
-add_executable(StreamZ_AEDA_2020_21 main.cpp streamz.cpp user.cpp stream.cpp streamz.h stream.h utils.h user.h menu.h menu.cpp)
+add_executable(StreamZ_AEDA_2020_21 main.cpp streamz.cpp streamz.h user.cpp user.h stream.cpp stream.h utils.cpp utils.h menu.cpp menu.h)

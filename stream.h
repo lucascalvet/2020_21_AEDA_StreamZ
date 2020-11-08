@@ -8,32 +8,34 @@
 #include <sstream>
 #include "utils.h"
 
-using namespace std;
-
+/// Unsigned type for representing an age
 typedef unsigned Age;
-typedef string Language;
+/// String type for representing a language, in the predefined format
+typedef std::string Language;
 
+/**
+ * Class with all of attributes and methods of a stream
+ */
 class Stream {
 private:
-    string title;
+    std::string title;
     Date starting_date;
-    static const vector<Language> langs;
+    static const std::vector<Language> LANGS;
     Language lang;
     Age min_age;
     unsigned num_viewers = 0;
     unsigned likes = 0;
     unsigned dislikes = 0;
-    vector<unsigned> viewers_liked;
-    vector<unsigned> viewers_disliked;
-    static string strToUpper(const string& str) ;
+    std::vector<unsigned> viewers_liked;
+    std::vector<unsigned> viewers_disliked;
 public:
-    Stream(const string& title, const Language& lang, unsigned min_age);
+    Stream(const std::string& title, const Language& lang, unsigned min_age);
     class InvalidLanguage{
     public:
         Language lang;
         explicit InvalidLanguage(Language lang) {this->lang = lang;}
     };
-    string getTitle() const;
+    std::string getTitle() const;
     Date getDate() const;
     Language getLanguage() const;
     Age getMinAge() const;
@@ -41,21 +43,27 @@ public:
     void addDislike();
     void remLike();
     void remDislike();
-    string getInfo() const;
+    std::string getInfo() const;
 };
 
+/**
+ * Class derived from Stream, to represent a public stream
+ */
 class PublicStream : public Stream{
 public:
-    PublicStream(string title, Language lang, Age min_age);
+    PublicStream(std::string title, Language lang, Age min_age);
     ~PublicStream();
 };
 
+/**
+ * Class derived from Stream, to represent a private stream, with its additional attributes
+ */
 class PrivateStream : public Stream{
 public:
-    PrivateStream(string title, Language lang, Age min_age);
+    PrivateStream(std::string title, Language lang, Age min_age);
     ~PrivateStream();
-    vector<unsigned> authorized_viewers;  //authorized_viewers through id (or vector<Users*>?)
-    vector<string> comments;
+    std::vector<unsigned> authorized_viewers;  //authorized_viewers through id (or std::vector<Users*>?)
+    std::vector<std::string> comments;
     unsigned capacity;
 };
 

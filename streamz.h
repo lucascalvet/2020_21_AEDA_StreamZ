@@ -9,8 +9,9 @@
 #include "user.h"
 #include "stream.h"
 
-using namespace std;
-
+/**
+ * Main class for handling a StreamZ platform
+ */
 class StreamZ {
 private:
     static Age calculateAge(const Date& birthday);
@@ -18,15 +19,15 @@ public:
     static int counter;
     unsigned id;
     unsigned capacity;   //how many streamers can be active at same time
-    vector<Streamer*> streamers;
-    vector<Viewer*> viewers;
-    vector<Stream*> best_streams;
-    //map<int, vector<Stream*>> history; ;  //history per id of streamer
+    std::vector<Streamer*> streamers;
+    std::vector<Viewer*> viewers;
+    std::vector<Stream*> best_streams;
+    //map<int, std::vector<Stream*>> history; ;  //history per id of streamer
     bool addStreamer(Streamer* s);
     bool addViewer(Viewer* v);
     //when stream is endend by streamer, stream is added to history after total viewers data is added to stream
     // for streamers
-    bool startStream(Streamer *streamer, string title, Language lang, unsigned min_age);
+    bool startStream(Streamer *streamer, std::string title, Language lang, unsigned min_age);
     bool stopStream(Streamer* streamer);
     //for viewers
     bool enterStream(Streamer* streamer, Viewer *v);  //can only be in one stream at the time
@@ -43,8 +44,8 @@ public:
     void printActiveStreams();
     StreamZ(unsigned capacity);
     ~StreamZ();
-    vector<Stream*> getStreams(const Language& lang, Age min_age) const;
-    bool saveStreams(const string& filename) const;
+    std::vector<Stream*> getStreams(const Language& lang, Age min_age) const;
+    bool saveStreams(const std::string& filename) const;
 };
 
 void streamz_framework();

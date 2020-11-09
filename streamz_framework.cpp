@@ -1,5 +1,6 @@
 #include "menu.h"
 #include "streamz.h"
+#include "streamz_framework.h"
 
 /**
  * Main loop for interaction with the StreamZ framework
@@ -28,17 +29,18 @@ void streamz_framework() {
     Menu subMenu("StreamZ default title", 7);
     subMenu.changeOption(0, "Help");
     subMenu.changeOption(1, "Create Streamer");
-    subMenu.changeOption(2, "Choose Streamer");  //this must show if the streamers are active or not
+    subMenu.changeOption(2, "Choose Streamer");
     subMenu.changeOption(3, "Create Viewer");
     subMenu.changeOption(4, "Choose Viewer");
     subMenu.changeOption(5, "Best streams");
     subMenu.changeOption(6, "Back");
 
-    Menu streamerMenu("Streamer default title", 4);
+    Menu streamerMenu("Streamer default title", 5);
     streamerMenu.changeOption(0, "Streamer Info");
-    streamerMenu.changeOption(1, "Start stream");
-    streamerMenu.changeOption(2, "Stop stream");
-    streamerMenu.changeOption(3, "Back");
+    streamerMenu.changeOption(1, "Start public stream");
+    streamerMenu.changeOption(2, "Start private stream");
+    streamerMenu.changeOption(3, "Stop stream");
+    streamerMenu.changeOption(4, "Back");
 
     Menu viewerMenu("Viewer default title", 8);
     viewerMenu.changeOption(0, "Viewer info");
@@ -54,11 +56,13 @@ void streamz_framework() {
         mainMenu.startMenu();
 
         switch (mainMenu.selected) {
+            //help
             case 0: {
-                cout << "\nhelp instructions for main menu here" << endl;
+                cout << help_main_menu << endl;
                 stopConsole();
                 break;
             }
+            //create streamz
             case 1: {
                 string inp;
                 bool inCreation = true;
@@ -83,6 +87,7 @@ void streamz_framework() {
                 }
                 break;
             }
+            //choose streamz
             case 2: {
                 unsigned input;
 
@@ -110,11 +115,13 @@ void streamz_framework() {
                         subMenu.startMenu();
 
                         switch (subMenu.selected) {
+                            //help
                             case 0: {
-                                cout << "\nhelp instructions for sub menu here" << endl;
+                                cout << help_submenu << endl;
                                 stopConsole();
                                 break;
                             }
+                            //create streamer
                             case 1: {
                                 string inp;
                                 bool inCreation = true;
@@ -139,6 +146,7 @@ void streamz_framework() {
                                 }
                                 break;
                             }
+                            //choose streamer
                             case 2: {
                                 unsigned input;
 
@@ -161,10 +169,12 @@ void streamz_framework() {
                                     streamerMenu.startMenu();
 
                                     switch (streamerMenu.selected) {
+                                        //streamer info
                                         case 0: {
                                             cout << s_selected->getInfo();
                                             break;
                                         }
+                                        //start public stream
                                         case 1: {
                                             if (s_selected->isActive()) {
                                                 cout << "This streamer is already streaming!" << endl;
@@ -184,7 +194,12 @@ void streamz_framework() {
                                             }
                                             break;
                                         }
+                                        //start private stream
                                         case 2: {
+                                            break;
+                                        }
+                                        //stop stream
+                                        case 3:{
                                             if (!s_selected->isActive()) {
                                                 cout << "There is now stream to stop!" << endl;
                                             } else {
@@ -195,7 +210,8 @@ void streamz_framework() {
                                             stopConsole();
                                             break;
                                         }
-                                        case 3: {
+                                        //back
+                                        case 4: {
                                             streamer_loop = false;
                                             break;
                                         }
@@ -203,6 +219,7 @@ void streamz_framework() {
                                 }
                                 break;
                             }
+                            //create viewer
                             case 3: {
                                 string inp;
                                 bool inCreation = true;
@@ -227,6 +244,7 @@ void streamz_framework() {
                                 }
                                 break;
                             }
+                            //choose viewer
                             case 4: {
                                 unsigned input;
 
@@ -248,10 +266,12 @@ void streamz_framework() {
                                 while (viewer_loop) {
                                     viewerMenu.startMenu();
                                     switch (viewerMenu.selected) {
+                                        //viewer info
                                         case 0: {
                                             cout << v_selected->getInfo();
                                             break;
                                         }
+                                        //enter stream
                                         case 1: {
                                             if (v_selected->isActive()) {
                                                 cout << "This viewer is already in a stream!" << endl;
@@ -270,6 +290,7 @@ void streamz_framework() {
                                             }
                                             break;
                                         }
+                                        //exit stream
                                         case 2: {
                                             if (!v_selected->isActive()) {
                                                 cout << "This viewer is not in a stream!" << endl;
@@ -281,6 +302,7 @@ void streamz_framework() {
                                             stopConsole();
                                             break;
                                         }
+                                        //like stream
                                         case 3: {
                                             if (!v_selected->isActive()) {
                                                 cout << "Not viweing any stream!" << endl;
@@ -292,6 +314,7 @@ void streamz_framework() {
                                             }
                                             break;
                                         }
+                                        //dislike stream
                                         case 4: {
                                             if (!v_selected->isActive()) {
                                                 cout << "Not viweing any stream!" << endl;
@@ -303,6 +326,7 @@ void streamz_framework() {
                                             }
                                             break;
                                         }
+                                        //remove like
                                         case 5: {
                                             if (!v_selected->isActive()) {
                                                 cout << "Not viweing any stream!" << endl;
@@ -315,6 +339,7 @@ void streamz_framework() {
                                             }
                                             break;
                                         }
+                                        //remove dislike
                                         case 6: {
                                             if (!v_selected->isActive()) {
                                                 cout << "Not viweing any stream!" << endl;
@@ -327,6 +352,7 @@ void streamz_framework() {
                                             }
                                             break;
                                         }
+                                        //back
                                         case 7: {
                                             viewer_loop = false;
                                             break;
@@ -335,6 +361,7 @@ void streamz_framework() {
                                 }
                                 break;
                             }
+                            //best streams
                             case 5: {
                                 cout << "Best streams" << endl << endl;
                                 for (int i = 0; i < sz_selected->best_streams.size(); i++) {
@@ -342,6 +369,7 @@ void streamz_framework() {
                                 }
                                 break;
                             }
+                            //back
                             case 6: {
                                 sub_loop = false;
                                 break;
@@ -351,6 +379,7 @@ void streamz_framework() {
                 }
                 break;
             }
+            //settings
             case 3: {
                 setngs = true;
 
@@ -358,6 +387,7 @@ void streamz_framework() {
                     settings.startMenu();
 
                     switch (settings.selected) {
+                        //auto save
                         case 0: {
                             if (!auto_save)
                                 cout << "Auto save is off" << endl;
@@ -373,12 +403,15 @@ void streamz_framework() {
                                 auto_save = true;
                             break;
                         }
+                        //save
                         case 1: {
                             break;
                         }
+                        //import
                         case 2: {
                             break;
                         }
+                        //back
                         case 3: {
                             setngs = false;
                             break;
@@ -387,6 +420,7 @@ void streamz_framework() {
                 }
                 break;
             }
+            //exit
             case 4: {
                 if (!auto_save) {
                     cout << "Don't forget to save if you want!" << endl;
@@ -406,5 +440,10 @@ void streamz_framework() {
                 break;
             }
         }
+    }
+    //deleting pointers allocated in streamz_vector
+    vector<StreamZ*>::iterator it;
+    for(it = streamz_vector.begin(); it != streamz_vector.end();){
+        delete * it;
     }
 }

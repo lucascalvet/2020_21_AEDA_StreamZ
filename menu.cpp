@@ -1,7 +1,7 @@
 #include "menu.h"
 
-bool numberInputFail(){
-    if(!cin) { //user didn't input a number
+bool numberInputFail(){ //checks if user didn't input a number
+    if(!cin) {
         cin.clear(); //reset failbit
         cin.ignore(10000, '\n');  //ignore bad input
         return true;
@@ -9,6 +9,26 @@ bool numberInputFail(){
     return false;
 }
 
+//checks if user didn't input a number or a number in a determinated range
+void inputChecker(unsigned &selected, unsigned options, bool &inMenu){
+    cout << "Input: ";
+    while(inMenu) {
+        cin >> selected;
+
+        if (numberInputFail()) {
+            cout << "Please input a number!" << endl;
+            cout << "Input: ";
+        } else if (selected < options && selected >= 0)
+            inMenu = false;
+        else {
+            cout << "Input a number in the options range!" << endl;
+            cout << "Input: ";
+        }
+    }
+    inMenu = true;
+}
+
+//stops the console until user presses anything
 void stopConsole(){
     /*
     std::string stop;
@@ -50,20 +70,7 @@ void Menu::startMenu() {
     for(int i = 0; i < options; i++){
         cout << optionNaming[i] << endl;
     }
-    cout << "Input: ";
-    while(inMenu) {
-        cin >> selected;
+    inputChecker(selected, options, inMenu);
 
-        if(numberInputFail()) {
-            cout << "Please input a number!" << endl;
-            cout << "Input: ";
-        }
-        else if(selected < options && selected >= 0)
-            inMenu = false;
-        else {
-            cout << "Input a number in the options range!" << endl;
-            cout << "Input: ";
-        }
-    } //what to do for each option is coded next
-    inMenu = true;
+    //what to do for each option is coded next
 }

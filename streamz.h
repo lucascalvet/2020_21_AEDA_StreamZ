@@ -38,13 +38,13 @@ public:
     static bool remdislikeStream(Viewer *v);
     unsigned getStreamers() const;
     unsigned getViewers() const;
-    Streamer* getStreamerByID(unsigned id);
-    Viewer* getViewerByID(unsigned id);
+    Streamer* getStreamerByID(unsigned id) const;
+    Viewer* getViewerByID(unsigned id) const;
     unsigned getActiveStreams() const;
-    void printActiveStreams();
+    void printActiveStreams() const;
     StreamZ(unsigned capacity);
     ~StreamZ();
-    std::vector<Stream*> getStreams(const Language& lang, Age min_age) const;
+    std::vector<Streamer*> getStreams(const Language& lang, Age min_age) const;
     bool saveStreams(const std::string& filename) const;
 };
 

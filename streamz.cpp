@@ -228,7 +228,7 @@ unsigned StreamZ::getViewers() const {
  * @param id the streamer's ID
  * @return a pointer to the streamer, a nullptr if the ID is invalid
  */
-Streamer *StreamZ::getStreamerByID(unsigned id) {
+Streamer *StreamZ::getStreamerByID(unsigned id) const{
     for(int i = 0; i < getStreamers(); i++){
         if(streamers.at(i)->getID() == id)
             return streamers.at(i);
@@ -242,7 +242,7 @@ Streamer *StreamZ::getStreamerByID(unsigned id) {
  * @param id the viewer's ID
  * @return a pointer to the viewer, a nullptr if the ID is invalid
  */
-Viewer *StreamZ::getViewerByID(unsigned id) {
+Viewer *StreamZ::getViewerByID(unsigned id) const{
     for(int i = 0; i < getViewers(); i++){
         if(viewers.at(i)->getID() == id)
             return viewers.at(i);
@@ -253,24 +253,36 @@ Viewer *StreamZ::getViewerByID(unsigned id) {
 /**
  * Prints the active streams
  */
-void StreamZ::printActiveStreams() {
+void StreamZ::printActiveStreams() const{
     for(int i = 0; i < streamers.size(); i++){
         if(streamers.at(i)->isActive())
             cout << "Streamer id: " << to_string(streamers.at(i)->getID()) << "   Stream: " << streamers.at(i)->s->getTitle() << endl;
     }
 }
 
-/*
-vector<Stream *> StreamZ::getStreams(const Language &lang = "", Age min_age = UINT_MAX) const {
-    vector<Stream *> ret_streams;
-    vector<Stream *>::const_iterator stream;
-    for (stream = this->active_streams.begin(); stream != this->active_streams.end(); stream++) {
-        if (lang.empty() || lang == (*stream)->getLanguage() && min_age >= (*stream)->getMinAge())
-            ret_streams.push_back(*stream);
+/**
+ * Gets a list of streamers streaming a stream with certain characteristics
+ *
+ * Selects the active streamers which the stream matches the language and has a minimum age smaller or
+ * equal to the one specified. One can call the function without parameters in order to get all active
+ * streams.
+ *
+ * @param lang the language of streams to search for. Empty string for any language.
+ * @param min_age the maximum minimum age for the streams to search for. Leave blank for any minimum age.
+ * @return
+ */
+vector<Streamer *> StreamZ::getStreams(const Language &lang = "", Age min_age = UINT_MAX) const {
+    vector<Streamer *> ret_streams;
+    vector<Streamer *>::const_iterator streamer;
+    for (streamer = this->streamers.begin(); streamer != this->streamers.end(); streamer++) {
+        if (!(*streamer)->isActive()) continue;
+        if (lang.empty() || lang == (*streamer)->s->getLanguage() && min_age >= (*streamer)->s->getMinAge())
+            ret_streams.push_back(*streamer);
     }
     return ret_streams;
 }
 
+/*
 bool StreamZ::saveStreams(const string &filename) const{
     ofstream streams_file;
     streams_file.open(filename, ofstream::trunc);

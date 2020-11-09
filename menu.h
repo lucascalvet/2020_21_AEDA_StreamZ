@@ -9,6 +9,8 @@ bool numberInputFail();
 
 void stopConsole();
 
+void inputChecker(unsigned &selected, unsigned options, bool &inMenu);
+
 using namespace std;
 
 class Menu{

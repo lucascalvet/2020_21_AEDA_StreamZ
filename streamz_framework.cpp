@@ -9,8 +9,9 @@
  */
 void streamz_framework() {
     unsigned cap;
-    bool auto_save = false, setngs;
-    bool loop = true, sub_loop, streamer_loop, viewer_loop;
+    bool inInput = true;  //used for to loop input while wrong one is submitted with inputChecker function
+    bool auto_save = false, setngs;  // (auto_save) used to enable disable the auto_save // (setngs) used with settings menu
+    bool loop = true, sub_loop, streamer_loop, viewer_loop; //each one is used to in it's respective menu
     string choice;
     vector<StreamZ *> streamz_vector;
 
@@ -100,8 +101,7 @@ void streamz_framework() {
                         cout << "Capacity: " + to_string(streamz_vector.at(i)->capacity) << endl;
                     }
                     cout << endl << "Select the StreamZ by it's id" << endl;
-                    cout << "Input: ";
-                    cin >> input;
+                    inputChecker(input, streamz_vector.size(), inInput);
 
                     StreamZ *sz_selected = streamz_vector.at(input);  //the vector must be ordered by id
 
@@ -127,14 +127,14 @@ void streamz_framework() {
                                     Date birthday;
 
                                     cout << "Enter the streamer nickname: " << endl;
-                                    cin >> nickname;
+                                    cin >> nickname;  //not checking equal names yet
 
                                     cout << "Enter the streamer birthday in the format dd-mm-yy: ";
-                                    cin >> date;
+                                    cin >> date;  // not yet implemented way to obey format
 
                                     sz_selected->addStreamer(nickname, birthday);
                                     cout << "Streamer created successfully, go back to work with it!" << endl;
-                                    cout << "To create another one input anything, to go back input 'e'" << endl;
+                                    cout << "To go back input 'e', to create another one input anything else" << endl;
                                     cout << "Input: ";
                                     cin >> inp;
                                     if (inp == "e")
@@ -152,11 +152,9 @@ void streamz_framework() {
                                     cout << "Name: " + sz_selected->streamers.at(i)->getName() << endl;
                                 }
                                 cout << endl << "Select the Streamer by it's id" << endl;
-                                cout << "Input: ";
-                                cin >> input;
+                                inputChecker(input, sz_selected->getStreamers(), inInput);
 
-                                Streamer *s_selected = sz_selected->getStreamerByID(
-                                        input);  //not treating exceptions yet
+                                Streamer *s_selected = sz_selected->getStreamerByID(input);  //not treating exceptions yet
 
                                 streamerMenu.changeTitle("Streamer " + s_selected->getName());
 
@@ -173,8 +171,7 @@ void streamz_framework() {
                                         case 1: {
                                             if (s_selected->isActive()) {
                                                 cout << "This streamer is already streaming!" << endl;
-                                                cout << "If you want to start a new one you have to stop this first!"
-                                                     << endl;
+                                                cout << "If you want to start a new one you have to stop this first!" << endl;
                                                 stopConsole();
                                             } else {
                                                 string title, lang;
@@ -225,7 +222,7 @@ void streamz_framework() {
 
                                     sz_selected->addViewer(nickname, birthday);
                                     cout << "Viewer created successfully, go back to work with it!" << endl;
-                                    cout << "To create another one input anything, to go back input 'e'" << endl;
+                                    cout << "To go back input 'e', to create another one input anything else" << endl;
                                     cout << "Input: ";
                                     cin >> inp;
                                     if (inp == "e")
@@ -243,8 +240,7 @@ void streamz_framework() {
                                     cout << "Name: " + sz_selected->viewers.at(i)->getName() << endl;
                                 }
                                 cout << endl << "Select the Viewer by it's id" << endl;
-                                cout << "Input: ";
-                                cin >> input;
+                                inputChecker(input, sz_selected->getViewers(), inInput);
 
                                 Viewer *v_selected = sz_selected->getViewerByID(input);  //not treating exceptions yet
 
@@ -262,9 +258,7 @@ void streamz_framework() {
                                         case 1: {
                                             if (v_selected->isActive()) {
                                                 cout << "This viewer is already in a stream!" << endl;
-                                                cout
-                                                        << "If you want to enter a new one you have to exit this one first!"
-                                                        << endl;
+                                                cout << "If you want to enter a new one you have to exit this one first!" << endl;
                                                 stopConsole();
                                             } else {
                                                 unsigned choice;
@@ -272,11 +266,9 @@ void streamz_framework() {
                                                 sz_selected->printActiveStreams();
                                                 cout << endl << "Chose the stream you want to enter" << endl;
                                                 cout << "Enter the respective streamer id" << endl;
-                                                cout << "Input: ";
-                                                cin >> choice;
+                                                inputChecker(choice, sz_selected->getStreamers(), inInput);
                                                 numberInputFail();
-                                                sz_selected->enterStream(sz_selected->getStreamerByID(choice),
-                                                                         v_selected);  //not treating exceptions
+                                                sz_selected->enterStream(sz_selected->getStreamerByID(choice), v_selected);  //not treating exceptions
                                                 cout << "Entered stream successfully!" << endl;
                                             }
                                             break;
@@ -374,7 +366,7 @@ void streamz_framework() {
                                 cout << "Auto save is off" << endl;
                             else
                                 cout << "Auto save is on" << endl;
-                            cout << endl << "Enter 'c' to change it's state" << endl;
+                            cout << endl << "Enter 'c' to change it's state and anything else to exit" << endl;
                             cout << "Input: ";
                             string off_or_on;
                             cin >> off_or_on;

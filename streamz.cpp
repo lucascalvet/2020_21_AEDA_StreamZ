@@ -2,7 +2,7 @@
 #include <fstream>
 #include <iostream>
 #include <algorithm>
-#include "menu.h"
+#include "exceptions.h"
 
 using namespace std;
 
@@ -36,7 +36,7 @@ StreamZ::~StreamZ() {
 }
 
 /**
- * Starts a stream, with all of its initial properties
+ * Starts a public stream, with all of its initial properties
  *
  * Checks if the streamer already has an active stream and if the StreamZ platform hasn't reached
  * its maximum capacity of streams. If so, it starts the stream.
@@ -47,14 +47,46 @@ StreamZ::~StreamZ() {
  * @param min_age the stream's minimum age
  * @return true if the operation was successful, false otherwise
  */
-bool StreamZ::startStream(Streamer *streamer, string title, Language lang, unsigned min_age){
-    if(!streamer->isActive() && getActiveStreams() <= capacity){
-        Stream s(title, lang, min_age);
-        streamer->s = &s;
+bool StreamZ::startPublicStream(Streamer *streamer, string title, Language lang, unsigned min_age){
+    if(!streamer->isActive() && getActiveStreams() <= this->capacity){
+        try {
+            streamer->s = new PublicStream(title, lang, min_age);
+        }
+        catch (InvalidLanguage &) {
+            return false;
+        }
         return true;
     } else {
-        return false;  //already has a stream
+        return false;
     }
+}
+
+/**
+ * Starts a private stream, with all of its initial properties
+ *
+ * Checks if the streamer already has an active stream and if the StreamZ platform hasn't reached
+ * its maximum capacity of streams. If so, it starts the stream.
+ *
+ * @param streamer the streamer starting the stream
+ * @param title the stream's title
+ * @param lang the stream's language
+ * @param min_age the stream's minimum age
+ * @param authorized_viewers a list of of the authorized viewers of the stream
+ * @param capacity the capacity of the stream
+ * @return true if the operation was successful, false otherwise
+ */
+bool StreamZ::startPrivateStream(Streamer *streamer, string title, Language lang, unsigned min_age,
+                                 const vector<unsigned>& authorized_viewers, unsigned capacity){
+    if(!streamer->isActive() && getActiveStreams() < this->capacity) {
+        try {
+            streamer->s = new PrivateStream(title, lang, min_age, authorized_viewers, capacity);
+        }
+        catch (InvalidLanguage &) {
+            return false;
+        }
+        return true;
+    }
+    return false;
 }
 
 /**
@@ -64,11 +96,10 @@ bool StreamZ::startStream(Streamer *streamer, string title, Language lang, unsig
  * @return true if the operation was successful, false otherwise
  */
 bool StreamZ::stopStream(Streamer* streamer){
-    if (streamer->isActive()){
-        streamer->s = NULL;
-        return true;
-    } else
-        return false;
+    if (!streamer->isActive()) return false;
+    delete streamer->s;
+    streamer->s = NULL;
+    return true;
 }
 
 /**
@@ -133,23 +164,41 @@ bool StreamZ::exitStream(Viewer *v){
 /**
  * Adds a user of type streamer to the StreamZ platform
  *
- * @param s the streamer to be added
+ * @param nickname the user's nickname
+ * @param birthday the user's date of birth
  * @return true if the operation was successful, false otherwise
  */
 bool StreamZ::addStreamer(const string& nickname, const Date& birthday) {
+    if(calculateAge(birthday) < MIN_AGE_STREAMER) return false;
+    vector<Streamer*>::const_iterator streamer_it;
+    vector<Viewer*>::const_iterator viewer_it;
+    for(streamer_it = streamers.begin(); streamer_it != streamers.end(); streamer_it++)
+        if ((*streamer_it)->getName() == nickname) return false;
+    for(viewer_it = viewers.begin(); viewer_it != viewers.end(); viewer_it++)
+        if ((*viewer_it)->getName() == nickname) return false;
     Streamer *s1 = new Streamer(nickname, birthday);
     streamers.push_back(s1);
+    return true;
 }
 
 /**
  * Adds a user of type viewer to the StreamZ platform
  *
- * @param s the streamer to be added
+ * @param nickname the user's nickname
+ * @param birthday the user's date of birth
  * @return true if the operation was successful, false otherwise
  */
 bool StreamZ::addViewer(const string& nickname, const Date& birthday) {
+    if(calculateAge(birthday) < MIN_AGE_VIEWER) return false;
+    vector<Streamer*>::const_iterator streamer_it;
+    vector<Viewer*>::const_iterator viewer_it;
+    for(streamer_it = streamers.begin(); streamer_it != streamers.end(); streamer_it++)
+        if ((*streamer_it)->getName() == nickname) return false;
+    for(viewer_it = viewers.begin(); viewer_it != viewers.end(); viewer_it++)
+        if ((*viewer_it)->getName() == nickname) return false;
     Viewer *v1 = new Viewer(nickname, birthday);
     viewers.push_back(v1);
+    return true;
 }
 
 /**
@@ -269,7 +318,7 @@ void StreamZ::printActiveStreams() const{
  *
  * @param lang the language of streams to search for. Empty string for any language.
  * @param min_age the maximum minimum age for the streams to search for. Leave blank for any minimum age.
- * @return
+ * @return the list of streamers streaming the specified streams
  */
 vector<Streamer *> StreamZ::getStreams(const Language &lang = "", Age min_age = UINT_MAX) const {
     vector<Streamer *> ret_streams;

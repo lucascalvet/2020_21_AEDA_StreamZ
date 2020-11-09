@@ -8,11 +8,6 @@
 #include <sstream>
 #include "utils.h"
 
-/// Unsigned type for representing an age
-typedef unsigned Age;
-/// String type for representing a language, in the predefined format
-typedef std::string Language;
-
 /**
  * Class with all of attributes and methods of a stream
  */
@@ -28,11 +23,6 @@ private:
     std::vector<unsigned> viewers_disliked;
 public:
     Stream(const std::string& title, const Language& lang, unsigned min_age);
-    class InvalidLanguage{
-    public:
-        Language lang;
-        explicit InvalidLanguage(Language lang) {this->lang = lang;}
-    };
     std::string getTitle() const;
     Date getDate() const;
     Language getLanguage() const;
@@ -59,7 +49,8 @@ public:
  */
 class PrivateStream : public Stream{
 public:
-    PrivateStream(std::string title, Language lang, Age min_age);
+    PrivateStream(std::string title, Language lang, Age min_age,
+                  std::vector<unsigned> authorized_viewers, unsigned capacity);
     ~PrivateStream();
     std::vector<unsigned> authorized_viewers;  //authorized_viewers through id (or std::vector<Users*>?)
     std::vector<std::string> comments;

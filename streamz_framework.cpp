@@ -1,6 +1,3 @@
-//
-// Created by sergi on 09/11/2020.
-//
 #include "menu.h"
 #include "streamz.h"
 
@@ -183,7 +180,7 @@ void streamz_framework() {
                                                 cout << "Input the minimum age: ";
                                                 cin >> min_age;
                                                 cout << "Starting Stream..." << endl;
-                                                sz_selected->startStream(s_selected, title, lang, min_age);
+                                                sz_selected->startPublicStream(s_selected, title, lang, min_age);
                                             }
                                             break;
                                         }

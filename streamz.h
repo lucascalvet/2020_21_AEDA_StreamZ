@@ -27,7 +27,9 @@ public:
     bool addViewer(const std::string& nickname, const Date& birthday);
     //when stream is endend by streamer, stream is added to history after total viewers data is added to stream
     // for streamers
-    bool startStream(Streamer *streamer, std::string title, Language lang, unsigned min_age);
+    bool startPublicStream(Streamer *streamer, std::string title, Language lang, unsigned min_age);
+    bool startPrivateStream(Streamer *streamer, std::string title, Language lang, unsigned min_age,
+                            const std::vector<unsigned>& authorized_viewers, unsigned capacity);
     bool stopStream(Streamer* streamer);
     //for viewers
     bool enterStream(Streamer* streamer, Viewer *v);  //can only be in one stream at the time

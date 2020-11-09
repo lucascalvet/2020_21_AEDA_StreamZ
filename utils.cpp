@@ -1,4 +1,5 @@
 #include "utils.h"
+#include "exceptions.h"
 
 using namespace std;
 
@@ -10,6 +11,10 @@ using namespace std;
  * @param year the date's year
  */
 Date::Date(unsigned int day, unsigned int month, unsigned int year){
+    if(day > 31)
+        throw InvalidDate(DAY, day);
+    if(month > 12)
+        throw InvalidDate(MONTH, month);
     this->day = day;
     this->month = month;
     this->year = year;

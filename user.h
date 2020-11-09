@@ -21,7 +21,7 @@ public:
     Date getBirthday() const;
     User(std::string nickname, Date birthday);
     bool isActive() const;
-    std::string getInfo();
+    virtual std::string getInfo();
     ~User();
 };
 

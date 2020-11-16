@@ -23,10 +23,12 @@ private:
     std::vector<unsigned> viewers_disliked;
 public:
     Stream(const std::string& title, const Language& lang, unsigned min_age);
+    Stream(const std::string& title, const Language& lang, unsigned min_age, const Date& starting_date, unsigned num_viewers);
     std::string getTitle() const;
     Date getDate() const;
     Language getLanguage() const;
     Age getMinAge() const;
+    unsigned getNumViewers() const;
     bool addLike(unsigned id);
     bool addDislike(unsigned id);
     bool remLike(unsigned id);

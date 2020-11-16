@@ -32,7 +32,22 @@ StreamZ::StreamZ(unsigned capacity) {
     this->capacity = capacity;
 }
 
+/**
+ * Deletes all pointers
+ */
 StreamZ::~StreamZ() {
+    vector<Streamer*>::iterator streamer;
+    vector<Viewer*>::iterator viewer;
+    vector<Stream*>::iterator stream;
+    for(streamer = streamers.begin(); streamer != streamers.end(); streamer++){
+        delete *streamer;
+    }
+    for(viewer = viewers.begin(); viewer != viewers.end(); viewer++){
+        delete *viewer;
+    }
+    for(stream = best_streams.begin(); stream != best_streams.end(); stream++){
+        delete *stream;
+    }
 }
 
 /**
@@ -331,17 +346,82 @@ vector<Streamer *> StreamZ::getStreams(const Language &lang = "", Age min_age = 
     return ret_streams;
 }
 
-/*
-bool StreamZ::saveStreams(const string &filename) const{
-    ofstream streams_file;
-    streams_file.open(filename, ofstream::trunc);
-    if (streams_file.fail())
-        return false;
+/**
+ * Saves the StreamZ object to a text file, in a formatted way.
+ *
+ * @param filename the name of the file to save to
+ * @return true if the operation was successful, false otherwise
+ */
+bool StreamZ::save(const string &filename) const{
+    ofstream file;
+    file.open(filename, ofstream::trunc);
+    if (file.fail()) return false;
+
+    vector<Streamer*>::const_iterator streamer;
+    //TODO: Save the active streams as well?
+    for (streamer = streamers.begin(); streamer != streamers.end(); streamer++){
+        file << (*streamer)->getName() << '\t' << (*streamer)->getBirthday() << '\n';
+    }
+    file << '\n';
+    vector<Viewer*>::const_iterator viewer;
+    for (viewer = viewers.begin(); viewer != viewers.end(); viewer++){
+        file << (*viewer)->getName() << '\t' << (*viewer)->getBirthday() << '\n';
+    }
+    file << '\n';
     vector<Stream*>::const_iterator stream;
-    for (stream = active_streams.begin(); stream != active_streams.end(); stream++){
-        streams_file << (*stream)->getTitle() << '\t' << (*stream)->getDate() << '\t' <<
-        (*stream)->getLanguage() << '\t' << (*stream)->getMinAge() << '\n';
+    for(stream = best_streams.begin(); stream != best_streams.end(); stream++){
+        file << (*stream)->getTitle() << '\t' << (*stream)->getDate() << '\t' << (*stream)->getLanguage()
+        << '\t' << (*stream)->getMinAge() << '\t' << (*stream)->getNumViewers() << '\n';
     }
     return true;
 }
+
+/**
+ * Load the StreamZ contents from a file
+ *
+ * @param filename the name of the file to load from
+ * @return
  */
+bool StreamZ::load(const string &filename) {
+    ifstream file;
+    file.open(filename);
+    if (file.fail()) return false;
+
+    while(file.peek() != '\n'){
+        string nickname;
+        unsigned day, month, year;
+        char sep;
+        getline(file, nickname, '\t');
+        file >> day >> sep >> month >> sep >> year;
+        Date birthday(day, month, year);
+        Streamer* streamer = new Streamer(nickname, birthday);
+        streamers.push_back(streamer);
+        file.ignore(numeric_limits<streamsize>::max(), '\n');
+    }
+    file.get();
+    while(file.peek() != '\n'){
+        string nickname;
+        unsigned day, month, year;
+        char sep;
+        getline(file, nickname, '\t');
+        file >> day >> sep >> month >> sep >> year;
+        Date birthday(day, month, year);
+        Viewer* viewer = new Viewer(nickname, birthday);
+        viewers.push_back(viewer);
+        file.ignore(numeric_limits<streamsize>::max(), '\n');
+    }
+    file.get();
+    while(!file.eof() || file.peek() != '\n'){
+        string title, lang;
+        unsigned day, month, year, min_age, num_viewers;
+        char sep;
+        getline(file,title, '\t');
+        file >> day >> sep >> month >> sep >> year;
+        file >> lang >> min_age >> num_viewers;
+        Date starting_date(day, month, year);
+        Stream* stream = new Stream(title, lang, min_age, starting_date, num_viewers);
+        best_streams.push_back(stream);
+        file.ignore(numeric_limits<streamsize>::max(), '\n');
+    }
+    return true;
+}

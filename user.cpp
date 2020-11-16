@@ -18,6 +18,7 @@ User::User(string nickname, Date birthday){
 }
 
 User::~User(){
+    delete s;
 }
 
 /**

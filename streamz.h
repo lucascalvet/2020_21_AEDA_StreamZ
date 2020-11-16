@@ -47,9 +47,8 @@ public:
     StreamZ(unsigned capacity);
     ~StreamZ();
     std::vector<Streamer*> getStreams(const Language& lang, Age min_age) const;
-    bool saveStreams(const std::string& filename) const;
+    bool save(const std::string &filename) const;
+    bool load(const std::string &filename);
 };
-
-void streamz_framework();
 
 #endif // STREAMZ_H

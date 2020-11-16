@@ -36,7 +36,28 @@ Stream::Stream(const string& title, const Language& lang, unsigned min_age) {
     time_t current_time;
     time(&current_time);
     tm* date = localtime(&current_time);
-    starting_date = Date(date->tm_mday, date->tm_mon + 1, date->tm_year + 1900);
+    this->starting_date = Date(date->tm_mday, date->tm_mon + 1, date->tm_year + 1900);
+}
+
+/**
+ * Constructs a stream object with attributes usually set at runtime (for loading from a file)
+ *
+ * @param title the stream´s title
+ * @param lang the stream's language (must be one of the languages in LANG)
+ * @param min_age the stream's minimum age
+ * @param starting_date the stream's starting date
+ * @param num_viewers the stream's number of viewers
+ */
+Stream::Stream(const string& title, const Language& lang, unsigned min_age,
+               const Date& starting_date, unsigned num_viewers) {
+    this->title = title;
+    string lang_upper = strToUpper(lang);
+    if(find(LANGS.begin(), LANGS.end(), lang_upper) == LANGS.end())
+        throw InvalidLanguage(lang);
+    this->lang = lang_upper;
+    this->min_age = min_age;
+    this->starting_date = starting_date;
+    this->num_viewers = num_viewers;
 }
 
 /**
@@ -151,6 +172,9 @@ string Stream::getInfo() const {
     return info.str();
 }
 
+unsigned Stream::getNumViewers() const {
+    return this->num_viewers;
+}
 
 
 /**

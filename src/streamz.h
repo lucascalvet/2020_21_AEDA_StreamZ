@@ -25,7 +25,7 @@ public:
     //map<int, std::vector<Stream*>> history; ;  //history per id of streamer
     bool addStreamer(const std::string& nickname, const Date& birthday);
     bool addViewer(const std::string& nickname, const Date& birthday);
-    //when stream is endend by streamer, stream is added to history after total viewers data is added to stream
+    //when stream is ended by streamer, stream is added to history after total viewers data is added to stream
     // for streamers
     bool startPublicStream(Streamer *streamer, std::string title, Language lang, unsigned min_age);
     bool startPrivateStream(Streamer *streamer, std::string title, Language lang, unsigned min_age,

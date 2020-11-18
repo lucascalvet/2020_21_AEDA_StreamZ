@@ -4,9 +4,11 @@
 #include "utils.h"
 
 class InvalidLanguage{
-public:
+private:
     Language lang;
-    explicit InvalidLanguage(Language lang) {this->lang = lang;}
+public:
+    InvalidLanguage(const Language& lang) {this->lang = lang;}
+    Language getLanguage() const {return lang;}
 };
 
 enum DateField {
@@ -14,11 +16,21 @@ enum DateField {
 };
 
 class InvalidDate{
-public:
+private:
     DateField field;
     unsigned value;
+public:
     InvalidDate(DateField field, unsigned value) {this->field = field; this->value = value;}
+    DateField getField() const {return field;}
+    unsigned getValue() const {return value;}
 };
 
+class InvalidFile{
+private:
+    std::string filename;
+public:
+    InvalidFile(const std::string& filename) {this->filename = filename;}
+    std::string getFileName() const {return filename;}
+};
 
 #endif //EXCEPTIONS_H

@@ -121,9 +121,25 @@ vector<Viewer *> StreamZ::getViewers() const {
  * @return a pointer to the viewer, a nullptr if the ID is invalid
  */
 Viewer *StreamZ::getViewerByID(unsigned user_id) const {
-    for (int i = 0; i < getNumViewers(); i++) {
-        if (viewers.at(i)->getID() == user_id)
-            return viewers.at(i);
+    vector<Viewer *>::const_iterator viewer;
+    for (viewer = viewers.begin(); viewer != viewers.end(); viewer++) {
+        if ((*viewer)->getID() == user_id)
+            return *viewer;
+    }
+    return nullptr;
+}
+
+/**
+ * Gets a viewer by its nickname
+ *
+ * @param user_id the viewer's nickname
+ * @return a pointer to the viewer, a nullptr if the nickname is invalid
+ */
+Viewer *StreamZ::getViewerByName(const string &nickname) const {
+    vector<Viewer *>::const_iterator viewer;
+    for (viewer = viewers.begin(); viewer != viewers.end(); viewer++) {
+        if ((*viewer)->getName() == nickname)
+            return *viewer;
     }
     return nullptr;
 }
@@ -152,9 +168,25 @@ vector<Streamer *> StreamZ::getStreamers() const {
  * @return a pointer to the streamer, a nullptr if the ID is invalid
  */
 Streamer *StreamZ::getStreamerByID(unsigned user_id) const {
-    for (int i = 0; i < getNumStreamers(); i++) {
-        if (streamers.at(i)->getID() == user_id)
-            return streamers.at(i);
+    vector<Streamer *>::const_iterator streamer;
+    for (streamer = streamers.begin(); streamer != streamers.end(); streamer++) {
+        if ((*streamer)->getID() == user_id)
+            return *streamer;
+    }
+    return nullptr;
+}
+
+/**
+ * Gets a streamer by its nickname
+ *
+ * @param user_id the streamer's nickname
+ * @return a pointer to the streamer, a nullptr if the nickname is invalid
+ */
+Streamer *StreamZ::getStreamerByName(const string &nickname) const {
+    vector<Streamer *>::const_iterator streamer;
+    for (streamer = streamers.begin(); streamer != streamers.end(); streamer++) {
+        if ((*streamer)->getName() == nickname)
+            return *streamer;
     }
     return nullptr;
 }
@@ -257,9 +289,11 @@ bool StreamZ::startPrivateStream(Streamer *streamer, const string &title, const 
  */
 bool StreamZ::stopStream(Streamer *streamer) {
     if (!streamer->isActive()) return false;
-    delete streamer->s;
-    streamer->s = nullptr;
-    return true;
+    vector<Viewer*>::const_iterator viewer;
+    for(viewer = viewers.begin(); viewer != viewers.end(); viewer++){
+        if((*viewer)->s == streamer->s) (*viewer)->s = nullptr;
+    }
+    return streamer->stopStreaming();
 }
 
 /**
@@ -296,6 +330,7 @@ bool StreamZ::exitStream(Viewer *v) {
         cout << "User is not viewing any stream!" << endl;
         return false;
     }
+    //TODO: change number of viewers in stream?????
     v->s = nullptr;  //exiting stream
     v->alreadyLiked = false;
     v->alreadyDisliked = false;

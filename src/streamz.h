@@ -18,7 +18,7 @@ private:
     unsigned capacity;   //how many streamers can be active at same time
     std::vector<Streamer*> streamers;
     std::vector<Viewer*> viewers;
-    std::vector<Stream*> best_streams;
+    std::vector<Stream*> best_streams = std::vector<Stream*>(20, nullptr);
 public:
     StreamZ(unsigned capacity);
     StreamZ(const std::string& filename);
@@ -28,9 +28,11 @@ public:
     unsigned getNumViewers() const;
     std::vector<Viewer*> getViewers() const;
     Viewer* getViewerByID(unsigned user_id) const;
+    Viewer *getViewerByName(const std::string &nickname) const;
     unsigned getNumStreamers() const;
     std::vector<Streamer*> getStreamers() const;
-    Streamer* getStreamerByID(unsigned user_id) const;
+    Streamer *getStreamerByID(unsigned user_id) const;
+    Streamer *getStreamerByName(const std::string &nickname) const;
     unsigned getNumActiveStreamers() const;
     std::vector<Streamer*> getActiveStreamers() const;
     std::vector<Stream*> getBestStreams() const;
@@ -42,7 +44,7 @@ public:
     bool startPublicStream(Streamer *streamer, const std::string &title, const Language &lang, unsigned min_age) const;
     bool startPrivateStream(Streamer *streamer, const std::string &title, const Language &lang, unsigned min_age,
                             const std::vector<unsigned>& authorized_viewers, unsigned cap) const;
-    static bool stopStream(Streamer* streamer) ;
+    bool stopStream(Streamer* streamer) ;
     //for viewers
     static bool enterStream(Streamer* streamer, Viewer *v) ;  //can only be in one stream at the time
     static bool exitStream(Viewer *v) ;   //they can exit at any time (needs to check if the stream should be added to the top 10)

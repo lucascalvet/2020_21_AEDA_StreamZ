@@ -6,7 +6,9 @@
 
 int main(int argc, char* argv[]){
     streamz_framework();
-    /*testing::InitGoogleTest(&argc, argv);
+    /*
+    testing::InitGoogleTest(&argc, argv);
     std::cout << "-------TESTS STREAMZ-------" << std::endl;
-    return RUN_ALL_TESTS();*/
+    return RUN_ALL_TESTS();
+     */
 }

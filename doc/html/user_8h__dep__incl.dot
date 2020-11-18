@@ -1,0 +1,17 @@
+digraph "user.h"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node1 [label="user.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="streamz.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$streamz_8h.html",tooltip=" "];
+  Node2 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="streamz.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$streamz_8cpp.html",tooltip=" "];
+  Node2 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="streamz_framework.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$streamz__framework_8cpp.html",tooltip=" "];
+  Node2 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="tests.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$tests_8cpp.html",tooltip=" "];
+  Node1 -> Node6 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="user.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$user_8cpp.html",tooltip=" "];
+}

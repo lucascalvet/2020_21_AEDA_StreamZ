@@ -33,10 +33,7 @@ Stream::Stream(const string& title, const Language& lang, unsigned min_age) {
         throw InvalidLanguage(lang);
     this->lang = lang_upper;
     this->min_age = min_age;
-    time_t current_time;
-    time(&current_time);
-    tm* date = localtime(&current_time);
-    this->starting_date = Date(date->tm_mday, date->tm_mon + 1, date->tm_year + 1900);
+    this->starting_date = getCurrentDate();
 }
 
 /**

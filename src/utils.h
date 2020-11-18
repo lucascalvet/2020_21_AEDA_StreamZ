@@ -1,5 +1,5 @@
-#ifndef UTILS_H
-#define UTILS_H
+#ifndef STREAMZ_UTILS_H
+#define STREAMZ_UTILS_H
 
 #include <iostream>
 #include <string>
@@ -31,4 +31,4 @@ Age calculateAge(const Date& birthday);
 
 Date getCurrentDate();
 
-#endif //UTILS_H
+#endif //STREAMZ_UTILS_H

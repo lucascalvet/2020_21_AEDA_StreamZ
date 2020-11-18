@@ -1,5 +1,5 @@
-#ifndef EXCEPTIONS_H
-#define EXCEPTIONS_H
+#ifndef STREAMZ_EXCEPTIONS_H
+#define STREAMZ_EXCEPTIONS_H
 
 #include "utils.h"
 
@@ -33,4 +33,4 @@ public:
     std::string getFileName() const {return filename;}
 };
 
-#endif //EXCEPTIONS_H
+#endif //STREAMZ_EXCEPTIONS_H

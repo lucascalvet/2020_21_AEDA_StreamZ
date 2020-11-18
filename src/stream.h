@@ -1,5 +1,5 @@
-#ifndef STREAM_H
-#define STREAM_H
+#ifndef STREAMZ_STREAM_H
+#define STREAMZ_STREAM_H
 
 #include <vector>
 #include <string>
@@ -54,8 +54,8 @@ public:
                   std::vector<unsigned> authorized_viewers, unsigned capacity);
     ~PrivateStream();
     std::vector<unsigned> authorized_viewers;  //authorized_viewers through id (or std::vector<Users*>?)
-    std::vector<std::string> comments;
+    std::vector<std::string> comments; //TODO: implement comments
     unsigned capacity;
 };
 
-#endif //STREAM_H
+#endif //STREAMZ_STREAM_H

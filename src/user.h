@@ -1,5 +1,5 @@
-#ifndef USER_H
-#define USER_H
+#ifndef STREAMZ_USER_H
+#define STREAMZ_USER_H
 
 #include "utils.h"
 #include "stream.h"
@@ -60,4 +60,4 @@ class Admin : public User {  //maybe not appropriate because its a framework so 
 };
 
 
-#endif //USER_H
+#endif //STREAMZ_USER_H

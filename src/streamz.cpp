@@ -47,8 +47,7 @@ StreamZ::StreamZ(const string &filename) {
         file.ignore(numeric_limits<streamsize>::max(), '\n');
     }
     file.get();
-    file.peek();
-    while (!file.eof() && file.peek() != '\n') {
+    while (file.peek() != EOF && file.peek() != '\n') {
         string title, lang;
         unsigned day, month, year, min_age, num_viewers;
         char sep;

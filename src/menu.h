@@ -1,5 +1,5 @@
-#ifndef STREAMZ_AEDA_2020_21_MENU_H
-#define STREAMZ_AEDA_2020_21_MENU_H
+#ifndef STREAMZ_MENU_H
+#define STREAMZ_MENU_H
 
 #include <vector>
 #include <iostream>
@@ -11,21 +11,21 @@ void stopConsole();
 
 void inputChecker(unsigned &selected, unsigned options, bool &inMenu);
 
-using namespace std;
-
 class Menu{
-public:
-    string title;
+private:
+    std::string title;
     bool inMenu = true;
     unsigned options;
     unsigned selected = 0;
-    vector<string> optionNaming;
-    Menu(string title, unsigned options);
+    std::vector<std::string> optionNaming;
+public:
+    Menu(const std::string &title, unsigned options);
     //~Menu();
-    void changeOption(unsigned index, string opName);
-    void changeTitle(string newTitle);
-    void addOption(string opName);
+    unsigned int getSelected() const;
+    void changeOption(unsigned index, const std::string &opName);
+    void changeTitle(const std::string &newTitle);
+    void addOption(const std::string &opName);
     void startMenu();
 };
 
-#endif //STREAMZ_AEDA_2020_21_MENU_H
+#endif //STREAMZ_MENU_H

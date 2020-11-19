@@ -1,9 +1,10 @@
 #include "user.h"
+#include <sstream>
 
 using namespace std;
 
 ///Static member to have unique id's to each user
-int User::counter = 0;
+unsigned User::counter = 0;
 
 /**
  * Constructs a user object
@@ -18,7 +19,7 @@ User::User(string nickname, Date birthday, string password){
     id = counter++;
 }
 
-User::~User(){
+User::~User() {
     delete s;
 }
 
@@ -36,7 +37,7 @@ string User::getName() const {
  *
  * @return the user's ID
  */
-int User::getID() const {
+unsigned User::getID() const {
     return id;
 }
 
@@ -58,8 +59,20 @@ string User::getInfo() {
     ostringstream info;
     info << "Name: " << nickname;
     info << "\tId: " << to_string(getID());
-    info << "\tBirthday: " << getBirthday() << endl;
+    info << "\tBirthday: " << getBirthday();
     return info.str();
+}
+
+/**
+ * Checks if a user is active.
+ *
+ * If the user is a viewer, checks if it is viewing any stream.
+ * If the user is a streamer, checks if it is streaming
+ *
+ * @return the user's active state
+ */
+bool User::isActive() const {
+    return s != nullptr;
 }
 
 /**
@@ -80,13 +93,26 @@ Viewer::~Viewer() {
  * @return a string with the viewer's information
  */
 string Viewer::getInfo() {
+    string active_status;
+
+    if(isActive()) active_status = "Active";
+    else active_status = "Inactive";
+
     ostringstream info;
     info << User::getInfo();
-    info << "Viewing: " << to_string(isActive()) << endl;
-    if(isActive()) {
+    info << "\t" << "Viewing: " << active_status << "\t";
+    if (isActive()) {
         info << "Stream: " << s->getInfo() << endl;
     }
     return info.str();
+}
+
+bool Viewer::comment(const string &comment) {
+    if(!isActive()) return false;
+    PrivateStream* viewing_stream = dynamic_cast<PrivateStream *>(s);
+    if (viewing_stream == nullptr) return false;
+    viewing_stream->addComment(comment);
+    return true;
 }
 
 /**
@@ -99,6 +125,10 @@ Streamer::Streamer(string nickname, Date birthday, string password) : User(nickn
 }
 
 Streamer::~Streamer() {
+    vector<Stream *>::iterator stream;
+    for (stream = streaming_history.begin(); stream != streaming_history.end(); stream++) {
+        delete *stream;
+    }
 }
 
 /**
@@ -107,28 +137,21 @@ Streamer::~Streamer() {
  * @return the streamer's number of total views
  */
 unsigned Streamer::getTotalViews() const {
-    return total_viewers.size();
+    return 0; //TODO: get from history
 }
 
-/**
- * Gets the streamer's number of active viewers
- *
- * @return the streamer's number of active viewers
- */
-unsigned Streamer::getActiveViewers() const {
-    return active_viewers.size();
+std::vector<Stream *> Streamer::getHistory() const {
+    return streaming_history;
 }
 
-/**
- * Checks if a user is active.
- *
- * If the user is a viewer, checks if it is viewing any stream.
- * If the user is a streamer, checks if it is streaming
- *
- * @return the user's active state
- */
-bool User::isActive() const{
-    if(s == NULL) return false;
+void Streamer::addToHistory(Stream *stream) {
+    streaming_history.push_back(stream);
+}
+
+bool Streamer::stopStreaming() {
+    if (!isActive()) return false;
+    streaming_history.push_back(s);
+    s = nullptr;
     return true;
 }
 
@@ -141,13 +164,17 @@ std::string User::getPassword() const {
  *
  * @return a string with the viewer's information
  */
-string Streamer::getInfo(){
+string Streamer::getInfo() {
+    string active_status;
+
+    if(isActive()) active_status = "Active";
+    else active_status = "Inactive";
+
     ostringstream info;
     info << User::getInfo();
-    info << "Streaming: " << to_string(isActive()) << endl;
-    if(isActive()) {
+    info << "\t" << "Streaming: " << active_status << "\t";
+    if (isActive()) {
         info << "Stream: " << s->getInfo() << endl;
-        info << "Active viewers: " << to_string(getActiveViewers()) << endl;
     }
     return info.str();
 }
@@ -160,5 +187,5 @@ string Streamer::getInfo(){
  */
 Admin::Admin(string nickname, Date birthday, string password) : User(nickname , birthday, password){}
 
-Admin::~Admin(){
+Admin::~Admin() {
 }

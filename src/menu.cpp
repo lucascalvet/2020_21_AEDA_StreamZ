@@ -1,7 +1,9 @@
 #include "menu.h"
 
-bool numberInputFail(){ //checks if user didn't input a number
-    if(!cin) {
+using namespace std;
+
+bool numberInputFail() { //checks if user didn't input a number
+    if (!cin) {
         cin.clear(); //reset failbit
         cin.ignore(10000, '\n');  //ignore bad input
         return true;
@@ -10,9 +12,9 @@ bool numberInputFail(){ //checks if user didn't input a number
 }
 
 //checks if user didn't input a number or a number in a determinated range
-void inputChecker(unsigned &selected, unsigned options, bool &inMenu){
+void inputChecker(unsigned &selected, unsigned options, bool &inMenu) {
     cout << "Input: ";
-    while(inMenu) {
+    while (inMenu) {
         cin >> selected;
 
         if (numberInputFail()) {
@@ -29,7 +31,7 @@ void inputChecker(unsigned &selected, unsigned options, bool &inMenu){
 }
 
 //stops the console until user presses anything
-void stopConsole(){
+void stopConsole() {
     /*
     std::string stop;
     getline(std::cin, stop);
@@ -37,28 +39,31 @@ void stopConsole(){
     system("pause");
 }
 
-Menu::Menu(string title, unsigned options){
+Menu::Menu(const string &title, unsigned options) {
     this->title = title;
     this->options = options;
-    for(int i = 0; i < options; i++){
-        optionNaming.push_back("Default");
+    for (int i = 0; i < options; i++) {
+        optionNaming.emplace_back("Default");
     }
 }
 
-void Menu::changeOption(unsigned int index, string opName) {
-    if(index > options) {
+unsigned int Menu::getSelected() const {
+    return selected;
+}
+
+void Menu::changeOption(unsigned int index, const string &opName) {
+    if (index > options) {
         cout << "ERROR" << endl;
-    }
-    else {
-        optionNaming[index] = to_string(index) + ": " +  opName;
+    } else {
+        optionNaming[index] = to_string(index) + ": " + opName;
     }
 }
 
-void Menu::changeTitle(string newTitle) {
+void Menu::changeTitle(const string &newTitle) {
     title = newTitle;
 }
 
-void Menu::addOption(string opName) {
+void Menu::addOption(const string &opName) {
     optionNaming.push_back(opName);
     options++;
 }
@@ -70,7 +75,7 @@ void Menu::startMenu() {
     cout << string(title.size(), '*') << endl << endl;
 
 
-    for(int i = 0; i < options; i++){
+    for (int i = 0; i < options; i++) {
         cout << optionNaming[i] << endl;
     }
     inputChecker(selected, options, inMenu);

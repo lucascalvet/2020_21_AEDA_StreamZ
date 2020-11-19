@@ -1,5 +1,7 @@
 #include "stream.h"
 #include "exceptions.h"
+#include <algorithm>
+#include <sstream>
 
 using namespace std;
 
@@ -158,14 +160,14 @@ bool Stream::alreadyLikedOrDisliked(unsigned id) {
 }
 
 /**
- * Gets a formatted string with the information of a stream (its title, starting date, language and minimum age
+ * Gets a formatted string with the information of the stream (its title, starting date, language and minimum age)
  *
  * @return a string with the stream's information
  */
 string Stream::getInfo() const {
     ostringstream info;
     info << "Title: " << this->title << "\tStarting Date: " << this->starting_date <<
-    "\tLanguage: " << this->lang << "\tMin Age: " << this->min_age;
+    "\tLanguage: " << this->lang << "\tMin Age: " << this->min_age << '\n';
     return info.str();
 }
 
@@ -202,3 +204,48 @@ PrivateStream::PrivateStream(string title, Language lang, Age min_age, vector<un
 
 PrivateStream::~PrivateStream() {
 }
+
+/**
+ * Gets a formatted string with the normal information of the stream plus the information of the private stream
+ *
+ * @return a string with the private stream's information
+ */
+std::string PrivateStream::getInfo() const {
+    ostringstream info;
+    info << Stream::getInfo();
+    if(!comments.empty()) {
+        info << "\n--------\nComments:\n--------\n";
+        vector<string>::const_iterator comment;
+        for (comment = comments.begin(); comment != comments.end(); comment++){
+            info << *comment << '\n';
+        }
+    }
+    else info << "\nNo comments.\n";
+    if(!authorized_viewers.empty()){
+        info << "\n\n--------------------------\nAuthorized Viewers (ID's):\n--------------------------\n";
+        vector<unsigned >::const_iterator viewer;
+        for (viewer = authorized_viewers.begin(); viewer != authorized_viewers.end(); viewer++){
+            info << *viewer << '\n';
+        }
+    }
+    else info << "\nNo authorized viewers. No one will be able to enter the stream!\n";
+    info << '\n';
+    return info.str();
+}
+
+const vector<unsigned int> &PrivateStream::getAuthorizedViewers() const {
+    return authorized_viewers;
+}
+
+bool PrivateStream::isAuthorized(unsigned int user_id) const {
+    return find(authorized_viewers.begin(), authorized_viewers.end(), user_id) != authorized_viewers.end();
+}
+
+const vector<std::string> &PrivateStream::getComments() const {
+    return comments;
+}
+
+void PrivateStream::addComment(const string &comment) {
+    comments.push_back(comment);
+}
+

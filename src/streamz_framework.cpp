@@ -2,6 +2,7 @@
 #include "streamz.h"
 #include "streamz_framework.h"
 #include "exceptions.h"
+#include <limits>
 
 using namespace std;
 
@@ -123,7 +124,7 @@ void streamer_menu_loop(Menu streamerMenu, Streamer* s_selected, StreamZ* sz_sel
     while (streamer_loop) {
         streamerMenu.startMenu();
 
-        switch (streamerMenu.selected) {
+        switch (streamerMenu.getSelected()) {
             //streamer info
             case 0: {
                 cout << s_selected->getInfo();
@@ -222,7 +223,7 @@ void viewer_menu_loop(Menu viewerMenu, Viewer* v_selected, StreamZ* sz_selected)
 
     while (viewer_loop) {
         viewerMenu.startMenu();
-        switch (viewerMenu.selected) {
+        switch (viewerMenu.getSelected()) {
             //viewer info
             case 0: {
                 cout << v_selected->getInfo();
@@ -326,7 +327,7 @@ void viewer_menu_loop(Menu viewerMenu, Viewer* v_selected, StreamZ* sz_selected)
 /**
  * Main loop for interaction with the StreamZ framework
  */
-void streamz_framework() {
+void streamz_framework() { //TODO: Allow stream titles with more than one word. Gets stuck when choosing user, because of ID!
     unsigned cap;
     bool inInput = true;  //used for to loop input while wrong one is submitted with inputChecker function
     bool auto_save = false, setngs;  // (auto_save) used to enable disable the auto_save // (setngs) used with settings menu
@@ -385,14 +386,14 @@ void streamz_framework() {
         admin_bool = false;
         mainMenu.startMenu();
 
-        switch (mainMenu.selected) {
+        switch (mainMenu.getSelected()) {
             //help
             case 0: {
                 cout << help_main_menu << endl;
                 stopConsole();
                 break;
             }
-            //create streamz
+                //create streamz
             case 1: {
                 string inp;
                 string nickname, password;
@@ -428,23 +429,23 @@ void streamz_framework() {
                 }
                 break;
             }
-            //choose streamz
+                //choose streamz
             case 2: {
                 unsigned input;
                 string nickname, password;
 
-                if (streamz_vector.size() == 0) {
+                if (streamz_vector.empty()) {
                     cout << "No StreamZ's created yet!" << endl;
                     stopConsole();
                 } else {
-
-                    for (int i = 0; i < streamz_vector.size(); i++) {
-                        cout << "StreamZ " + to_string(streamz_vector.at(i)->getID()) + "  ";
-                        cout << "Streamers: " + to_string(streamz_vector.at(i)->getNumStreamers()) + "  ";
-                        cout << "Viewers: " + to_string(streamz_vector.at(i)->getNumViewers()) + "  ";
-                        cout << "Capacity: " + to_string(streamz_vector.at(i)->getCapacity()) << endl;
+                    vector<StreamZ *>::const_iterator streamz;
+                    for (streamz = streamz_vector.begin(); streamz != streamz_vector.end(); streamz++) {
+                        cout << "StreamZ " + to_string((*streamz)->getID()) + "  ";
+                        cout << "Streamers: " + to_string((*streamz)->getNumStreamers()) + "  ";
+                        cout << "Viewers: " + to_string((*streamz)->getNumViewers()) + "  ";
+                        cout << "Capacity: " + to_string((*streamz)->getCapacity()) << endl;
                     }
-                    cout << endl << "Select the StreamZ by it's id" << endl;
+                    cout << endl << "Select the StreamZ by its id" << endl;
                     inputChecker(input, streamz_vector.size(), inInput);
 
                     StreamZ *sz_selected = streamz_vector.at(input);  //the vector must be ordered by id
@@ -455,7 +456,7 @@ void streamz_framework() {
 
                     loginMenu.startMenu();
 
-                        switch (loginMenu.selected) {
+                        switch (loginMenu.getSelected()) {
                             //sign In
                             case 0: {
                                 cout << "Enter the user nick name: ";
@@ -517,25 +518,25 @@ void streamz_framework() {
                     while (sub_loop && admin_bool) {
                         subMenu.startMenu();
 
-                        switch (subMenu.selected) {
+                        switch (subMenu.getSelected()) {
                             //help
                             case 0: {
                                 cout << help_submenu << endl;
                                 stopConsole();
                                 break;
                             }
-                            //create streamer
+                                //create streamer
                             case 1: {
                                 create_streamer(sz_selected);
                                 break;
                             }
-                            //choose streamer
+                                //choose streamer
                             case 2: {
                                 unsigned input;
 
                                 cout << "Streamers" << endl;
-                                vector<Streamer*> streamers = sz_selected->getStreamers();
-                                vector<Streamer*>::const_iterator streamer;
+                                vector<Streamer *> streamers = sz_selected->getStreamers();
+                                vector<Streamer *>::const_iterator streamer;
                                 for (streamer = streamers.begin(); streamer != streamers.end(); streamer++) {
                                     cout << "Id: " << to_string((*streamer)->getID()) + "  ";
                                     cout << "Name: " << (*streamer)->getName() << endl;
@@ -543,24 +544,26 @@ void streamz_framework() {
                                 cout << endl << "Select the Streamer by it's id" << endl;
                                 inputChecker(input, sz_selected->getNumStreamers(), inInput);
 
-                                Streamer *s_selected = sz_selected->getStreamerByID(input);  //not treating exceptions yet
+                                Streamer *s_selected = sz_selected->getStreamerByID(
+                                        input);  //not treating exceptions yet
 
                                 streamer_menu_loop(streamerMenu, s_selected, sz_selected);
 
                                 break;
                             }
-                            //create viewer
+                                //create viewer
                             case 3: {
+
                                 create_viewer(sz_selected);
                                 break;
                             }
-                            //choose viewer
+                                //choose viewer
                             case 4: {
                                 unsigned input;
 
                                 cout << "Viewers" << endl;
-                                vector<Viewer*> viewers = sz_selected->getViewers();
-                                vector<Viewer*>::const_iterator viewer;
+                                vector<Viewer *> viewers = sz_selected->getViewers();
+                                vector<Viewer *>::const_iterator viewer;
                                 for (viewer = viewers.begin(); viewer != viewers.end(); viewer++) {
                                     cout << "Id: " << to_string((*viewer)->getID()) + "  ";
                                     cout << "Name: " << (*viewer)->getName() << endl;
@@ -574,17 +577,17 @@ void streamz_framework() {
 
                                 break;
                             }
-                            //best streams
+                                //best streams
                             case 5: {
                                 cout << "Best streams" << endl << endl;
-                                vector<Stream*> best_streams = sz_selected->getBestStreams();
-                                vector<Stream*>::const_iterator stream;
+                                vector<Stream *> best_streams = sz_selected->getBestStreams();
+                                vector<Stream *>::const_iterator stream;
                                 for (stream = best_streams.begin(); stream != best_streams.end(); stream++) {
                                     cout << "Stream " + (*stream)->getTitle() << endl;
                                 }
                                 break;
                             }
-                            //back
+                                //back
                             case 6: {
                                 sub_loop = false;
                                 break;
@@ -594,14 +597,14 @@ void streamz_framework() {
                 }
                 break;
             }
-            //settings
+                //settings
             case 3: {
                 setngs = true;
 
                 while (setngs) {
                     settings.startMenu();
 
-                    switch (settings.selected) {
+                    switch (settings.getSelected()) {
                         //auto save
                         case 0: {
                             if (!auto_save)
@@ -618,7 +621,7 @@ void streamz_framework() {
                                 auto_save = true;
                             break;
                         }
-                        //save
+                            //TODO: save (save all StreamZ instances? or only one?)
                         case 1: {
                             vector<StreamZ*>::iterator it;
                             for(it = streamz_vector.begin(); it != streamz_vector.end();){
@@ -627,11 +630,22 @@ void streamz_framework() {
                             }
                             break;
                         }
-                        //import
                         case 2: {
+                            string filename;
+                            cout << "The name of the file with the StreamZ information: ";
+                            cin >> filename;
+                            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                            try {
+                                streamz_vector.emplace_back(new StreamZ(filename)); //TODO: if it fails the id still goes up. Messes up when choosing a stream
+                            }
+                            catch (InvalidFile &invf) {
+                                cout << "\"" << invf.getFileName() << "\" failed to load. StreamZ not imported!\n\n";
+                                break;
+                            }
+                            cout << "StreamZ instance imported successfully!\n\n";
                             break;
                         }
-                        //back
+                            //back
                         case 3: {
                             setngs = false;
                             break;
@@ -640,7 +654,7 @@ void streamz_framework() {
                 }
                 break;
             }
-            //exit
+                //exit
             case 4: {
                 if (!auto_save) {
                     cout << "Don't forget to save if you want!" << endl;
@@ -665,8 +679,8 @@ void streamz_framework() {
         }
     }
     //deleting pointers allocated in streamz_vector
-    vector<StreamZ*>::iterator it;
-    for(it = streamz_vector.begin(); it != streamz_vector.end();){
-        delete * it;
+    vector<StreamZ *>::iterator it;
+    for (it = streamz_vector.begin(); it != streamz_vector.end();) {
+        delete *it;
     }
 }

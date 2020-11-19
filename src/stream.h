@@ -1,10 +1,8 @@
-#ifndef STREAM_H
-#define STREAM_H
+#ifndef STREAMZ_STREAM_H
+#define STREAMZ_STREAM_H
 
 #include <vector>
 #include <string>
-#include <algorithm>
-#include <sstream>
 #include "utils.h"
 
 /**
@@ -33,7 +31,7 @@ public:
     bool remLike(unsigned id);
     bool remDislike(unsigned id);
     bool alreadyLikedOrDisliked(unsigned id);
-    std::string getInfo() const;
+    virtual std::string getInfo() const;
 };
 
 /**
@@ -49,12 +47,18 @@ public:
  * Class derived from Stream, to represent a private stream, with its additional attributes
  */
 class PrivateStream : public Stream{
+private:
+    std::vector<unsigned> authorized_viewers;  //authorized_viewers through id (or std::vector<Users*>?)
+    std::vector<std::string> comments; //TODO: save the viewer that commented? implement comments
 public:
     PrivateStream(std::string title, Language lang, Age min_age,
                   std::vector<unsigned> authorized_viewers);
     ~PrivateStream();
-    std::vector<unsigned> authorized_viewers;  //authorized_viewers through id (or std::vector<Users*>?)
-    std::vector<std::string> comments;
+    bool isAuthorized(unsigned user_id) const;
+    const std::vector<unsigned int> &getAuthorizedViewers() const;
+    const std::vector<std::string> &getComments() const;
+    void addComment(const std::string &comment);
+    std::string getInfo() const;
 };
 
-#endif //STREAM_H
+#endif //STREAMZ_STREAM_H

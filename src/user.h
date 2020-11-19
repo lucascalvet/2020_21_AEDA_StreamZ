@@ -1,5 +1,5 @@
-#ifndef USER_H
-#define USER_H
+#ifndef STREAMZ_USER_H
+#define STREAMZ_USER_H
 
 #include "utils.h"
 #include "stream.h"
@@ -10,18 +10,18 @@
 class User {
 private:
     std::string password;
-    static int counter;
+    static unsigned counter;
     int id;
     Date birthday;
 protected:
     std::string nickname;
 public:
-    Stream *s = nullptr;
+    Stream *s = nullptr; //TODO: Should be private
+    User(std::string nickname, Date birthday, std::string password);
     std::string getName() const;
-    int getID() const;
+    unsigned getID() const;
     std::string getPassword() const;
     Date getBirthday() const;
-    User(std::string nickname, Date birthday, std::string password);
     bool isActive() const;
     virtual std::string getInfo();
     ~User();
@@ -36,6 +36,7 @@ public:
     bool alreadyDisliked = false;
     Viewer(std::string nickname, Date birthday, std::string password);
     std::string getInfo();
+    bool comment(const std::string &comment);
     ~Viewer();
 };
 
@@ -43,14 +44,16 @@ public:
  * Class derived from User, to represent a user of type streamer
  */
 class Streamer : public User {
+private:
+    std::vector<Stream *> streaming_history;
 public:
     Streamer(std::string nickname, Date birthday, std::string password);
     ~Streamer();
-    std::vector<Viewer*> total_viewers;
-    std::vector<Viewer*> active_viewers;
-    unsigned getTotalViews() const;
-    unsigned getActiveViewers() const;
     std::string getInfo();
+    unsigned getTotalViews() const;
+    std::vector<Stream *> getHistory() const;
+    void addToHistory(Stream *stream);
+    bool stopStreaming();
 };
 
 /**
@@ -63,4 +66,4 @@ public:
 };
 
 
-#endif //USER_H
+#endif //STREAMZ_USER_H

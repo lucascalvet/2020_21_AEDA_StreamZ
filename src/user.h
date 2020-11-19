@@ -9,8 +9,8 @@
  */
 class User {
 private:
-    static int counter;
-    int id;
+    static unsigned counter;
+    unsigned id;
     Date birthday;
 protected:
     std::string nickname;
@@ -18,7 +18,7 @@ public:
     Stream *s = nullptr; //TODO: Should be private
     User(std::string nickname, Date birthday);
     std::string getName() const;
-    int getID() const;
+    unsigned getID() const;
     Date getBirthday() const;
     bool isActive() const;
     virtual std::string getInfo();
@@ -34,6 +34,7 @@ public:
     bool alreadyDisliked = false;
     Viewer(std::string nickname, Date birthday);
     std::string getInfo();
+    bool comment(const std::string &comment);
     ~Viewer();
 };
 

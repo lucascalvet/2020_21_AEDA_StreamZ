@@ -1,9 +1,10 @@
 #include "user.h"
+#include <sstream>
 
 using namespace std;
 
 ///Static member to have unique id's to each user
-int User::counter = 0;
+unsigned User::counter = 0;
 
 /**
  * Constructs a user object
@@ -35,7 +36,7 @@ string User::getName() const {
  *
  * @return the user's ID
  */
-int User::getID() const {
+unsigned User::getID() const {
     return id;
 }
 
@@ -98,6 +99,14 @@ string Viewer::getInfo() {
         info << "Stream: " << s->getInfo() << endl;
     }
     return info.str();
+}
+
+bool Viewer::comment(const string &comment) {
+    if(!isActive()) return false;
+    PrivateStream* viewing_stream = dynamic_cast<PrivateStream *>(s);
+    if (viewing_stream == nullptr) return false;
+    viewing_stream->addComment(comment);
+    return true;
 }
 
 /**

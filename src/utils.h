@@ -4,8 +4,8 @@
 #include <iostream>
 #include <string>
 
-#define MIN_AGE_STREAMER 12
-#define MIN_AGE_VIEWER 15
+#define MIN_AGE_STREAMER 15
+#define MIN_AGE_VIEWER 12
 
 /// Unsigned type for representing an age
 typedef unsigned Age;
@@ -22,6 +22,8 @@ struct Date {
     unsigned month;
     unsigned year;
 };
+
+bool operator<(const Date &date1, const Date &date2);
 
 std::ostream& operator<< (std::ostream& out, const Date& date);
 

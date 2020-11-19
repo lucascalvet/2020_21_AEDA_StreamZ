@@ -16,6 +16,7 @@ Date::Date(unsigned int day, unsigned int month, unsigned int year) {
         throw InvalidDate(MONTH, month);
     if (day > 31)
         throw InvalidDate(DAY, day);
+
     this->day = day;
     this->month = month;
     this->year = year;
@@ -31,6 +32,22 @@ Date::Date(unsigned int day, unsigned int month, unsigned int year) {
 std::ostream &operator<<(std::ostream &out, const Date &date) {
     out << date.day << "/" << date.month << "/" << date.year;
     return out;
+}
+
+/**
+ * Implementation of the operator<
+ *
+ * @param date1 the date object to compare
+ * @param date2 the date object to compare with date1
+ * @return true if date1 < date2, false otherwise
+ */
+bool operator<(const Date &date1, const Date &date2){
+    if(date1.year < date2.year) return true;
+    if(date1.year == date2.year){
+        if(date1.month < date2.month) return true;
+        if(date1.month == date2.month && date1.day < date2.day) return true;
+    }
+    return false;
 }
 
 /**
@@ -53,12 +70,10 @@ string strToUpper(const string &str) {
  * @return the age of the person
  */
 Age calculateAge(const Date &birthday) {
-    time_t current_time;
-    time(&current_time);
-    tm *date = localtime(&current_time);
-    if (date->tm_mon + 1 > birthday.month || date->tm_mon + 1 == birthday.month && date->tm_mday >= birthday.day)
-        return date->tm_year - birthday.year;
-    return date->tm_year - birthday.year - 1;
+    Date current_date = getCurrentDate();
+    if (current_date.month > birthday.month || current_date.month == birthday.month && current_date.day >= birthday.day)
+        return current_date.year - birthday.year;
+    return current_date.year - birthday.year - 1;
 }
 
 /**

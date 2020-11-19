@@ -65,7 +65,10 @@ void Menu::addOption(string opName) {
 
 void Menu::startMenu() {
     //gotoxy(0,0);
-    cout << title << endl << endl;
+    cout << endl << string(title.size(), '*') << endl;
+    cout << title << endl;
+    cout << string(title.size(), '*') << endl << endl;
+
 
     for(int i = 0; i < options; i++){
         cout << optionNaming[i] << endl;

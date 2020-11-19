@@ -7,12 +7,14 @@
 #include "utils.h"
 #include "user.h"
 #include "stream.h"
+#include <typeinfo>
 
 /**
  * Main class for handling a StreamZ platform
  */
 class StreamZ {
 private:
+    Admin* admin;
     static int counter;
     unsigned id;
     unsigned capacity;   //how many streamers can be active at same time
@@ -20,7 +22,7 @@ private:
     std::vector<Viewer*> viewers;
     std::vector<Stream*> best_streams;
 public:
-    StreamZ(unsigned capacity);
+    StreamZ(unsigned capacity, Admin *admin);
     StreamZ(const std::string& filename);
     ~StreamZ();
     unsigned getCapacity() const;
@@ -35,13 +37,13 @@ public:
     std::vector<Streamer*> getActiveStreamers() const;
     std::vector<Stream*> getBestStreams() const;
     //map<int, std::vector<Stream*>> history; ;  //history per id of streamer
-    bool addStreamer(const std::string& nickname, const Date& birthday);
-    bool addViewer(const std::string& nickname, const Date& birthday);
+    bool addStreamer(const std::string& nickname, const Date& birthday, const std::string& password);
+    bool addViewer(const std::string& nickname, const Date& birthday, const std::string& password);
     //when stream is ended by streamer, stream is added to history after total viewers data is added to stream
     // for streamers
     bool startPublicStream(Streamer *streamer, const std::string &title, const Language &lang, unsigned min_age) const;
     bool startPrivateStream(Streamer *streamer, const std::string &title, const Language &lang, unsigned min_age,
-                            const std::vector<unsigned>& authorized_viewers, unsigned cap) const;
+                            const std::vector<unsigned>& authorized_viewers) const;
     static bool stopStream(Streamer* streamer) ;
     //for viewers
     static bool enterStream(Streamer* streamer, Viewer *v) ;  //can only be in one stream at the time
@@ -53,6 +55,8 @@ public:
     void printActiveStreams() const;
     std::vector<Streamer*> getStreams(const Language& lang, Age min_age) const;
     bool save(const std::string &filename) const;
+    bool loginVerifier(std::string nickname, std::string password) const;
+    User* getUserByName(std::string nickname);
 };
 
 #endif // STREAMZ_H

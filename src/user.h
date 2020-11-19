@@ -9,6 +9,7 @@
  */
 class User {
 private:
+    std::string password;
     static int counter;
     int id;
     Date birthday;
@@ -18,8 +19,9 @@ public:
     Stream *s = nullptr;
     std::string getName() const;
     int getID() const;
+    std::string getPassword() const;
     Date getBirthday() const;
-    User(std::string nickname, Date birthday);
+    User(std::string nickname, Date birthday, std::string password);
     bool isActive() const;
     virtual std::string getInfo();
     ~User();
@@ -32,7 +34,7 @@ class Viewer : public User {
 public:
     bool alreadyLiked = false;
     bool alreadyDisliked = false;
-    Viewer(std::string nickname, Date birthday);
+    Viewer(std::string nickname, Date birthday, std::string password);
     std::string getInfo();
     ~Viewer();
 };
@@ -42,7 +44,7 @@ public:
  */
 class Streamer : public User {
 public:
-    Streamer(std::string nickname, Date birthday);
+    Streamer(std::string nickname, Date birthday, std::string password);
     ~Streamer();
     std::vector<Viewer*> total_viewers;
     std::vector<Viewer*> active_viewers;
@@ -55,7 +57,8 @@ public:
  * Class derived from User, to represent a user of type admin
  */
 class Admin : public User {  //maybe not appropriate because its a framework so the people controling it is the admin
-    Admin(std::string nickname, Date birthday);
+public:
+    Admin(std::string nickname, Date birthday, std::string password);
     ~Admin();
 };
 

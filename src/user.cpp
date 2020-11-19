@@ -11,9 +11,10 @@ int User::counter = 0;
  * @param nickname the user's nickname
  * @param birthday the user's date of birth
  */
-User::User(string nickname, Date birthday){
+User::User(string nickname, Date birthday, string password){
     this->nickname = nickname;
     this->birthday = birthday;
+    this->password = password;
     id = counter++;
 }
 
@@ -67,7 +68,7 @@ string User::getInfo() {
  * @param nickname the viewer's nickname
  * @param birthday the viewer's date of birth
  */
-Viewer::Viewer(string nickname, Date birthday) : User(nickname , birthday){
+Viewer::Viewer(string nickname, Date birthday, string password) : User(nickname , birthday, password){
 }
 
 Viewer::~Viewer() {
@@ -94,7 +95,7 @@ string Viewer::getInfo() {
  * @param nickname the streamer's nickname
  * @param birthday the streamer's date of birth
  */
-Streamer::Streamer(string nickname, Date birthday) : User(nickname, birthday){
+Streamer::Streamer(string nickname, Date birthday, string password) : User(nickname, birthday, password){
 }
 
 Streamer::~Streamer() {
@@ -131,6 +132,10 @@ bool User::isActive() const{
     return true;
 }
 
+std::string User::getPassword() const {
+    return password;
+}
+
 /**
  * Prints the streamer's information
  *
@@ -153,7 +158,7 @@ string Streamer::getInfo(){
  * @param nickname the admin's nickname
  * @param birthday the admin's date of birth
  */
-Admin::Admin(string nickname, Date birthday) : User(nickname , birthday){}
+Admin::Admin(string nickname, Date birthday, string password) : User(nickname , birthday, password){}
 
 Admin::~Admin(){
 }

@@ -196,10 +196,8 @@ PublicStream::~PublicStream(){
  * @param lang the stream's language (must be one of the languages in LANG)
  * @param min_age the stream's minimum age
  */
-PrivateStream::PrivateStream(string title, Language lang, Age min_age, vector<unsigned> authorized_viewers,
-                             unsigned capacity) : Stream(title, lang, min_age){
+PrivateStream::PrivateStream(string title, Language lang, Age min_age, vector<unsigned> authorized_viewers) : Stream(title, lang, min_age){
     this->authorized_viewers = authorized_viewers;
-    this->capacity = capacity;
 }
 
 PrivateStream::~PrivateStream() {

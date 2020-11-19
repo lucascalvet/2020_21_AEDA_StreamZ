@@ -51,11 +51,10 @@ public:
 class PrivateStream : public Stream{
 public:
     PrivateStream(std::string title, Language lang, Age min_age,
-                  std::vector<unsigned> authorized_viewers, unsigned capacity);
+                  std::vector<unsigned> authorized_viewers);
     ~PrivateStream();
     std::vector<unsigned> authorized_viewers;  //authorized_viewers through id (or std::vector<Users*>?)
     std::vector<std::string> comments;
-    unsigned capacity;
 };
 
 #endif //STREAM_H

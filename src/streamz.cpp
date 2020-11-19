@@ -11,9 +11,10 @@ int StreamZ::counter = 0;
  *
  * @param capacity the maximum capacity of streams the platform may have at any time
  */
-StreamZ::StreamZ(unsigned capacity) {
+StreamZ::StreamZ(unsigned capacity, Admin *admin) {
     id = counter++;
     this->capacity = capacity;
+    this->admin = admin;
 }
 
 StreamZ::StreamZ(const string &filename) {
@@ -24,25 +25,25 @@ StreamZ::StreamZ(const string &filename) {
     file >> capacity;
     file.get();
     while (file.peek() != '\n') {
-        string nickname;
+        string nickname, password;
         unsigned day, month, year;
         char sep;
         getline(file, nickname, '\t');
         file >> day >> sep >> month >> sep >> year;
         Date birthday(day, month, year);
-        Streamer *streamer = new Streamer(nickname, birthday);
+        Streamer *streamer = new Streamer(nickname, birthday, password);
         streamers.push_back(streamer);
         file.ignore(numeric_limits<streamsize>::max(), '\n');
     }
     file.get();
     while (file.peek() != '\n') {
-        string nickname;
+        string nickname, password;
         unsigned day, month, year;
         char sep;
         getline(file, nickname, '\t');
         file >> day >> sep >> month >> sep >> year;
         Date birthday(day, month, year);
-        Viewer *viewer = new Viewer(nickname, birthday);
+        Viewer *viewer = new Viewer(nickname, birthday, password);
         viewers.push_back(viewer);
         file.ignore(numeric_limits<streamsize>::max(), '\n');
     }
@@ -237,10 +238,10 @@ bool StreamZ::startPublicStream(Streamer *streamer, const string &title, const L
  * @return true if the operation was successful, false otherwise
  */
 bool StreamZ::startPrivateStream(Streamer *streamer, const string &title, const Language &lang, unsigned min_age,
-                                 const vector<unsigned int> &authorized_viewers, unsigned cap) const {
+                                 const vector<unsigned int> &authorized_viewers) const {
     if (!streamer->isActive() && getNumActiveStreamers() < this->capacity) {
         try {
-            streamer->s = new PrivateStream(title, lang, min_age, authorized_viewers, cap);
+            streamer->s = new PrivateStream(title, lang, min_age, authorized_viewers);
         }
         catch (InvalidLanguage &) {
             return false;
@@ -310,15 +311,17 @@ bool StreamZ::exitStream(Viewer *v) {
  * @param birthday the user's date of birth
  * @return true if the operation was successful, false otherwise
  */
-bool StreamZ::addStreamer(const string &nickname, const Date &birthday) {
+bool StreamZ::addStreamer(const string &nickname, const Date &birthday, const std::string& password) {
+    cout << endl << endl << "DEBUG:   " << calculateAge(birthday) << "     get : " << getCurrentDate() << endl << endl;
     if (calculateAge(birthday) < MIN_AGE_STREAMER) return false;
     vector<Streamer *>::const_iterator streamer_it;
     vector<Viewer *>::const_iterator viewer_it;
+    if(admin->getName() == nickname) return false;
     for (streamer_it = streamers.begin(); streamer_it != streamers.end(); streamer_it++)
         if ((*streamer_it)->getName() == nickname) return false;
     for (viewer_it = viewers.begin(); viewer_it != viewers.end(); viewer_it++)
         if ((*viewer_it)->getName() == nickname) return false;
-    Streamer *s1 = new Streamer(nickname, birthday);
+    Streamer *s1 = new Streamer(nickname, birthday, password);
     streamers.push_back(s1);
     return true;
 }
@@ -330,15 +333,16 @@ bool StreamZ::addStreamer(const string &nickname, const Date &birthday) {
  * @param birthday the user's date of birth
  * @return true if the operation was successful, false otherwise
  */
-bool StreamZ::addViewer(const string &nickname, const Date &birthday) {
+bool StreamZ::addViewer(const string &nickname, const Date &birthday, const std::string& password) {
     if (calculateAge(birthday) < MIN_AGE_VIEWER) return false;
     vector<Streamer *>::const_iterator streamer_it;
     vector<Viewer *>::const_iterator viewer_it;
+    if(admin->getName() == nickname) return false;
     for (streamer_it = streamers.begin(); streamer_it != streamers.end(); streamer_it++)
         if ((*streamer_it)->getName() == nickname) return false;
     for (viewer_it = viewers.begin(); viewer_it != viewers.end(); viewer_it++)
         if ((*viewer_it)->getName() == nickname) return false;
-    Viewer *v1 = new Viewer(nickname, birthday);
+    Viewer *v1 = new Viewer(nickname, birthday, password);
     viewers.push_back(v1);
     return true;
 }
@@ -458,3 +462,27 @@ bool StreamZ::save(const string &filename) const {
     }
     return true;
 }
+
+bool StreamZ::loginVerifier(string nickname,string password) const{
+    for(int i = 0; i < streamers.size(); i++){
+        if(streamers.at(i)->getName() == nickname && streamers.at(i)->getPassword() == password)
+            return true;
+    }
+    for(int i = 0; i < viewers.size(); i++){
+        if(viewers.at(i)->getName() == nickname && viewers.at(i)->getPassword() == password)
+            return true;
+    }
+    if(admin->getName() == nickname && admin->getPassword() == password) return true;
+    return false;
+}
+
+User* StreamZ::getUserByName(std::string nickname){
+    for(int i = 0; i < streamers.size(); i++) {
+        if (streamers.at(i)->getName() == nickname) return streamers.at(i);
+    }
+    for(int i = 0; viewers.size(); i++){
+        if(viewers.at(i)->getName() == nickname) return viewers.at(i);
+    }
+    return NULL;
+}
+

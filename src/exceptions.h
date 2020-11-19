@@ -33,4 +33,9 @@ public:
     std::string getFileName() const {return filename;}
 };
 
+class UserNotFound{
+private:
+public:
+};
+
 #endif //EXCEPTIONS_H

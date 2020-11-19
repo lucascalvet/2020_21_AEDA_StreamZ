@@ -3,8 +3,6 @@
 
 #include <vector>
 #include <string>
-#include <algorithm>
-#include <sstream>
 #include "utils.h"
 
 /**
@@ -33,7 +31,7 @@ public:
     bool remLike(unsigned id);
     bool remDislike(unsigned id);
     bool alreadyLikedOrDisliked(unsigned id);
-    std::string getInfo() const;
+    virtual std::string getInfo() const;
 };
 
 /**
@@ -49,13 +47,19 @@ public:
  * Class derived from Stream, to represent a private stream, with its additional attributes
  */
 class PrivateStream : public Stream{
+private:
+    std::vector<unsigned> authorized_viewers;  //authorized_viewers through id (or std::vector<Users*>?)
+    std::vector<std::string> comments; //TODO: save the viewer that commented? implement comments
+    unsigned capacity; //TODO: remove?
 public:
     PrivateStream(std::string title, Language lang, Age min_age,
                   std::vector<unsigned> authorized_viewers, unsigned capacity);
     ~PrivateStream();
-    std::vector<unsigned> authorized_viewers;  //authorized_viewers through id (or std::vector<Users*>?)
-    std::vector<std::string> comments; //TODO: implement comments
-    unsigned capacity;
+    bool isAuthorized(unsigned user_id) const;
+    const std::vector<unsigned int> &getAuthorizedViewers() const;
+    const std::vector<std::string> &getComments() const;
+    void addComment(const std::string &comment);
+    std::string getInfo() const;
 };
 
 #endif //STREAMZ_STREAM_H

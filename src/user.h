@@ -36,7 +36,7 @@ public:
     bool alreadyDisliked = false;
     Viewer(std::string nickname, Date birthday, std::string password);
     std::string getInfo();
-    bool comment(const std::string &comment);
+    void comment(const std::string &comment);
     ~Viewer();
 };
 

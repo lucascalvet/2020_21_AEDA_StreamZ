@@ -2,7 +2,7 @@
 
 using namespace std;
 
-bool numberInputFail() { //checks if user didn't input a number
+bool cinFail() { //checks if user didn't input a number
     if (!cin) {
         cin.clear(); //reset failbit
         cin.ignore(10000, '\n');  //ignore bad input
@@ -12,22 +12,22 @@ bool numberInputFail() { //checks if user didn't input a number
 }
 
 //checks if user didn't input a number or a number in a determinated range
-void inputChecker(unsigned &selected, unsigned options, bool &inMenu) {
+void inputChecker(unsigned &selected, unsigned options) {
+    bool in_input = true;
     cout << "Input: ";
-    while (inMenu) {
+    while (in_input) {
         cin >> selected;
 
-        if (numberInputFail()) {
+        if (cinFail()) {
             cout << "Please input a number!" << endl;
             cout << "Input: ";
         } else if (selected < options && selected >= 0)
-            inMenu = false;
+            in_input = false;
         else {
             cout << "Input a number in the options range!" << endl;
             cout << "Input: ";
         }
     }
-    inMenu = true;
 }
 
 //stops the console until user presses anything
@@ -78,7 +78,7 @@ void Menu::startMenu() {
     for (int i = 0; i < options; i++) {
         cout << optionNaming[i] << endl;
     }
-    inputChecker(selected, options, inMenu);
+    inputChecker(selected, options);
 
     //what to do for each option is coded next
 }

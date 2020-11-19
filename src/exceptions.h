@@ -33,4 +33,12 @@ public:
     std::string getFileName() const {return filename;}
 };
 
+class AlreadyStreaming{};
+
+class FullCapacity{};
+
+class InactiveUser{};
+
+class NotInPrivateStream{};
+
 #endif //STREAMZ_EXCEPTIONS_H

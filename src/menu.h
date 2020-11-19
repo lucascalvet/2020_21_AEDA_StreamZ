@@ -5,11 +5,11 @@
 #include <iostream>
 #include <string>
 
-bool numberInputFail();
+bool cinFail();
 
 void stopConsole();
 
-void inputChecker(unsigned &selected, unsigned options, bool &inMenu);
+void inputChecker(unsigned &selected, unsigned options);
 
 class Menu{
 private:

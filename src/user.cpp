@@ -1,5 +1,6 @@
 #include "user.h"
 #include <sstream>
+#include "exceptions.h"
 
 using namespace std;
 
@@ -104,15 +105,15 @@ string Viewer::getInfo() {
     if (isActive()) {
         info << "Stream: " << s->getInfo() << endl;
     }
+    cout << endl;
     return info.str();
 }
 
-bool Viewer::comment(const string &comment) {
-    if(!isActive()) return false;
+void Viewer::comment(const string &comment) {
+    if(!isActive()) throw InactiveUser();
     PrivateStream* viewing_stream = dynamic_cast<PrivateStream *>(s);
-    if (viewing_stream == nullptr) return false;
+    if (viewing_stream == nullptr) throw NotInPrivateStream();
     viewing_stream->addComment(comment);
-    return true;
 }
 
 /**
@@ -176,6 +177,7 @@ string Streamer::getInfo() {
     if (isActive()) {
         info << "Stream: " << s->getInfo() << endl;
     }
+    cout << endl;
     return info.str();
 }
 

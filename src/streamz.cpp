@@ -241,18 +241,16 @@ vector<Stream *> StreamZ::getBestStreams() const {
  * @param min_age the stream's minimum age
  * @return true if the operation was successful, false otherwise
  */
-bool StreamZ::startPublicStream(Streamer *streamer, const string &title, const Language &lang, unsigned min_age) const {
-    if (!streamer->isActive() && getNumActiveStreamers() <= this->capacity) {
-        try {
-            streamer->s = new PublicStream(title, lang, min_age);
-        }
-        catch (InvalidLanguage &) {
-            return false;
-        }
-        return true;
-    } else {
-        return false;
+void StreamZ::startPublicStream(Streamer *streamer, const string &title, const Language &lang, unsigned min_age) const {
+    if (streamer->isActive()) throw AlreadyStreaming();
+    if(getNumActiveStreamers() == this->capacity) throw FullCapacity();
+    try {
+        streamer->s = new PublicStream(title, lang, min_age);
     }
+    catch (InvalidLanguage &) {
+        throw;
+    }
+
 }
 
 /**
@@ -352,7 +350,6 @@ bool StreamZ::exitStream(Viewer *v) {
  * @return true if the operation was successful, false otherwise
  */
 bool StreamZ::addStreamer(const string &nickname, const Date &birthday, const std::string& password) {
-    cout << endl << endl << "DEBUG:   " << calculateAge(birthday) << "     get : " << getCurrentDate() << endl << endl;
     if (calculateAge(birthday) < MIN_AGE_STREAMER) return false;
     vector<Streamer *>::const_iterator streamer_it;
     vector<Viewer *>::const_iterator viewer_it;

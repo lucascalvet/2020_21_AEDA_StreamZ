@@ -2,6 +2,7 @@
 #include "streamz.h"
 #include "streamz_framework.h"
 #include "exceptions.h"
+#include <limits>
 
 using namespace std;
 
@@ -56,7 +57,7 @@ string help_submenu =
 /**
  * Main loop for interaction with the StreamZ framework
  */
-void streamz_framework() {
+void streamz_framework() { //TODO: Allow stream titles with more than one word. Gets stuck when choosing user, because of ID!
     unsigned cap;
     bool inInput = true;  //used for to loop input while wrong one is submitted with inputChecker function
     bool auto_save = false, setngs;  // (auto_save) used to enable disable the auto_save // (setngs) used with settings menu

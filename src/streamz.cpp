@@ -1,6 +1,7 @@
 #include "streamz.h"
 #include <fstream>
 #include "exceptions.h"
+#include <limits>
 
 using namespace std;
 
@@ -293,6 +294,10 @@ bool StreamZ::stopStream(Streamer *streamer) {
     for(viewer = viewers.begin(); viewer != viewers.end(); viewer++){
         if((*viewer)->s == streamer->s) (*viewer)->s = nullptr;
     }
+    //TODO: handle best streams
+    for (unsigned i = 0; i < 10; i++){
+        if (best_streams.at(i) == nullptr);
+    }
     return streamer->stopStreaming();
 }
 
@@ -313,6 +318,8 @@ bool StreamZ::enterStream(Streamer *streamer, Viewer *v) {
     if (!streamer->isActive()) {
         return false;
     }
+    PrivateStream* stream = dynamic_cast<PrivateStream *>(streamer->s);
+    if(stream != nullptr && !stream->isAuthorized(v->getID())) return false;
     v->s = streamer->s;
     return true;
 }
@@ -485,10 +492,13 @@ bool StreamZ::save(const string &filename) const {
         file << (*viewer)->getName() << '\t' << (*viewer)->getBirthday() << '\n';
     }
     file << '\n';
+    // TODO: Change to handle the nullptr values
+    /*
     vector<Stream *>::const_iterator stream;
     for (stream = best_streams.begin(); stream != best_streams.end(); stream++) {
         file << (*stream)->getTitle() << '\t' << (*stream)->getDate() << '\t' << (*stream)->getLanguage()
              << '\t' << (*stream)->getMinAge() << '\t' << (*stream)->getNumViewers() << '\n';
     }
+     */
     return true;
 }

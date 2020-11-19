@@ -37,3 +37,26 @@ TEST(test, StartStopStreams) {
     sz1.stopStream(strmr_lucas);
     EXPECT_EQ(viewer_ze->s, nullptr);
 }
+
+TEST(test, EnterExitStream) {
+    StreamZ sz1(20);
+    Date bd1(14, 10, 2000);
+    Date bd2(1, 1, 2001);
+    Date bd3(28, 11, 2001);
+    sz1.addStreamer("lucascs", bd1);
+    sz1.addStreamer("sergio", bd2);
+    sz1.addViewer("ze", bd3);
+    Streamer* strmr_lucas = sz1.getStreamerByName("lucascs");
+    Viewer* viewer_ze = sz1.getViewerByName("ze");
+    std::vector<unsigned> auth {viewer_ze->getID()};
+    sz1.startPrivateStream(strmr_lucas, "A minha stream privada", "PT", 18, auth, 20);
+    EXPECT_EQ(true, sz1.enterStream(strmr_lucas, viewer_ze));
+    EXPECT_EQ(false, sz1.enterStream(strmr_lucas, viewer_ze));
+    sz1.stopStream(strmr_lucas);
+    sz1.startPrivateStream(strmr_lucas, "A minha stream privada", "PT", 18, auth, 20);
+    EXPECT_EQ(true, sz1.enterStream(strmr_lucas, viewer_ze));
+    sz1.stopStream(strmr_lucas);
+    auth.clear();
+    sz1.startPrivateStream(strmr_lucas, "A minha stream privada", "PT", 18, auth, 20);
+    EXPECT_EQ(false, sz1.enterStream(strmr_lucas, viewer_ze));
+}

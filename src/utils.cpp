@@ -35,10 +35,21 @@ std::ostream &operator<<(std::ostream &out, const Date &date) {
 }
 
 /**
+ * Implementation of the operator==
+ *
+ * @param date1 the first date object to compare
+ * @param date2 the second date object to compare
+ * @return true if date1 == date2, false otherwise
+ */
+bool operator==(const Date &date1, const Date &date2){
+    return date1.day == date2.day && date1.month == date2.month && date1.year == date2.year;
+}
+
+/**
  * Implementation of the operator<
  *
- * @param date1 the date object to compare
- * @param date2 the date object to compare with date1
+ * @param date1 the first date object to compare
+ * @param date2 the second date object to compare
  * @return true if date1 < date2, false otherwise
  */
 bool operator<(const Date &date1, const Date &date2){
@@ -48,6 +59,17 @@ bool operator<(const Date &date1, const Date &date2){
         if(date1.month == date2.month && date1.day < date2.day) return true;
     }
     return false;
+}
+
+/**
+ * Implementation of the operator<=
+ *
+ * @param date1 the first date object to compare
+ * @param date2 the second date object to compare
+ * @return true if date1 <= date2, false otherwise
+ */
+bool operator<=(const Date &date1, const Date &date2){
+    return date1 < date2 || date1 == date2;
 }
 
 /**

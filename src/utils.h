@@ -23,7 +23,11 @@ struct Date {
     unsigned year;
 };
 
+bool operator==(const Date &date1, const Date &date2);
+
 bool operator<(const Date &date1, const Date &date2);
+
+bool operator<=(const Date &date1, const Date &date2);
 
 std::ostream& operator<< (std::ostream& out, const Date& date);
 

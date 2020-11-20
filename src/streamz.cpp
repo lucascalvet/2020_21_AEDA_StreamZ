@@ -13,7 +13,10 @@ int StreamZ::counter = 0;
  * @param capacity the maximum capacity of streams the platform may have at any time
  */
 StreamZ::StreamZ(unsigned capacity, const std::string &nickname, const Date &birthday, const std::string &password) {
-    admin = new Admin(nickname, birthday, password);
+
+    string hashed_password = sha256Encode(password);  //encrypts password
+
+    admin = new Admin(nickname, birthday, hashed_password);
     id = counter++;
     this->capacity = capacity;
     this->admin = admin;
@@ -542,7 +545,10 @@ bool StreamZ::addStreamer(const string &nickname, const Date &birthday, const st
         if ((*streamer_it)->getName() == nickname) return false;
     for (viewer_it = viewers.begin(); viewer_it != viewers.end(); viewer_it++)
         if ((*viewer_it)->getName() == nickname) return false;
-    Streamer *s1 = new Streamer(nickname, birthday, password);
+
+    string hashed_password = sha256Encode(password);  //encrypts password
+
+    Streamer *s1 = new Streamer(nickname, birthday, hashed_password);
     streamers.push_back(s1);
     return true;
 }
@@ -563,7 +569,10 @@ bool StreamZ::addViewer(const string &nickname, const Date &birthday, const std:
         if ((*streamer_it)->getName() == nickname) return false;
     for (viewer_it = viewers.begin(); viewer_it != viewers.end(); viewer_it++)
         if ((*viewer_it)->getName() == nickname) return false;
-    Viewer *v1 = new Viewer(nickname, birthday, password);
+
+    string hashed_password = sha256Encode(password);  //encrypts password
+
+    Viewer *v1 = new Viewer(nickname, birthday, hashed_password);
     viewers.push_back(v1);
     return true;
 }

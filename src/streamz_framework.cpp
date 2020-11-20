@@ -89,8 +89,6 @@ void passwordInput(string& password) {
 
         cout << endl << "Your password is " << password_strength << endl;
     }
-
-    password = sha256Encode(password);  //encrypts password
 }
 
 void dateInput(Date& birthday, bool birth_date){

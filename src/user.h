@@ -55,7 +55,7 @@ public:
     unsigned getTotalViews() const;
     std::vector<Stream *> getHistory() const;
     void addToHistory(Stream *stream);
-    bool stopStreaming();
+    void stopStreaming();
 };
 
 /**

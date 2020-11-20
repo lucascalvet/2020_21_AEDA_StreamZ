@@ -51,8 +51,8 @@ public:
     //when stream is ended by streamer, stream is added to history after total viewers data is added to stream
     // for streamers
     void startPublicStream(Streamer *streamer, const std::string &title, const Language &lang, unsigned min_age) const;
-    bool startPrivateStream(Streamer *streamer, const std::string &title, const Language &lang, unsigned min_age, const std::vector<unsigned>& authorized_viewers) const;
-    bool stopStream(Streamer* streamer) ;
+    void startPrivateStream(Streamer *streamer, const std::string &title, const Language &lang, unsigned min_age, const std::vector<unsigned>& authorized_viewers) const;
+    void stopStream(Streamer* streamer) ;
     //for viewers
     //TODO: Doesn't it make more sense for these static to be part of the viewer class;
     static bool enterStream(Streamer* streamer, Viewer *v) ;  //can only be in one stream at the time

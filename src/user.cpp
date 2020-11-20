@@ -168,11 +168,9 @@ void Streamer::addToHistory(Stream *stream) {
     streaming_history.push_back(stream);
 }
 
-bool Streamer::stopStreaming() {
-    if (!isActive()) return false;
+void Streamer::stopStreaming() {
     streaming_history.push_back(s);
     s = nullptr;
-    return true;
 }
 
 std::string User::getPassword() const {

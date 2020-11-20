@@ -1,6 +1,7 @@
 #include "utils.h"
 #include "exceptions.h"
 #include <ctime>
+#include <string>
 
 using namespace std;
 
@@ -107,4 +108,35 @@ Date getCurrentDate() {
     time(&current_time);
     tm *date = localtime(&current_time);
     return Date(date->tm_mday, date->tm_mon + 1, date->tm_year + 1900);
+}
+
+bool passwordStrength(const string& password, string &strength){
+        bool has_lower = false, has_upper = false;
+        bool has_digit = false, special_char = false;
+
+        string normal_chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 ";
+
+        for (int i = 0; i < password.size(); i++) {
+            if (islower(password[i]))
+                has_lower = true;
+            if (isupper(password[i]))
+                has_upper = true;
+            if (isdigit(password[i]))
+                has_digit = true;
+        }
+
+        size_t special = password.find_first_not_of(normal_chars); // finds first character in password which is not present in normal_chars
+
+        if (special != string::npos)
+            special_char = true;
+
+        if (has_lower && has_upper && has_digit && special_char && (password.size() >= 8))
+            strength = "strong";
+        else if (has_lower && has_upper && (password.size() >= 6))
+            strength =  "moderate";
+        else
+            strength =  "weak";
+
+        if(strength == "strong" || strength == "moderate") return true;
+        else return false;
 }

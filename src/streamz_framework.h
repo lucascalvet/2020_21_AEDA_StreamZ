@@ -5,6 +5,6 @@
 #ifndef STREAMZ_FRAMEWORK_H
 #define STREAMZ_FRAMEWORK_H
 
-void streamz_framework();
+void streamzFramework();
 
 #endif //STREAMZ_FRAMEWORK_H

@@ -35,6 +35,8 @@ public:
 
 class AlreadyStreaming{};
 
+class NotStreaming{};
+
 class FullCapacity{};
 
 class InactiveUser{};

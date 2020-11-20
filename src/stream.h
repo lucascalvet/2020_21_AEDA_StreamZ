@@ -13,25 +13,29 @@ private:
     std::string title;
     Date starting_date;
     static const std::vector<Language> LANGS;
+    ///Total number of times that any viewer enters the stream
+    unsigned num_total_views = 0;
     Language lang;
     Age min_age;
-    unsigned num_viewers = 0;
     std::vector<unsigned> viewers_liked;
     std::vector<unsigned> viewers_disliked;
 public:
     Stream(const std::string& title, const Language& lang, unsigned min_age);
     Stream(const std::string& title, const Language& lang, unsigned min_age, const Date& starting_date, unsigned num_viewers);
+    virtual std::string getInfo() const;
     std::string getTitle() const;
     Date getDate() const;
     Language getLanguage() const;
     Age getMinAge() const;
-    unsigned getNumViewers() const;
+    unsigned int getNumTotalViews() const;
+    unsigned getNumLikes() const;
+    unsigned getNumDislikes() const;
+    void addView();
     bool addLike(unsigned id);
     bool addDislike(unsigned id);
     bool remLike(unsigned id);
     bool remDislike(unsigned id);
     bool alreadyLikedOrDisliked(unsigned id);
-    virtual std::string getInfo() const;
 };
 
 /**
@@ -54,11 +58,11 @@ public:
     PrivateStream(std::string title, Language lang, Age min_age,
                   std::vector<unsigned> authorized_viewers);
     ~PrivateStream();
-    bool isAuthorized(unsigned user_id) const;
+    std::string getInfo() const;
     const std::vector<unsigned int> &getAuthorizedViewers() const;
     const std::vector<std::string> &getComments() const;
+    bool isAuthorized(unsigned user_id) const;
     void addComment(const std::string &comment);
-    std::string getInfo() const;
 };
 
 #endif //STREAMZ_STREAM_H

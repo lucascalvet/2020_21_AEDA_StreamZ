@@ -34,7 +34,6 @@ User::User(const string &nickname, const Date &birthday, const string &password,
 }
 
 User::~User() {
-    delete s;
 }
 
 /**
@@ -145,6 +144,7 @@ Streamer::Streamer(const string &nickname, const Date &birthday, const string &p
 }
 
 Streamer::~Streamer() {
+    delete s;
     vector<Stream *>::iterator stream;
     for (stream = streaming_history.begin(); stream != streaming_history.end(); stream++) {
         delete *stream;

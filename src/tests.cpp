@@ -220,7 +220,3 @@ TEST(test, BestStreams) {
     EXPECT_EQ(sz1.getAverageViews(), 5.0);
     EXPECT_EQ(sz1.getNumCreatedStreams(), 4);
 }
-
-TEST(test, PointerTest){
-    int * ptr = new int;
-}

@@ -56,14 +56,16 @@ string help_submenu =
         "\n\n";
 
 //5 functions with respective code encapsulated in order to avoid code repetition
-void dateInput(Date& birthday){
+void dateInput(Date& birthday, bool birth_date){
     unsigned day, year, month;
     char sep;
     bool in_date_selection = true;
 
     while(in_date_selection) {
         in_date_selection = false;
-        cout << "Enter the birthday in the format dd-mm-yy: ";
+        if(birth_date) cout << "Enter birthday date in the format dd-mm-yy: ";
+        else cout << "Enter the date in the format dd-mm-yy: ";
+
         cin >> day >> sep >> month >> sep >> year;// not yet implemented way to obey format
 
         try {
@@ -90,7 +92,7 @@ void create_streamer(StreamZ* sz_selected){
     cout << "Enter the streamer nickname: ";
     cin >> nickname;  //not checking equal names yet
 
-    dateInput(birthday);
+    dateInput(birthday, true);
 
     cout << "Enter the password: ";
     cin >> password;
@@ -108,7 +110,7 @@ void create_viewer(StreamZ* sz_selected){
     cout << "Enter the viewer nickname: ";
     cin >> nickname;
 
-    dateInput(birthday);
+    dateInput(birthday, true);
 
     cout << "Enter the password: ";
     cin >> password;
@@ -392,13 +394,10 @@ void viewer_menu_loop(Menu viewerMenu, Viewer* v_selected, StreamZ* sz_selected)
  * Main loop for interaction with the StreamZ framework
  */
 void streamz_framework() { //TODO: Allow stream titles with more than one word. Gets stuck when choosing user, because of ID!
-    unsigned cap;
-    bool in_input = true;  //used for to loop input while wrong one is submitted with inputChecker function
-    bool auto_save = false, setngs;  // (auto_save) used to enable disable the auto_save // (setngs) used with settings menu
-    bool loop = true, sub_loop; //each one is used to in it's respective menu
-    bool login_loop; //login loop
-    bool admin_bool = false; //access control
-    string choice;
+    bool auto_save = false;  //used to enable disable the auto_save
+    bool loop = true, sub_loop; //(loop) used in main loop // (sub_loop) used in other sub loops
+    bool stats_loop, admin_bool = false; //access control
+
     vector<StreamZ *> streamz_vector;
 
     Menu mainMenu("StreamZ Framework", 5);
@@ -419,13 +418,13 @@ void streamz_framework() { //TODO: Allow stream titles with more than one word. 
     settings.changeOption(2, "Import");
     settings.changeOption(3, "Back");
 
-    Menu subMenu("StreamZ default title", 7);
+    Menu subMenu("StreamZ admin menu default title", 7);
     subMenu.changeOption(0, "Help");
     subMenu.changeOption(1, "Create Streamer");
     subMenu.changeOption(2, "Choose Streamer");
     subMenu.changeOption(3, "Create Viewer");
     subMenu.changeOption(4, "Choose Viewer");
-    subMenu.changeOption(5, "Best streams");
+    subMenu.changeOption(5, "Statistics");
     subMenu.changeOption(6, "Back");
 
     Menu streamerMenu("Streamer default title", 5);
@@ -446,6 +445,13 @@ void streamz_framework() { //TODO: Allow stream titles with more than one word. 
     viewerMenu.changeOption(7, "Comment");
     viewerMenu.changeOption(8, "Back");
 
+    Menu statsMenu("Admin Statistics", 5);
+    statsMenu.changeOption(0, "StreamZ statistics"); //lianguem e tipo de stream mais criada,uantity of streams created, average views per stream
+    statsMenu.changeOption(1, "Best streams");  // best streams
+    statsMenu.changeOption(2, "Best Streamer"); //streamer com mais visualizaçoes
+    statsMenu.changeOption(3, "Streams at a given time"); //quantidade de streams privadas ou pblicas num dado momento
+    statsMenu.changeOption(4, "Back");
+
     while (loop) {
         admin_bool = false;
         mainMenu.startMenu();
@@ -463,18 +469,19 @@ void streamz_framework() { //TODO: Allow stream titles with more than one word. 
                 string nickname, password;
                 Date birthday;
                 bool inCreation = true;
+                unsigned cap;  //streamz capacity
 
                 while (inCreation) {
                     cout << "Enter StreamZ active streamers capacity: " << endl;
                     cin >> cap;
                     if (cinFail()) {
-                        cout << "Please input a number!!" << endl;
+                        cout << endl << "Please input a number!!" << endl;
                         continue;
                     }
                     cout << "Enter admin name: ";
                     cin >> nickname;
 
-                    dateInput(birthday);
+                    dateInput(birthday, true);
 
                     cout << "Enter the password: ";
                     cin >> password;
@@ -515,9 +522,9 @@ void streamz_framework() { //TODO: Allow stream titles with more than one word. 
 
                     StreamZ *sz_selected = streamz_vector.at(input);  //the vector must be ordered by id
 
-                    login_loop = true;
+                    sub_loop = true;
 
-                    while(login_loop) {
+                    while(sub_loop) {
 
                     loginMenu.startMenu();
 
@@ -543,7 +550,7 @@ void streamz_framework() { //TODO: Allow stream titles with more than one word. 
                                     } else {
                                         admin_bool = true;
                                     }
-                                    login_loop = false;
+                                    sub_loop = false;
                                 }
                                 break;
                             }
@@ -570,13 +577,13 @@ void streamz_framework() { //TODO: Allow stream titles with more than one word. 
                             }
                                 //exit
                             case 2: {
-                                login_loop = false;
+                                sub_loop = false;
                                 break;
                             }
                         }
                     }
 
-                    subMenu.changeTitle("StreamZ " + to_string(sz_selected->getID()));
+                    subMenu.changeTitle("StreamZ " + to_string(sz_selected->getID()) + " Admin");
 
                     sub_loop = true;
 
@@ -669,16 +676,57 @@ void streamz_framework() { //TODO: Allow stream titles with more than one word. 
 
                                 break;
                             }
-                                //best streams
+                            //statitics
                             case 5: {
-                                cout << "Best streams" << endl << endl;
-                                vector<Stream *> best_streams = sz_selected->getBestStreams();
-                                vector<Stream *>::const_iterator stream;
-                                for (stream = best_streams.begin(); stream != best_streams.end(); stream++) {
-                                    cout << "Stream " + (*stream)->getTitle() << endl;
+                                stats_loop = true;
+
+                                while (stats_loop) {
+
+                                    statsMenu.startMenu();
+
+                                    switch (statsMenu.getSelected()) {
+                                        //streamz statistics
+                                        case 0: //lianguem e tipo de stream mais criada,uantity of streams created, average views per stre
+                                            cout << "Most used languages: " << << endl;
+                                            cout << "Most created user: " << << endl;
+                                            cout << "Total streams created: " << << endl;
+                                            cout << "Average views per stream: " << << endl;
+                                            break;
+                                        //best streams
+                                        case 1: {
+                                            cout << "Best streams: " << endl;
+                                            vector<Stream *>::iterator it;
+                                            for (sz_selected->getBestStreams().begin(), sz_selected->getBestStreams().end(), it++) {
+
+                                            }
+                                            break;
+                                        }
+                                            //best streamer
+                                        case 2:
+                                            cout << "Best Streamer (with most views): " << endl;
+                                            break;
+                                            //streams at a given time
+                                        case 3:
+                                            Date date1, date2;
+
+                                            cout << "Enter the period you want by entering two dates" << endl;
+
+                                            cout << "Begin date: ";
+                                            dateInput(date1, false);
+                                            cout << "End date: ";
+                                            dateInput(date2, false);
+
+
+
+                                            break;
+                                            //back
+                                        case 4:
+                                            stats_loop = false;
+                                            break;
+                                    }
                                 }
-                                break;
-                            }
+                                    break;
+                                }
                                 //back
                             case 6: {
                                 sub_loop = false;
@@ -691,9 +739,9 @@ void streamz_framework() { //TODO: Allow stream titles with more than one word. 
             }
                 //settings
             case 3: {
-                setngs = true;
+                sub_loop = true;
 
-                while (setngs) {
+                while (sub_loop) {
                     settings.startMenu();
 
                     switch (settings.getSelected()) {
@@ -739,7 +787,7 @@ void streamz_framework() { //TODO: Allow stream titles with more than one word. 
                         }
                             //back
                         case 3: {
-                            setngs = false;
+                            sub_loop = false;
                             break;
                         }
                     }
@@ -748,6 +796,8 @@ void streamz_framework() { //TODO: Allow stream titles with more than one word. 
             }
                 //exit
             case 4: {
+                string choice;
+
                 if (!auto_save) {
                     cout << "Don't forget to save if you want!" << endl;
                 } else {

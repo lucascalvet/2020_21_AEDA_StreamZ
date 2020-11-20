@@ -428,7 +428,6 @@ bool StreamZ::stopStream(Streamer *streamer) {
             for (unsigned j = 19; j > i; j--){
                 best_streams.at(j) = best_streams.at(j-1);
             }
-            best_streams.at(i) = streamer->s;
             break;
         }
     }

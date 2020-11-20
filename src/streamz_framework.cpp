@@ -446,10 +446,10 @@ void streamz_framework() { //TODO: Allow stream titles with more than one word. 
     viewerMenu.changeOption(8, "Back");
 
     Menu statsMenu("Admin Statistics", 5);
-    statsMenu.changeOption(0, "StreamZ statistics"); //lianguem e tipo de stream mais criada,uantity of streams created, average views per stream
-    statsMenu.changeOption(1, "Best streams");  // best streams
-    statsMenu.changeOption(2, "Best Streamer"); //streamer com mais visualizaçoes
-    statsMenu.changeOption(3, "Streams at a given time"); //quantidade de streams privadas ou pblicas num dado momento
+    statsMenu.changeOption(0, "StreamZ statistics");
+    statsMenu.changeOption(1, "Best streams");
+    statsMenu.changeOption(2, "Best Streamer");
+    statsMenu.changeOption(3, "Streams at a given time");
     statsMenu.changeOption(4, "Back");
 
     while (loop) {
@@ -534,6 +534,7 @@ void streamz_framework() { //TODO: Allow stream titles with more than one word. 
                                 cout << "Enter the user nick name: ";
                                 cin >> nickname;
                                 cout << "Enter the user password: ";
+
                                 cin >> password;
                                 if (!sz_selected->loginVerifier(nickname, password))
                                     cout << "User not found, incorrect input given!!";
@@ -686,39 +687,70 @@ void streamz_framework() { //TODO: Allow stream titles with more than one word. 
 
                                     switch (statsMenu.getSelected()) {
                                         //streamz statistics
-                                        case 0: //lianguem e tipo de stream mais criada,uantity of streams created, average views per stre
-                                            cout << "Most used languages: " << << endl;
-                                            cout << "Most created user: " << << endl;
-                                            cout << "Total streams created: " << << endl;
-                                            cout << "Average views per stream: " << << endl;
+                                        case 0: {
+                                            Language lang;
+                                            sz_selected->getNumCreatedStreams(lang);
+
+                                            cout << "Most used languages: " << lang << endl;
+                                            cout << "Total streams created: "
+                                                 << to_string(sz_selected->getNumCreatedStreams()) << endl;
+                                            cout << "Average views per stream: "
+                                                 << to_string(sz_selected->getAverageViews()) << endl;
                                             break;
+                                        }
                                         //best streams
                                         case 1: {
-                                            cout << "Best streams: " << endl;
-                                            vector<Stream *>::iterator it;
-                                            for (sz_selected->getBestStreams().begin(), sz_selected->getBestStreams().end(), it++) {
+                                            cout << "Best streams: (upwards order)" << endl;
 
+                                            vector<Stream*> best = sz_selected->getBestStreams();
+
+                                            cout << "Most viewed streams: " << endl;
+
+                                            for(int i = 0; i < 10; i++){
+                                                if(best.at(i) != nullptr) cout << best.at(i)->getInfo();
                                             }
+
+                                            cout << "Most liked streams: " << endl;
+
+                                            for(int i = 10; i < 20; i++){
+                                                if(best.at(i) != nullptr) cout << best.at(i)->getInfo();
+                                            }
+
+                                            stopConsole();
+
                                             break;
                                         }
                                             //best streamer
-                                        case 2:
+                                        case 2: {
                                             cout << "Best Streamer (with most views): " << endl;
+                                            if(sz_selected->getMostViewedStreamer() != nullptr) {
+                                                cout << sz_selected->getMostViewedStreamer()->getInfo() << endl;
+                                            }
+                                            else cout << "none" << endl;
+
+                                            stopConsole();
                                             break;
+                                        }
                                             //streams at a given time
-                                        case 3:
+                                        case 3: {
                                             Date date1, date2;
 
                                             cout << "Enter the period you want by entering two dates" << endl;
 
-                                            cout << "Begin date: ";
+                                            cout << "Begin date-> ";
                                             dateInput(date1, false);
-                                            cout << "End date: ";
+                                            cout << "End date-> ";
                                             dateInput(date2, false);
 
+                                            cout << endl << "Streams created between " << date1 << " and " << date2  << endl << endl;
 
+                                            cout << "Public streams: " << to_string(sz_selected->getNumCreatedStreams(true, date1, date2)) << endl;
 
+                                            cout << "Private streams: " << to_string(sz_selected->getNumCreatedStreams(false, date1, date2)) << endl << endl;
+
+                                            stopConsole();
                                             break;
+                                        }
                                             //back
                                         case 4:
                                             stats_loop = false;

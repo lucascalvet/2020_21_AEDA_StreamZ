@@ -354,7 +354,7 @@ double StreamZ::getAverageViews() const {
  * @param title the stream's title
  * @param lang the stream's language
  * @param min_age the stream's minimum age
- * @return true if the operation was successful, false otherwise
+ * @return
  */
 void StreamZ::startPublicStream(Streamer *streamer, const string &title, const Language &lang, unsigned min_age) const {
     if (streamer->isActive()) throw AlreadyStreaming();
@@ -380,34 +380,35 @@ void StreamZ::startPublicStream(Streamer *streamer, const string &title, const L
  * @param min_age the stream's minimum age
  * @param authorized_viewers a list of of the authorized viewers of the stream
  * @param cap the cap of the stream
- * @return true if the operation was successful, false otherwise
+ * @return
  */
-bool StreamZ::startPrivateStream(Streamer *streamer, const string &title, const Language &lang, unsigned min_age, const vector<unsigned int> &authorized_viewers) const {
-    if (!streamer->isActive() && getNumActiveStreamers() < this->capacity) {
-        try {
-            streamer->s = new PrivateStream(title, lang, min_age, authorized_viewers);
-        }
-        catch (InvalidLanguage &) {
-            return false;
-        }
-        return true;
+void StreamZ::startPrivateStream(Streamer *streamer, const string &title, const Language &lang, unsigned min_age, const vector<unsigned int> &authorized_viewers) const {
+    if (streamer->isActive()) throw AlreadyStreaming();
+    if(getNumActiveStreamers() == this->capacity) throw FullCapacity();
+    try {
+        streamer->s = new PrivateStream(title, lang, min_age, authorized_viewers);
     }
-    return false;
+    catch (InvalidLanguage &) {
+        throw;
+    }
 }
 
 /**
- * Stops a streamer's stream. Checks if the streamer has indeed an active stream
+ * Stops a streamer's stream and adds or not to best streams. Checks if the streamer has indeed an active stream
  *
  * @param streamer the streamer that stopped its stream
- * @return true if the operation was successful, false otherwise
+ * @return
  */
-bool StreamZ::stopStream(Streamer *streamer) {
-    if (!streamer->isActive()) return false;
+void StreamZ::stopStream(Streamer *streamer) {
+    if (!streamer->isActive()) throw NotStreaming();
+
     vector<Viewer*>::const_iterator viewer;
     for(viewer = viewers.begin(); viewer != viewers.end(); viewer++){
         if((*viewer)->s == streamer->s) (*viewer)->s = nullptr;
     }
-    if(dynamic_cast<PrivateStream*>(streamer->s) != nullptr) return streamer->stopStreaming();
+
+    if(dynamic_cast<PrivateStream*>(streamer->s) != nullptr) streamer->stopStreaming();  //private streams doesn't enter in best streams
+
     for (unsigned i = 0; i < 9; i++){
         if (best_streams.at(i) == nullptr){
             best_streams.at(i) = streamer->s;
@@ -433,7 +434,7 @@ bool StreamZ::stopStream(Streamer *streamer) {
             break;
         }
     }
-    return streamer->stopStreaming();
+    streamer->stopStreaming();
 }
 
 /**

@@ -33,6 +33,8 @@ std::ostream& operator<< (std::ostream& out, const Date& date);
 
 std::string strToUpper(const std::string& str);
 
+bool passwordStrength(const std::string& password, std::string &strength);
+
 Age calculateAge(const Date& birthday);
 
 Date getCurrentDate();

@@ -11,13 +11,14 @@ class User {
 private:
     std::string password;
     static unsigned counter;
-    int id;
+    unsigned id;
     Date birthday;
 protected:
     std::string nickname;
 public:
     Stream *s = nullptr; //TODO: Should be private
     User(std::string nickname, Date birthday, std::string password);
+    User(std::string nickname, Date birthday, std::string password, unsigned id);
     std::string getName() const;
     unsigned getID() const;
     std::string getPassword() const;

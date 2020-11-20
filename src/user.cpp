@@ -12,12 +12,25 @@ unsigned User::counter = 0;
  *
  * @param nickname the user's nickname
  * @param birthday the user's date of birth
+ * @param password the user's password
  */
 User::User(string nickname, Date birthday, string password){
     this->nickname = nickname;
     this->birthday = birthday;
     this->password = password;
     id = counter++;
+}
+
+/**
+ * Constructs a user object with a defined id
+ *
+ * @param nickname the user's nickname
+ * @param birthday the user's date of birth
+ * @param password the user's password
+ * @param id the user's id
+ */
+User::User(std::string nickname, Date birthday, std::string password, unsigned int id) : User(nickname, birthday, password) {
+    this->id = id;
 }
 
 User::~User() {
@@ -130,7 +143,6 @@ Streamer::~Streamer() {
     for (stream = streaming_history.begin(); stream != streaming_history.end(); stream++) {
         delete *stream;
     }
-
 }
 
 /**

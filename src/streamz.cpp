@@ -302,7 +302,7 @@ unsigned StreamZ::getNumCreatedStreams(const Language &lang) const {
     return count;
 }
 
-unsigned StreamZ::getNumCreatedStreams(bool public_streams) const {
+unsigned StreamZ::getNumCreatedStreams(bool public_streams, const Date &dt1, const Date &dt2) const {
     unsigned count = 0;
     vector<Stream *> streams;
     vector<Streamer *>::const_iterator streamer;
@@ -311,9 +311,11 @@ unsigned StreamZ::getNumCreatedStreams(bool public_streams) const {
         streams = (*streamer)->getHistory();
         if((*streamer)->isActive()) streams.push_back((*streamer)->s);
         for (stream = streams.begin(); stream != streams.end(); stream++) {
-            if (dynamic_cast<PrivateStream *>(*stream) == nullptr) {
-                if (public_streams) count++;
-            } else if(!public_streams) count++;
+            if (dt1 <= (*stream)->getDate() && (*stream)->getDate() <= dt2) {
+                if (dynamic_cast<PrivateStream *>(*stream) == nullptr) {
+                    if (public_streams) count++;
+                } else if (!public_streams) count++;
+            }
         }
     }
     return count;
@@ -607,6 +609,14 @@ vector<Streamer *> StreamZ::getStreams(const Language &lang = "", Age min_age = 
     return ret_streams;
 }
 
+void StreamZ::stopAllStreams() {
+    vector<Streamer *> active_streamers = getActiveStreamers();
+    vector<Streamer *>::iterator streamer;
+    for (streamer = active_streamers.begin(); streamer != active_streamers.end(); streamer++){
+        stopStream(*streamer);
+    }
+}
+
 /**
  * Saves the StreamZ object to a text file, in a formatted way.
  *
@@ -627,7 +637,8 @@ bool StreamZ::save(const string &filename) const {
     file << '\n';
     vector<Viewer *>::const_iterator viewer;
     for (viewer = viewers.begin(); viewer != viewers.end(); viewer++) {
-        file << (*viewer)->getName() << '\t' << (*viewer)->getBirthday() << '\n';
+        file << (*viewer)->getName() << '\t' << (*viewer)->getPassword() << '\t' << (*viewer)->getBirthday() << '\n';
+
     }
     file << '\n';
     // TODO: Change to handle the nullptr values

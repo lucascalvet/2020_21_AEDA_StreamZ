@@ -55,7 +55,7 @@ string help_submenu =
         "Remove dislike-> removes the dislike given to a stream (can only be used if already disliked)"
         "\n\n";
 
-
+//the 3 following functions are used for inputs
 void minAgeInput(unsigned &min_age){
     bool in_min_age_input = true;
 
@@ -89,9 +89,10 @@ void passwordInput(string& password) {
 
         cout << endl << "Your password is " << password_strength << endl;
     }
+
+    password = sha256Encode(password);  //encrypts password
 }
 
-//5 functions with respective code encapsulated in order to avoid code repetition
 void dateInput(Date& birthday, bool birth_date){
     unsigned day, year, month;
     char sep;
@@ -122,6 +123,7 @@ void dateInput(Date& birthday, bool birth_date){
     }
 }
 
+//the following 4 functions are used in the users menus
 void create_streamer(StreamZ* sz_selected){
     string nickname, password;
     Date birthday;
@@ -193,7 +195,7 @@ void streamer_menu_loop(Menu streamerMenu, Streamer* s_selected, StreamZ* sz_sel
                     } catch (FullCapacity&) {
                         cout << "StreamZ has reached is full capacity of active streams: " << sz_selected->getCapacity() << endl;
                     } catch (InvalidLanguage& invalidL) {
-                        cout << "User have inputed an invalid language: " << invalidL.getLanguage() << endl;
+                        cout << "User have inputted an invalid language: " << invalidL.getLanguage() << endl;
                     }
 
                     if(!exception_caught) cout << "Started Stream..." << endl;
@@ -218,7 +220,7 @@ void streamer_menu_loop(Menu streamerMenu, Streamer* s_selected, StreamZ* sz_sel
 
                     minAgeInput(min_age);
 
-                    cout << "Input the autorized viewers by id: (to stop enter 'stop')" << endl << endl;
+                    cout << "Input the authorized viewers by id: (to stop enter 'stop')" << endl << endl;
 
                     cout << "Viewers" << endl;
 
@@ -244,12 +246,12 @@ void streamer_menu_loop(Menu streamerMenu, Streamer* s_selected, StreamZ* sz_sel
                         }
 
                         if(find(authorized_viewers.begin(), authorized_viewers.end(), id_selected) != authorized_viewers.end())
-                            cout << "Already inputed id" << endl;
+                            cout << "Already inputted id" << endl;
                         else if(sz_selected->getViewerByID(id_selected) == nullptr)
-                            cout <<"Invalid viewer id inputed!" << endl;
+                            cout <<"Invalid viewer id inputted!" << endl;
                         else {
                             authorized_viewers.push_back(id_selected);
-                            cout << "Successfully inputed viewer" << endl;
+                            cout << "Successfully inputted viewer" << endl;
                         }
                     }
 
@@ -264,7 +266,7 @@ void streamer_menu_loop(Menu streamerMenu, Streamer* s_selected, StreamZ* sz_sel
                     } catch (FullCapacity&) {
                         cout << "StreamZ has reached is full capacity of active streams: " << sz_selected->getCapacity() << endl;
                     } catch (InvalidLanguage& invalidL) {
-                        cout << "User have inputed an invalid language: " << invalidL.getLanguage() << endl;
+                        cout << "User have inputted an invalid language: " << invalidL.getLanguage() << endl;
                     }
 
                     if(!exception_caught) cout << "Started Stream..." << endl;
@@ -282,7 +284,7 @@ void streamer_menu_loop(Menu streamerMenu, Streamer* s_selected, StreamZ* sz_sel
                     cout << "There is no stream to stop! Streamer is not streaming!" << endl;
                 }
 
-                if(!exception_caught) cout << "Stream stoped..." << endl;
+                if(!exception_caught) cout << "Stream stopped..." << endl;
 
                 stopConsole();
 
@@ -328,12 +330,12 @@ void viewer_menu_loop(Menu viewerMenu, Viewer* v_selected, StreamZ* sz_selected)
 
                     if(!cinFail()) {
                         if(sz_selected->getStreamerByID(choice) == nullptr) {
-                            cout << "Invalid streamer id inputed!" << endl;
+                            cout << "Invalid streamer id inputted!" << endl;
                             break;
                         }
                     }
                     else{
-                        cout << "No valid number inputed!" << endl;
+                        cout << "No valid number inputted!" << endl;
                         break;
                     }
 
@@ -356,7 +358,7 @@ void viewer_menu_loop(Menu viewerMenu, Viewer* v_selected, StreamZ* sz_selected)
                 //like stream
             case 3: {
                 if (!v_selected->isActive()) {
-                    cout << "Not viweing any stream!" << endl;
+                    cout << "Not viewing any stream!" << endl;
                 } else {
                     if (sz_selected->likeStream(v_selected))
                         cout << "Liked the stream that viewer is watching!" << endl;
@@ -368,7 +370,7 @@ void viewer_menu_loop(Menu viewerMenu, Viewer* v_selected, StreamZ* sz_selected)
                 //dislike stream
             case 4: {
                 if (!v_selected->isActive()) {
-                    cout << "Not viweing any stream!" << endl;
+                    cout << "Not viewing any stream!" << endl;
                 } else {
                     if (sz_selected->dislikeStream(v_selected))
                         cout << "Disliked the stream that viewer is watching!" << endl;
@@ -380,7 +382,7 @@ void viewer_menu_loop(Menu viewerMenu, Viewer* v_selected, StreamZ* sz_selected)
                 //remove like
             case 5: {
                 if (!v_selected->isActive()) {
-                    cout << "Not viweing any stream!" << endl;
+                    cout << "Not viewing any stream!" << endl;
                 } else {
                     if (sz_selected->remlikeStream(v_selected))
                         cout << "Removed like to the stream that viewer is watching!"
@@ -393,7 +395,7 @@ void viewer_menu_loop(Menu viewerMenu, Viewer* v_selected, StreamZ* sz_selected)
                 //remove dislike
             case 6: {
                 if (!v_selected->isActive()) {
-                    cout << "Not viweing any stream!" << endl;
+                    cout << "Not viewing any stream!" << endl;
                 } else {
                     if (sz_selected->remdislikeStream(v_selected))
                         cout << "Removed dislike to the stream that viewer is watching!"
@@ -668,12 +670,12 @@ void streamzFramework() { //TODO: Allow stream titles with more than one word. G
 
                                 if(!cinFail()) {
                                     if(sz_selected->getStreamerByID(input) == nullptr) {
-                                        cout << "Invalid streamer id inputed!" << endl;
+                                        cout << "Invalid streamer id inputted!" << endl;
                                         break;
                                     }
                                 }
                                 else{
-                                    cout << "No valid number inputed!" << endl;
+                                    cout << "No valid number inputted!" << endl;
                                     break;
                                 }
 
@@ -709,12 +711,12 @@ void streamzFramework() { //TODO: Allow stream titles with more than one word. G
 
                                 if(!cinFail()) {
                                     if(sz_selected->getViewerByID(input) == nullptr) {
-                                        cout << "Invalid viewer id inputed!" << endl;
+                                        cout << "Invalid viewer id inputted!" << endl;
                                         break;
                                     }
                                 }
                                 else{
-                                    cout << "No valid number inputed!" << endl;
+                                    cout << "No valid number inputted!" << endl;
                                     break;
                                 }
 
@@ -724,7 +726,7 @@ void streamzFramework() { //TODO: Allow stream titles with more than one word. G
 
                                 break;
                             }
-                            //statitics
+                            //statistics
                             case 5: {
                                 stats_loop = true;
 
@@ -859,7 +861,7 @@ void streamzFramework() { //TODO: Allow stream titles with more than one word. G
                             cin >> filename;
                             cin.ignore(numeric_limits<streamsize>::max(), '\n');
                             try {
-                                streamz_vector.emplace_back(new StreamZ(filename)); //TODO: if it fails the id still goes up. Messes up when choosing a stream
+                                streamz_vector.emplace_back(new StreamZ(filename));
                             }
                             catch (InvalidFile &invf) {
                                 cout << "\"" << invf.getFileName() << "\" failed to load. StreamZ not imported!\n\n";

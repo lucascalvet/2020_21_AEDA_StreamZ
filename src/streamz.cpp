@@ -652,19 +652,30 @@ bool StreamZ::save(const string &filename) const {
     return true;
 }
 
-bool StreamZ::loginVerifier(string nickname,string password) const{
+/**
+ * Verifies is a user is already registered using sha256Verifier()
+ * @param nickname the user nickname
+ * @param password the user password
+ * @return true if it is already registered, false otherwise
+ */
+bool StreamZ::loginVerifier(string nickname,string password_inputted) const{
     for(int i = 0; i < streamers.size(); i++){
-        if(streamers.at(i)->getName() == nickname && streamers.at(i)->getPassword() == password)
+        if(streamers.at(i)->getName() == nickname && sha256Verifier(streamers.at(i)->getPassword(), password_inputted))
             return true;
     }
     for(int i = 0; i < viewers.size(); i++){
-        if(viewers.at(i)->getName() == nickname && viewers.at(i)->getPassword() == password)
+        if(viewers.at(i)->getName() == nickname && sha256Verifier(viewers.at(i)->getPassword(), password_inputted))
             return true;
     }
-    if(admin->getName() == nickname && admin->getPassword() == password) return true;
+    if(admin->getName() == nickname && sha256Verifier(admin->getPassword(), password_inputted)) return true;
     return false;
 }
 
+/**
+ * Gets user by it's nickname
+ * @param nickname the user nickname
+ * @return user pointer to user if it exists, nullptr otherwise
+ */
 User* StreamZ::getUserByName(std::string nickname){
     for(int i = 0; i < streamers.size(); i++) {
         if (streamers.at(i)->getName() == nickname) return streamers.at(i);

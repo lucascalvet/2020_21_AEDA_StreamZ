@@ -23,6 +23,10 @@ struct Date {
     unsigned year;
 };
 
+Age calculateAge(const Date& birthday);
+
+Date getCurrentDate();
+
 bool operator==(const Date &date1, const Date &date2);
 
 bool operator<(const Date &date1, const Date &date2);
@@ -35,8 +39,8 @@ std::string strToUpper(const std::string& str);
 
 bool passwordStrength(const std::string& password, std::string &strength);
 
-Age calculateAge(const Date& birthday);
+bool sha256Verifier(const std::string& hash,const std::string& password);
 
-Date getCurrentDate();
+std::string sha256Encode(const std::string& password);
 
 #endif //STREAMZ_UTILS_H

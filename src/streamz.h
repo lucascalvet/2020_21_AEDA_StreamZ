@@ -23,7 +23,7 @@ private:
     ///A container with the 10 most viewed streams, followed by the 10 most liked streams, sorted in descending order
     std::vector<Stream*> best_streams = std::vector<Stream*>(20, nullptr);
 public:
-    StreamZ(unsigned capacity, Admin *admin);
+    StreamZ(unsigned capacity, const std::string &nickname, const Date &birthday, const std::string &password);
     StreamZ(const std::string& filename);
     ~StreamZ();
     unsigned getCapacity() const;

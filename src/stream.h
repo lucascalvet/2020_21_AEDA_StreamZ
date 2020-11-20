@@ -21,13 +21,20 @@ private:
     std::vector<unsigned> viewers_disliked;
 public:
     Stream(const std::string& title, const Language& lang, unsigned min_age);
-    Stream(const std::string& title, const Language& lang, unsigned min_age, const Date& starting_date, unsigned num_viewers);
+    Stream(const std::string &title, const Language &lang, unsigned min_age, const Date &starting_date,
+           unsigned num_viewers, const std::vector<unsigned int> &viewers_liked,
+           const std::vector<unsigned int> &viewers_disliked);
     virtual std::string getInfo() const;
     std::string getTitle() const;
     Date getDate() const;
     Language getLanguage() const;
     Age getMinAge() const;
     unsigned int getNumTotalViews() const;
+
+    const std::vector<unsigned int> &getViewersLiked() const;
+
+    const std::vector<unsigned int> &getViewersDisliked() const;
+
     unsigned getNumLikes() const;
     unsigned getNumDislikes() const;
     void addView();
@@ -44,6 +51,11 @@ public:
 class PublicStream : public Stream{
 public:
     PublicStream(std::string title, Language lang, Age min_age);
+
+    PublicStream(const std::string &title, const Language &lang, unsigned int minAge, const Date &startingDate,
+                 unsigned int numViewers, const std::vector<unsigned int> &viewersLiked,
+                 const std::vector<unsigned int> &viewersDisliked);
+
     ~PublicStream();
 };
 
@@ -57,6 +69,12 @@ private:
 public:
     PrivateStream(std::string title, Language lang, Age min_age,
                   std::vector<unsigned> authorized_viewers);
+
+    PrivateStream(const std::string &title, const Language &lang, unsigned int minAge, const Date &startingDate,
+                  unsigned int numViewers, const std::vector<unsigned int> &viewersLiked,
+                  const std::vector<unsigned int> &viewersDisliked, const std::vector<unsigned int> &authorizedViewers,
+                  const std::vector<std::string> &comments);
+
     ~PrivateStream();
     std::string getInfo() const;
     const std::vector<unsigned int> &getAuthorizedViewers() const;

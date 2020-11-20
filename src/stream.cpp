@@ -49,15 +49,10 @@ Stream::Stream(const string &title, const Language &lang, unsigned min_age) {
  * @param num_viewers the stream's number of viewers
  */
 Stream::Stream(const string &title, const Language &lang, unsigned min_age,
-               const Date &starting_date, unsigned num_total_views) {
-    this->title = title;
-    string lang_upper = strToUpper(lang);
-    if (find(LANGS.begin(), LANGS.end(), lang_upper) == LANGS.end())
-        throw InvalidLanguage(lang);
-    this->lang = lang_upper;
-    this->min_age = min_age;
+               const Date &starting_date, unsigned num_viewers, const vector<unsigned int> &viewers_liked,
+               const vector<unsigned int> &viewers_disliked) : Stream(title, lang, min_age) {
     this->starting_date = starting_date;
-    this->num_total_views = num_total_views;
+    this->num_total_views = num_viewers;
 }
 
 /**
@@ -68,7 +63,9 @@ Stream::Stream(const string &title, const Language &lang, unsigned min_age,
 string Stream::getInfo() const {
     ostringstream info;
     info << "Title: " << this->title << "\tStarting Date: " << this->starting_date <<
-         "\tLanguage: " << this->lang << "\tMin Age: " << this->min_age << '\n';
+         "\tLanguage: " << this->lang << "\tMin Age: " << this->min_age <<
+         "\tLikes: " << getNumLikes() << "\tDislikes: " << getNumDislikes() <<
+         "\tTotal Views: " << this->num_total_views <<'\n';
     return info.str();
 }
 
@@ -132,6 +129,14 @@ unsigned Stream::getNumLikes() const {
  */
 unsigned Stream::getNumDislikes() const {
     return viewers_disliked.size();
+}
+
+const vector<unsigned int> &Stream::getViewersLiked() const {
+    return viewers_liked;
+}
+
+const vector<unsigned int> &Stream::getViewersDisliked() const {
+    return viewers_disliked;
 }
 
 /**
@@ -217,6 +222,12 @@ bool Stream::alreadyLikedOrDisliked(unsigned id) {
 PublicStream::PublicStream(string title, Language lang, Age min_age) : Stream(title, lang, min_age) {
 }
 
+PublicStream::PublicStream(const string &title, const Language &lang, unsigned int minAge, const Date &startingDate,
+                           unsigned int numViewers, const vector<unsigned int> &viewersLiked,
+                           const vector<unsigned int> &viewersDisliked) : Stream(title, lang, minAge, startingDate,
+                                                                                 numViewers, viewersLiked,
+                                                                                 viewersDisliked) {}
+
 PublicStream::~PublicStream() {
 }
 
@@ -230,6 +241,15 @@ PublicStream::~PublicStream() {
 PrivateStream::PrivateStream(string title, Language lang, Age min_age, vector<unsigned> authorized_viewers) : Stream(
         title, lang, min_age) {
     this->authorized_viewers = authorized_viewers;
+}
+
+PrivateStream::PrivateStream(const string &title, const Language &lang, unsigned int minAge, const Date &startingDate,
+                             unsigned int numViewers, const vector<unsigned int> &viewersLiked,
+                             const vector<unsigned int> &viewersDisliked, const vector<unsigned int> &authorizedViewers,
+                             const vector<std::string> &comments) : Stream(title, lang, minAge, startingDate,
+                                                                           numViewers, viewersLiked, viewersDisliked){
+    this->authorized_viewers = authorizedViewers;
+    this->comments = comments;
 }
 
 PrivateStream::~PrivateStream() {

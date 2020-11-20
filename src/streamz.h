@@ -43,7 +43,7 @@ public:
     Streamer * getMostViewedStreamer() const;
     unsigned getNumCreatedStreams() const;
     unsigned getNumCreatedStreams(const Language &lang) const;
-    unsigned getNumCreatedStreams(bool public_streams) const;
+    unsigned getNumCreatedStreams(bool public_streams, const Date &dt1 = Date(0,0,0), const Date &dt2 = Date(31,12,UINT_MAX)) const;
     double getAverageViews() const;
     //map<int, std::vector<Stream*>> history; ;  //history per id of streamer
     bool addStreamer(const std::string& nickname, const Date& birthday, const std::string& password);
@@ -63,6 +63,7 @@ public:
     static bool remdislikeStream(Viewer *v);
     void printActiveStreams() const;
     std::vector<Streamer*> getStreams(const Language& lang, Age min_age) const;
+    void stopAllStreams();
     bool save(const std::string &filename) const;
     bool loginVerifier(std::string nickname, std::string password) const;
     User* getUserByName(std::string nickname);

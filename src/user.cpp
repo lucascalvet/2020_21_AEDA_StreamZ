@@ -14,7 +14,7 @@ unsigned User::counter = 0;
  * @param birthday the user's date of birth
  * @param password the user's password
  */
-User::User(string nickname, Date birthday, string password){
+User::User(const string &nickname, const Date &birthday, const string &password){
     this->nickname = nickname;
     this->birthday = birthday;
     this->password = password;
@@ -22,14 +22,14 @@ User::User(string nickname, Date birthday, string password){
 }
 
 /**
- * Constructs a user object with a defined id
+ * Constructs a user object with a defined id (for importing from a file)
  *
  * @param nickname the user's nickname
  * @param birthday the user's date of birth
  * @param password the user's password
  * @param id the user's id
  */
-User::User(std::string nickname, Date birthday, std::string password, unsigned int id) : User(nickname, birthday, password) {
+User::User(const string &nickname, const Date &birthday, const string &password, unsigned int id) : User(nickname, birthday, password) {
     this->id = id;
 }
 
@@ -95,10 +95,11 @@ bool User::isActive() const {
  * @param nickname the viewer's nickname
  * @param birthday the viewer's date of birth
  */
-Viewer::Viewer(string nickname, Date birthday, string password) : User(nickname , birthday, password){
+Viewer::Viewer(const string &nickname, const Date &birthday, const string &password) : User(nickname , birthday, password){
 }
 
-Viewer::~Viewer() {
+Viewer::Viewer(const string &nickname, const Date &birthday, const string &password, unsigned int id) : User(nickname, birthday,
+                                                                                                             password, id) {
 }
 
 /**
@@ -135,7 +136,12 @@ void Viewer::comment(const string &comment) {
  * @param nickname the streamer's nickname
  * @param birthday the streamer's date of birth
  */
-Streamer::Streamer(string nickname, Date birthday, string password) : User(nickname, birthday, password){
+Streamer::Streamer(const string &nickname, const Date &birthday, const string &password) : User(nickname, birthday, password){
+}
+
+Streamer::Streamer(const string &nickname, const Date &birthday, const string &password, unsigned int id) : User(nickname,
+                                                                                                                 birthday,
+                                                                                                                 password, id) {
 }
 
 Streamer::~Streamer() {
@@ -198,4 +204,4 @@ string Streamer::getInfo() {
  * @param nickname the admin's nickname
  * @param birthday the admin's date of birth
  */
-Admin::Admin(string nickname, Date birthday, string password) : User(nickname , birthday, password){}
+Admin::Admin(const string &nickname, const Date &birthday, const string &password) : User(nickname , birthday, password){}

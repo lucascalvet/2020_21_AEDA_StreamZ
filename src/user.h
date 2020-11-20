@@ -16,9 +16,9 @@ private:
 protected:
     std::string nickname;
 public:
-    Stream *s = nullptr; //TODO: Should be private
-    User(std::string nickname, Date birthday, std::string password);
-    User(std::string nickname, Date birthday, std::string password, unsigned id);
+    Stream *s = nullptr;
+    User(const std::string &nickname, const Date &birthday, const std::string &password);
+    User(const std::string &nickname, const Date &birthday, const std::string &password, unsigned id);
     std::string getName() const;
     unsigned getID() const;
     std::string getPassword() const;
@@ -35,10 +35,10 @@ class Viewer : public User {
 public:
     bool alreadyLiked = false;
     bool alreadyDisliked = false;
-    Viewer(std::string nickname, Date birthday, std::string password);
+    Viewer(const std::string &nickname, const Date &birthday, const std::string &password);
+    Viewer(const std::string &nickname, const Date &birthday, const std::string &password, unsigned id);
     std::string getInfo();
     void comment(const std::string &comment);
-    ~Viewer();
 };
 
 /**
@@ -48,7 +48,8 @@ class Streamer : public User {
 private:
     std::vector<Stream *> streaming_history;
 public:
-    Streamer(std::string nickname, Date birthday, std::string password);
+    Streamer(const std::string &nickname, const Date &birthday, const std::string &password);
+    Streamer(const std::string &nickname, const Date &birthday, const std::string &password, unsigned id);
     ~Streamer();
     std::string getInfo();
     unsigned getTotalViews() const;
@@ -62,7 +63,7 @@ public:
  */
 class Admin : public User {  //maybe not appropriate because its a framework so the people controling it is the admin
 public:
-    Admin(std::string nickname, Date birthday, std::string password);
+    Admin(const std::string &nickname, const Date &birthday, const std::string &password);
 };
 
 

@@ -535,9 +535,7 @@ void streamzFramework() { //TODO: Allow stream titles with more than one word. G
 
                     passwordInput(password);
 
-                    Admin *admin = new Admin(nickname, birthday, password);
-
-                    StreamZ *sz1 = new StreamZ(cap, admin);
+                    StreamZ *sz1 = new StreamZ(cap, nickname, birthday, password);
                     streamz_vector.push_back(sz1);
 
                     cout << "StreamZ created successfully, go back to work with it!" << endl;

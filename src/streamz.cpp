@@ -74,11 +74,10 @@ StreamZ::~StreamZ() {
         delete *streamer;
     }
     for (viewer = viewers.begin(); viewer != viewers.end(); viewer++) {
+        (*viewer)->s = nullptr;
         delete *viewer;
     }
-    for (stream = best_streams.begin(); stream != best_streams.end(); stream++) {
-        delete *stream;
-    }
+    delete admin;
 }
 
 /**
@@ -106,6 +105,19 @@ unsigned StreamZ::getID() const {
  */
 unsigned StreamZ::getNumViewers() const {
     return viewers.size();
+}
+
+/**
+ * Get the number of viewers in a stream
+ * @return the number of viewers in a stream
+ */
+unsigned StreamZ::getNumStreamViewers(Stream* stream) const {
+    unsigned count = 0;
+    vector<Viewer *>::const_iterator viewer;
+    for(viewer = viewers.begin(); viewer != viewers.end(); viewer++){
+        if((*viewer)->s == stream) count++;
+    }
+    return count;
 }
 
 /**
@@ -230,6 +242,107 @@ vector<Stream *> StreamZ::getBestStreams() const {
 }
 
 /**
+ * Get the streamer with the most total views
+ * @return the most viewed streamer
+ */
+Streamer *StreamZ::getMostViewedStreamer() const {
+    if(streamers.empty()) return nullptr;
+    Streamer* most_viewed = nullptr;
+    unsigned most_views = 0;
+    unsigned views;
+    vector<Streamer *>::const_iterator streamer;
+    for(streamer = streamers.begin(); streamer != streamers.end(); streamer++){
+        views = 0;
+        vector<Stream *> history = (*streamer)->getHistory();
+        vector<Stream *>::const_iterator stream;
+        for(stream = history.begin(); stream != history.end(); stream++){
+            views += (*stream)->getNumTotalViews();
+        }
+        if (most_viewed == nullptr){
+            most_viewed = *streamer;
+            most_views = views;
+        }
+        else if (views > most_views){
+            most_viewed = *streamer;
+            most_views = views;
+        }
+        else if (views == most_views && (*most_viewed->getHistory().end()-1)->getDate() < (*history.end()-1)->getDate()){
+            most_viewed = *streamer;
+        }
+    }
+    return most_viewed;
+}
+
+/**
+ * Get the number of all previously created streams
+ *
+ * @return the number of created streams
+ */
+unsigned StreamZ::getNumCreatedStreams() const {
+    unsigned count = 0;
+    vector<Streamer *>::const_iterator streamer;
+    for (streamer = streamers.begin(); streamer != streamers.end(); streamer++) {
+        count += (*streamer)->getHistory().size();
+        if((*streamer)->isActive()) count++;
+    }
+    return count;
+}
+
+unsigned StreamZ::getNumCreatedStreams(const Language &lang) const {
+    unsigned count = 0;
+    vector<Stream *> streams;
+    vector<Streamer *>::const_iterator streamer;
+    vector<Stream *>::const_iterator stream;
+    for (streamer = streamers.begin(); streamer != streamers.end(); streamer++) {
+        streams = (*streamer)->getHistory();
+        if((*streamer)->isActive()) streams.push_back((*streamer)->s);
+        for (stream = streams.begin(); stream != streams.end(); stream++)
+            if ((*stream)->getLanguage() == lang) count++;
+    }
+    return count;
+}
+
+unsigned StreamZ::getNumCreatedStreams(bool public_streams) const {
+    unsigned count = 0;
+    vector<Stream *> streams;
+    vector<Streamer *>::const_iterator streamer;
+    vector<Stream *>::const_iterator stream;
+    for (streamer = streamers.begin(); streamer != streamers.end(); streamer++) {
+        streams = (*streamer)->getHistory();
+        if((*streamer)->isActive()) streams.push_back((*streamer)->s);
+        for (stream = streams.begin(); stream != streams.end(); stream++) {
+            if (dynamic_cast<PrivateStream *>(*stream) == nullptr) {
+                if (public_streams) count++;
+            } else if(!public_streams) count++;
+        }
+    }
+    return count;
+}
+
+/**
+ * Get the average number of total views on previous streams
+ *
+ * @return the average number of total views on previous streams
+ */
+double StreamZ::getAverageViews() const {
+    unsigned amount = 0;
+    double total_average = 0;
+    vector<Streamer *>::const_iterator streamer;
+    for(streamer = streamers.begin(); streamer != streamers.end(); streamer++){
+        vector<Stream *> history = (*streamer)->getHistory();
+        vector<Stream *>::const_iterator stream;
+        for(stream = history.begin(); stream != history.end(); stream++){
+            total_average += (*stream)->getNumTotalViews();
+            amount++;
+        }
+    }
+    total_average = total_average / amount;
+    return total_average;
+}
+
+
+
+/**
  * Starts a public stream, with all of its initial properties
  *
  * Checks if the streamer already has an active stream and if the StreamZ platform hasn't reached
@@ -292,9 +405,32 @@ bool StreamZ::stopStream(Streamer *streamer) {
     for(viewer = viewers.begin(); viewer != viewers.end(); viewer++){
         if((*viewer)->s == streamer->s) (*viewer)->s = nullptr;
     }
-    //TODO: handle best streams
-    for (unsigned i = 0; i < 10; i++){
-        if (best_streams.at(i) == nullptr);
+    if(dynamic_cast<PrivateStream*>(streamer->s) != nullptr) return streamer->stopStreaming();
+    for (unsigned i = 0; i < 9; i++){
+        if (best_streams.at(i) == nullptr){
+            best_streams.at(i) = streamer->s;
+            break;
+        }
+        if (streamer->s->getNumTotalViews() > best_streams.at(i)->getNumTotalViews()){
+            for (unsigned j = 9; j > i; j--){
+                best_streams.at(j) = best_streams.at(j-1);
+            }
+            best_streams.at(i) = streamer->s;
+            break;
+        }
+    }
+    for (unsigned i = 10; i < 19; i++){
+        if (best_streams.at(i) == nullptr){
+            best_streams.at(i) = streamer->s;
+            break;
+        }
+        if (streamer->s->getNumLikes() > best_streams.at(i)->getNumLikes()){
+            for (unsigned j = 19; j > i; j--){
+                best_streams.at(j) = best_streams.at(j-1);
+            }
+            best_streams.at(i) = streamer->s;
+            break;
+        }
     }
     return streamer->stopStreaming();
 }
@@ -318,6 +454,7 @@ bool StreamZ::enterStream(Streamer *streamer, Viewer *v) {
     }
     PrivateStream* stream = dynamic_cast<PrivateStream *>(streamer->s);
     if(stream != nullptr && !stream->isAuthorized(v->getID())) return false;
+    streamer->s->addView();
     v->s = streamer->s;
     return true;
 }
@@ -485,6 +622,7 @@ bool StreamZ::save(const string &filename) const {
     //TODO: Save the active streams as well?
     for (streamer = streamers.begin(); streamer != streamers.end(); streamer++) {
         file << (*streamer)->getName() << '\t' << (*streamer)->getBirthday() << '\n';
+
     }
     file << '\n';
     vector<Viewer *>::const_iterator viewer;
@@ -523,6 +661,5 @@ User* StreamZ::getUserByName(std::string nickname){
     for(int i = 0; viewers.size(); i++){
         if(viewers.at(i)->getName() == nickname) return viewers.at(i);
     }
-    return NULL;
+    return nullptr;
 }
-

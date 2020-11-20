@@ -130,6 +130,7 @@ Streamer::~Streamer() {
     for (stream = streaming_history.begin(); stream != streaming_history.end(); stream++) {
         delete *stream;
     }
+
 }
 
 /**
@@ -188,6 +189,3 @@ string Streamer::getInfo() {
  * @param birthday the admin's date of birth
  */
 Admin::Admin(string nickname, Date birthday, string password) : User(nickname , birthday, password){}
-
-Admin::~Admin() {
-}

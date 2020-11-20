@@ -20,6 +20,7 @@ private:
     unsigned capacity;   //how many streamers can be active at same time
     std::vector<Streamer*> streamers;
     std::vector<Viewer*> viewers;
+    ///A container with the 10 most viewed streams, followed by the 10 most liked streams, sorted in descending order
     std::vector<Stream*> best_streams = std::vector<Stream*>(20, nullptr);
 public:
     StreamZ(unsigned capacity, Admin *admin);
@@ -28,16 +29,22 @@ public:
     unsigned getCapacity() const;
     unsigned getID() const;
     unsigned getNumViewers() const;
+    unsigned getNumStreamViewers(Stream* stream) const;
     std::vector<Viewer*> getViewers() const;
     Viewer* getViewerByID(unsigned user_id) const;
     Viewer *getViewerByName(const std::string &nickname) const;
     unsigned getNumStreamers() const;
+    unsigned getNumActiveStreamers() const;
     std::vector<Streamer*> getStreamers() const;
     Streamer *getStreamerByID(unsigned user_id) const;
     Streamer *getStreamerByName(const std::string &nickname) const;
-    unsigned getNumActiveStreamers() const;
     std::vector<Streamer*> getActiveStreamers() const;
     std::vector<Stream*> getBestStreams() const;
+    Streamer * getMostViewedStreamer() const;
+    unsigned getNumCreatedStreams() const;
+    unsigned getNumCreatedStreams(const Language &lang) const;
+    unsigned getNumCreatedStreams(bool public_streams) const;
+    double getAverageViews() const;
     //map<int, std::vector<Stream*>> history; ;  //history per id of streamer
     bool addStreamer(const std::string& nickname, const Date& birthday, const std::string& password);
     bool addViewer(const std::string& nickname, const Date& birthday, const std::string& password);

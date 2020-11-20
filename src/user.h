@@ -62,7 +62,6 @@ public:
 class Admin : public User {  //maybe not appropriate because its a framework so the people controling it is the admin
 public:
     Admin(std::string nickname, Date birthday, std::string password);
-    ~Admin();
 };
 
 

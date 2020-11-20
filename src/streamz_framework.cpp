@@ -637,6 +637,7 @@ void streamz_framework() { //TODO: Allow stream titles with more than one word. 
                             }
                                 //choose viewer
                             case 4: {
+                                    
                                 unsigned input;
 
                                 cout << "Viewers" << endl;
@@ -653,7 +654,7 @@ void streamz_framework() { //TODO: Allow stream titles with more than one word. 
 
                                 if(!cinFail()) {
                                     if(sz_selected->getViewerByID(input) == nullptr) {
-                                        cout << "Invalid streamer id inputed!" << endl;
+                                        cout << "Invalid viewer id inputed!" << endl;
                                         break;
                                     }
                                 }

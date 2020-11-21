@@ -1013,7 +1013,7 @@ streamzFramework() {
                     cout << "Don't forget to save if you want!" << endl;
                 } else {
                     vector<StreamZ *>::iterator it;
-                    for (it = streamz_vector.begin(); it != streamz_vector.end();) {
+                    for (it = streamz_vector.begin(); it != streamz_vector.end(); it++) {
                         string filename = "StreamZ_" + to_string((*it)->getID()) + ".txt";
                         (*it)->save(filename);
                     }

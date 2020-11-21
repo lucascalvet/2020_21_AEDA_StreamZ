@@ -56,7 +56,7 @@ public:
                             const std::vector<unsigned> &authorized_viewers) const;
     void stopStream(Streamer *streamer);
     void stopAllStreams();
-    bool loginVerifier(std::string nickname, std::string password) const;
+    bool loginVerifier(const std::string &nickname,const std::string &password) const;
     void save(const std::string &filename) const;
 };
 

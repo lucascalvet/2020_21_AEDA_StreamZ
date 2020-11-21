@@ -538,21 +538,20 @@ bool StreamZ::exitStream(Viewer *v) {
  * @param birthday the user's date of birth
  * @return true if the operation was successful, false otherwise
  */
-bool StreamZ::addStreamer(const string &nickname, const Date &birthday, const std::string &password) {
-    if (calculateAge(birthday) < MIN_AGE_STREAMER) return false;
+void StreamZ::addStreamer(const string &nickname, const Date &birthday, const std::string &password) {
+    if (calculateAge(birthday) < MIN_AGE_STREAMER) throw NoMinimumAge();
     vector<Streamer *>::const_iterator streamer_it;
     vector<Viewer *>::const_iterator viewer_it;
-    if (admin->getName() == nickname) return false;
+    if (admin->getName() == nickname) throw NameAlreadyInUse();
     for (streamer_it = streamers.begin(); streamer_it != streamers.end(); streamer_it++)
-        if ((*streamer_it)->getName() == nickname) return false;
+        if ((*streamer_it)->getName() == nickname) throw NameAlreadyInUse();
     for (viewer_it = viewers.begin(); viewer_it != viewers.end(); viewer_it++)
-        if ((*viewer_it)->getName() == nickname) return false;
+        if ((*viewer_it)->getName() == nickname) throw NameAlreadyInUse();
 
     string hashed_password = sha256Encode(password);  //encrypts password
 
     Streamer *s1 = new Streamer(nickname, birthday, hashed_password);
     streamers.push_back(s1);
-    return true;
 }
 
 /**
@@ -562,21 +561,20 @@ bool StreamZ::addStreamer(const string &nickname, const Date &birthday, const st
  * @param birthday the user's date of birth
  * @return true if the operation was successful, false otherwise
  */
-bool StreamZ::addViewer(const string &nickname, const Date &birthday, const std::string &password) {
-    if (calculateAge(birthday) < MIN_AGE_VIEWER) return false;
+void StreamZ::addViewer(const string &nickname, const Date &birthday, const std::string &password) {
+    if (calculateAge(birthday) < MIN_AGE_VIEWER) throw NoMinimumAge();
     vector<Streamer *>::const_iterator streamer_it;
     vector<Viewer *>::const_iterator viewer_it;
-    if (admin->getName() == nickname) return false;
+    if (admin->getName() == nickname) throw NameAlreadyInUse();
     for (streamer_it = streamers.begin(); streamer_it != streamers.end(); streamer_it++)
-        if ((*streamer_it)->getName() == nickname) return false;
+        if ((*streamer_it)->getName() == nickname) throw NameAlreadyInUse();
     for (viewer_it = viewers.begin(); viewer_it != viewers.end(); viewer_it++)
-        if ((*viewer_it)->getName() == nickname) return false;
+        if ((*viewer_it)->getName() == nickname) throw NameAlreadyInUse();
 
     string hashed_password = sha256Encode(password);  //encrypts password
 
     Viewer *v1 = new Viewer(nickname, birthday, hashed_password);
     viewers.push_back(v1);
-    return true;
 }
 
 /**

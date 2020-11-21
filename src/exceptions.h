@@ -43,4 +43,8 @@ class InactiveUser : std::exception{};
 
 class NotInPrivateStream : std::exception{};
 
+class NoMinimumAge : std::exception{};
+
+class NameAlreadyInUse : std::exception{};
+
 #endif //STREAMZ_EXCEPTIONS_H

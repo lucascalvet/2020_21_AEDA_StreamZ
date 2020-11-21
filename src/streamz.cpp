@@ -19,11 +19,14 @@ StreamZ::StreamZ(unsigned capacity, const std::string &nickname, const Date &bir
     admin = new Admin(nickname, birthday, hashed_password);
     id = counter++;
     this->capacity = capacity;
-    this->admin = admin;
 }
 
+/**
+ * Constructor for the StreamZ class, from a formatted file
+ */
 StreamZ::StreamZ(const string &filename) {
     id = counter++;
+    capacity = 0;
     ifstream file;
     file.open(filename);
     if (file.fail()) throw InvalidFile(filename);
@@ -49,7 +52,7 @@ StreamZ::StreamZ(const string &filename) {
         getline(file, nickname, '\t');
         getline(file, password, '\t');
         file >> day >> sep >> month >> sep >> year;
-        Date birthday(day, month, year);
+        birthday = Date(day, month, year);
         Viewer *viewer = new Viewer(nickname, birthday, password, user_id);
         viewers.push_back(viewer);
         file.ignore(numeric_limits<streamsize>::max(), '\n');
@@ -61,7 +64,7 @@ StreamZ::StreamZ(const string &filename) {
         getline(file, nickname, '\t');
         getline(file, password, '\t');
         file >> day >> sep >> month >> sep >> year;
-        Date birthday(day, month, year);
+        birthday = Date(day, month, year);
         Streamer *streamer = new Streamer(nickname, birthday, password, user_id);
         streamers.push_back(streamer);
         file.ignore(numeric_limits<streamsize>::max(), '\n');
@@ -120,11 +123,9 @@ StreamZ::~StreamZ() {
     vector<Viewer *>::iterator viewer;
     vector<Stream *>::iterator stream;
     for (streamer = streamers.begin(); streamer != streamers.end(); streamer++) {
-        //delete (*viewer)->s;
         delete *streamer;
     }
     for (viewer = viewers.begin(); viewer != viewers.end(); viewer++) {
-        //delete (*viewer)->s;
         delete *viewer;
     }
     delete admin;
@@ -580,65 +581,13 @@ bool StreamZ::addViewer(const string &nickname, const Date &birthday, const std:
 }
 
 /**
- * Likes the stream that the user is viewing
- *
- * Checks if the user already liked or disliked the stream. If not, likes the stream.
- *
- * @param v the viewer liking the stream
- * @return true if the operation was successful, false otherwise
+ * Prints a list of streams
+ * @param streams the streams to be printed
  */
-bool StreamZ::likeStream(Viewer *v) {
-    if (!v->isActive()) return false;
-    return v->s->addLike(v->getID());
-}
-
-/**
- * Dislikes the stream that the user is viewing
- *
- * Checks if the user already liked or disliked the stream. If not, dislikes the stream.
- *
- * @param v the viewer liking the stream
- * @return true if the operation was successful, false otherwise
- */
-bool StreamZ::dislikeStream(Viewer *v) {
-    if (!v->isActive()) return false;
-    return v->s->addDislike(v->getID());
-}
-
-/**
- * Removes a like from the stream that the user is viewing
- *
- * Checks if the user already liked. If so, removes the like.
- *
- * @param v the viewer that liked the stream
- * @return true if the operation was successful, false otherwise
- */
-bool StreamZ::remlikeStream(Viewer *v) {
-    if (!v->isActive()) return false;
-    return v->s->remLike(v->getID());
-}
-
-/**
- * Removes a dislike from the stream that the user is viewing
- *
- * Checks if the user already disliked. If so, removes the dislike.
- *
- * @param v the viewer that disliked the stream
- * @return true if the operation was successful, false otherwise
- */
-bool StreamZ::remdislikeStream(Viewer *v) {
-    if (!v->isActive()) return false;
-    return v->s->remDislike(v->getID());
-}
-
-/**
- * Prints the active streams
- */
-void StreamZ::printActiveStreams() const {
-    vector<Streamer *> active_streamers = getActiveStreamers();
+void StreamZ::printStreams(const vector<Streamer *> &streams) const {
     vector<Streamer *>::const_iterator streamer;
-    for (streamer = active_streamers.begin(); streamer != active_streamers.end(); streamer++) {
-        cout << "Streamer id: " << to_string((*streamer)->getID()) << "   Stream: " << (*streamer)->s->getInfo()
+    for (streamer = streams.begin(); streamer != streams.end(); streamer++) {
+        cout << "Streamer: " << (*streamer)->getName() << "\tStream-> " << (*streamer)->s->getInfo()
              << endl;
     }
 }
@@ -741,6 +690,7 @@ bool StreamZ::save(const string &filename) const {
  * @return true if it is already registered, false otherwise
  */
 bool StreamZ::loginVerifier(string nickname, string password_inputted) const {
+    if (admin->getName() == nickname && sha256Verifier(admin->getPassword(), password_inputted)) return true;
     for (int i = 0; i < streamers.size(); i++) {
         if (streamers.at(i)->getName() == nickname && sha256Verifier(streamers.at(i)->getPassword(), password_inputted))
             return true;
@@ -749,7 +699,6 @@ bool StreamZ::loginVerifier(string nickname, string password_inputted) const {
         if (viewers.at(i)->getName() == nickname && sha256Verifier(viewers.at(i)->getPassword(), password_inputted))
             return true;
     }
-    if (admin->getName() == nickname && sha256Verifier(admin->getPassword(), password_inputted)) return true;
     return false;
 }
 
@@ -759,11 +708,12 @@ bool StreamZ::loginVerifier(string nickname, string password_inputted) const {
  * @return user pointer to user if it exists, nullptr otherwise
  */
 User *StreamZ::getUserByName(std::string nickname) {
+    if (admin->getName() == nickname) return admin;
     for (int i = 0; i < streamers.size(); i++) {
         if (streamers.at(i)->getName() == nickname) return streamers.at(i);
     }
-    for (int i = 0; viewers.size(); i++) {
+    for (int i = 0; i < viewers.size(); i++) {
         if (viewers.at(i)->getName() == nickname) return viewers.at(i);
     }
     return nullptr;
-} //TODO: What about the admin?
+}

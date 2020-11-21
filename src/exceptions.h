@@ -35,6 +35,10 @@ public:
 
 class AlreadyStreaming{};
 
+class AlreadyInteracted{};
+
+class HasNotInteracted{};
+
 class NotStreaming{};
 
 class FullCapacity{};

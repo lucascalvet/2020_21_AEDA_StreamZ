@@ -37,7 +37,11 @@ public:
     Viewer(const std::string &nickname, const Date &birthday, const std::string &password);
     Viewer(const std::string &nickname, const Date &birthday, const std::string &password, unsigned id);
     std::string getInfo();
-    void comment(const std::string &comment);
+    void likeStream() const;
+    void remlikeStream() const;
+    void dislikeStream() const;
+    void remdislikeStream() const;
+    void comment(const std::string &comment) const;
 };
 
 /**

@@ -127,7 +127,72 @@ string Viewer::getInfo() {
     return info.str();
 }
 
-void Viewer::comment(const string &comment) {
+/**
+ * Likes the stream that the viewer is watching
+ *
+ * @param v the viewer liking the stream
+ */
+void Viewer::likeStream() const{
+    if (!isActive()) throw InactiveUser();
+    try {
+        s->addLike(getID());
+    }
+    catch (AlreadyInteracted&) {
+        throw;
+    }
+}
+
+/**
+ * Removes a like from the stream that the user is viewing
+ *
+ * Checks if the user already liked. If so, removes the like.
+ *
+ * @param v the viewer that liked the stream
+ * @return true if the operation was successful, false otherwise
+ */
+void Viewer::remlikeStream() const {
+    if (!isActive()) throw InactiveUser();
+    try {
+        s->remLike(getID());
+    }
+    catch (HasNotInteracted&) {
+        throw;
+    }
+}
+
+/**
+ * Dislikes the stream that the viewer is watching
+ */
+void Viewer::dislikeStream() const{
+    if (!isActive()) throw InactiveUser();
+    try {
+        s->addDislike(getID());
+    }
+    catch (AlreadyInteracted&) {
+        throw;
+    }
+}
+
+/**
+ * Removes a dislike from the stream that the viewer is watching
+ *
+ * Checks if the viewer already disliked. If so, removes the dislike.
+ */
+void Viewer::remdislikeStream() const {
+    if (!isActive()) throw InactiveUser();
+    try {
+        s->remDislike(getID());
+    }
+    catch (AlreadyInteracted&) {
+        throw;
+    }
+}
+
+/**
+ * Add a comment to the stream. Checks if a user is viewing a private stream
+ * @param comment
+ */
+void Viewer::comment(const string &comment) const{
     if (!isActive()) throw InactiveUser();
     PrivateStream *viewing_stream = dynamic_cast<PrivateStream *>(s);
     if (viewing_stream == nullptr) throw NotInPrivateStream();

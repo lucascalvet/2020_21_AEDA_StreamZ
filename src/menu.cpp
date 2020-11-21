@@ -18,7 +18,7 @@ void inputChecker(unsigned &selected, unsigned options) {
     cout << "Input: ";
     while (in_input) {
         cin >> selected;
-
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
         if (cinFail()) {
             cout << "Please input a number!" << endl;
             cout << "Input: ";

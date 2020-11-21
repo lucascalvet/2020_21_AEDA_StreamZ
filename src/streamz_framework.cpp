@@ -8,56 +8,53 @@
 
 using namespace std;
 
-//to maintain readability of the code where they are used and avoiding having them global
-void help_strings(string &help_main_menu, string &help_submenu) {
-    help_main_menu =
-            "\nFramework Help Instructions"
-            "\n\n"
-            "Inputs:\n"
-            "All inputs have the respective instructions above them, but generally all the framework user has to do is to "
-            "input a number to choose an option in the menus or to input some kind of data.\n"
-            "In the case of wrong input given, the user is warned and is able to try again."
-            "\n\n"
-            "StreamZ:\n"
-            "To create a streamz you only have to input the capacity number and create an admin (option 1).\n"
-            "Then, to enter it and work with it just go back and choose it (option 2)."
-            "\n\n"
-            "Settings:\n"
-            "Auto save-> if this is turned on, the framework will save all program data at the end, automatically.\n"
-            "Save-> used to save the program data manually.\n"
-            "Import-> it imports a program data file."
-            "\n\n";
+string help_main_menu =
+        "\nFramework Help Instructions"
+        "\n\n"
+        "Inputs:\n"
+        "All inputs have the respective instructions above them, but generally all the framework user has to do is to "
+        "input a number to choose an option in the menus or to input some kind of data.\n"
+        "In the case of wrong input given, the user is warned and is able to try again."
+        "\n\n"
+        "StreamZ:\n"
+        "To create a streamz you only have to input the capacity number and create an admin (option 1).\n"
+        "Then, to enter it and work with it just go back and choose it (option 2)."
+        "\n\n"
+        "Settings:\n"
+        "Auto save-> if this is turned on, the framework will save all program data at the end, automatically.\n"
+        "Save-> used to save the program data manually.\n"
+        "Import-> it imports a program data file."
+        "\n\n";
 
-    help_submenu =
-            "\nStreamZ Help Instruction"
-            "\n\n"
-            "Create Streamer or Viewer:\n"
-            "Only have to input the viewer's or streamer's data that is requested."
-            "\n\n"
-            "Choose Streamer or viewer:\n"
-            "Just input the id of the streamer or viewer wanted. If any is created yet, it will warn the user."
-            "\n\n"
-            "Best Streams:\n"
-            "Prints the bests streams and their information."
-            "\n\n"
-            "The next functionalities are all self explanatory, however here are their description."
-            "\n\n"
-            "Inside Streamer (after streamer chosen):\n"
-            "Streamer info-> outputs the streamer's information.\n"
-            "Start public stream-> starts a public stream and streamer can only have one stream at the time (private or public)\n"
-            "Start private stream-> used to start a private stream\n"
-            "Stop Stream-> stops a stream"
-            "\n\n"
-            "Inside Viewer (after viewer chosen):\n"
-            "Viewer info-> outputs the user info"
-            "Enter stream-> enters a stream (can only be at one at the time) and if stream is private, can only enter if it is allowed\n"
-            "Exit stream-> used to exit the current stream it's in\n"
-            "Like stream-> likes the stream it's in (can only like or dislike a stream and only once)\n"
-            "Dislike stream-> dislikes the stream being watched\n"
-            "Remove like-> removes the like given to a stream (can only be used if already liked)\n"
-            "Remove dislike-> removes the dislike given to a stream (can only be used if already disliked)"
-            "\n\n";
-}
+string help_submenu =
+        "\nStreamZ Help Instruction"
+        "\n\n"
+        "Create Streamer or Viewer:\n"
+        "Only have to input the viewer's or streamer's data that is requested."
+        "\n\n"
+        "Choose Streamer or viewer:\n"
+        "Just input the id of the streamer or viewer wanted. If any is created yet, it will warn the user."
+        "\n\n"
+        "Best Streams:\n"
+        "Prints the bests streams and their information."
+        "\n\n"
+        "The next functionalities are all self explanatories, however here are their description."
+        "\n\n"
+        "Inside Streamer (after streamer chosen):\n"
+        "Streamer info-> outputs the streamer's information.\n"
+        "Start public stream-> starts a public stream and streamer can only have one stream at the time (private or public)\n"
+        "Start private stream-> used to start a private stream\n"
+        "Stop Stream-> stops a stream"
+        "\n\n"
+        "Inside Viewer (after viewer chosen):\n"
+        "Viewer info-> outputs the user info"
+        "Enter stream-> enters a stream (can only be at one at the time) and if stream is private, can only enter if it is allowed\n"
+        "Exit stream-> used to exit the current stream it's in\n"
+        "Like stream-> likes the stream it's in (can only like or dislike a stream and only once)\n"
+        "Dislike stream-> dislikes the stream being watched\n"
+        "Remove like-> removes the like given to a stream (can only be used if already liked)\n"
+        "Remove dislike-> removes the dislike given to a stream (can only be used if already disliked)"
+        "\n\n";
 
 //the 3 following functions are used for inputs
 void minAgeInput(unsigned &min_age) {
@@ -99,7 +96,7 @@ void dateInput(Date &birthday, bool birth_date) {
     unsigned day, year, month;
     char sep;
     bool in_date_selection = true;  //loop of date input
-    bool number_failed, separator_failed, ok; //used in checking date input (ok is used to prevent from the next cin inputs to execute if previous fails)
+    bool number_failed, separator_failed, ok; //used in checking date input (ok is used to prevent from next cin's to execute if previous fails)
 
     while (in_date_selection) {
         number_failed = false, separator_failed = false;
@@ -165,7 +162,7 @@ void dateInput(Date &birthday, bool birth_date) {
 //the following 4 functions are used in the users menus
 void create_streamer(StreamZ *sz_selected) {
     string nickname, password;
-    Date birthday{};
+    Date birthday;
 
     cout << "Enter the streamer's nickname: ";
     cin >> nickname;
@@ -182,7 +179,7 @@ void create_streamer(StreamZ *sz_selected) {
 
 void create_viewer(StreamZ *sz_selected) {
     string nickname, password, inp;
-    Date birthday{};
+    Date birthday;
 
     cout << "Enter the viewer's nickname: ";
     cin >> nickname;
@@ -211,7 +208,7 @@ void streamer_menu_loop(Menu streamerMenu, Streamer *s_selected, StreamZ *sz_sel
             }
                 //start public stream
             case 1: {
-                if (s_selected->isActive()) { //also in exceptions, but here too to prevent user from inputting if is already active
+                if (s_selected->isActive()) { //also in exceptions, but here too to prevent user from inputing if is already active
                     cout << "This streamer is already streaming!" << endl;
                     cout << "If you want to start a new one you have to stop this first!" << endl;
                     stopConsole();
@@ -251,7 +248,7 @@ void streamer_menu_loop(Menu streamerMenu, Streamer *s_selected, StreamZ *sz_sel
                 unsigned min_age, id_selected;
                 vector<unsigned> authorized_viewers;
 
-                if (s_selected->isActive()) { //also in exceptions, but here too to prevent user from inputting if is already active
+                if (s_selected->isActive()) { //also in exceptions, but here too to prevent user from inputing if is already active
                     cout << "This streamer is already streaming!" << endl;
                     cout << "If you want to start a new one you have to stop this first!" << endl;
                     stopConsole();
@@ -547,10 +544,6 @@ streamzFramework() {
     statsMenu.changeOption(3, "Streams at a given time");
     statsMenu.changeOption(4, "Back");
 
-    string help_main_menu, help_submenu;
-
-    help_strings(help_main_menu, help_submenu);
-
     while (loop) {
         admin_bool = false;
         mainMenu.startMenu();
@@ -565,7 +558,7 @@ streamzFramework() {
                 //create streamz
             case 1: {
                 string inp, nickname, password;
-                Date birthday{};
+                Date birthday;
                 bool inCreation = true;
                 unsigned cap;  //streamz capacity
 
@@ -584,7 +577,7 @@ streamzFramework() {
 
                     passwordInput(password);
 
-                    auto *sz1 = new StreamZ(cap, nickname, birthday, password);
+                    StreamZ *sz1 = new StreamZ(cap, nickname, birthday, password);
                     streamz_vector.push_back(sz1);
 
                     cout << "StreamZ created successfully, go back to work with it!" << endl;
@@ -640,8 +633,8 @@ streamzFramework() {
                                 else {
                                     User *user = sz_selected->getUserByName(nickname);
 
-                                    auto *s_selected = dynamic_cast<Streamer *>(user);
-                                    auto *v_selected = dynamic_cast<Viewer *>(user);
+                                    Streamer *s_selected = dynamic_cast<Streamer *>(user);
+                                    Viewer *v_selected = dynamic_cast<Viewer *>(user);
 
                                     if (s_selected != nullptr) {
                                         streamer_menu_loop(streamerMenu, s_selected, sz_selected);
@@ -704,7 +697,7 @@ streamzFramework() {
                             }
                                 //choose streamer
                             case 2: {
-                                unsigned inp;
+                                unsigned input;
 
                                 cout << "Streamers" << endl;
                                 vector<Streamer *> streamers = sz_selected->getStreamers();
@@ -715,10 +708,10 @@ streamzFramework() {
                                 }
                                 cout << endl << "Select the Streamer by its id" << endl;
                                 cout << "--> ";
-                                cin >> inp;
+                                cin >> input;
                                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
                                 if (!cinFail()) {
-                                    if (sz_selected->getStreamerByID(inp) == nullptr) {
+                                    if (sz_selected->getStreamerByID(input) == nullptr) {
                                         cout << "Invalid streamer id inputted!" << endl;
                                         break;
                                     }
@@ -728,7 +721,7 @@ streamzFramework() {
                                 }
 
                                 Streamer *s_selected = sz_selected->getStreamerByID(
-                                        inp);
+                                        input);
 
                                 streamer_menu_loop(streamerMenu, s_selected, sz_selected);
 
@@ -743,7 +736,7 @@ streamzFramework() {
                                 //choose viewer
                             case 4: {
 
-                                unsigned inp;
+                                unsigned input;
 
                                 cout << "Viewers" << endl;
                                 vector<Viewer *> viewers = sz_selected->getViewers();
@@ -754,10 +747,10 @@ streamzFramework() {
                                 }
                                 cout << endl << "Select the Viewer by its id" << endl;
                                 cout << "--> ";
-                                cin >> inp;
+                                cin >> input;
                                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
                                 if (!cinFail()) {
-                                    if (sz_selected->getViewerByID(inp) == nullptr) {
+                                    if (sz_selected->getViewerByID(input) == nullptr) {
                                         cout << "Invalid viewer id inputted!" << endl;
                                         break;
                                     }
@@ -766,7 +759,7 @@ streamzFramework() {
                                     break;
                                 }
 
-                                Viewer *v_selected = sz_selected->getViewerByID(inp);  //not treating exceptions yet
+                                Viewer *v_selected = sz_selected->getViewerByID(input);  //not treating exceptions yet
 
                                 viewer_menu_loop(viewerMenu, v_selected, sz_selected);
 
@@ -827,7 +820,7 @@ streamzFramework() {
                                         }
                                             //streams at a given time
                                         case 3: {
-                                            Date date1{}, date2{};
+                                            Date date1, date2;
 
                                             cout << "Enter the period you want by entering two dates" << endl;
 
@@ -911,8 +904,8 @@ streamzFramework() {
                             try {
                                 streamz_vector.emplace_back(new StreamZ(filename));
                             }
-                            catch (InvalidFile &invalid) {
-                                cout << "\"" << invalid.getFileName() << "\" failed to load. StreamZ not imported!\n\n";
+                            catch (InvalidFile &invf) {
+                                cout << "\"" << invf.getFileName() << "\" failed to load. StreamZ not imported!\n\n";
                                 break;
                             }
                             cout << "StreamZ instance imported successfully!\n\n";

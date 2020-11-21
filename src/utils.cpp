@@ -122,13 +122,13 @@ bool passwordStrength(const string &password, string &strength) {
     bool has_digit = false, special_char = false;
 
     string normal_chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 ";
-
-    for (int i = 0; i < password.size(); i++) {
-        if (islower(password[i]))
+    string::const_iterator pass_char;
+    for (pass_char = password.begin(); pass_char != password.end(); pass_char++) {
+        if (islower(*pass_char))
             has_lower = true;
-        if (isupper(password[i]))
+        if (isupper(*pass_char))
             has_upper = true;
-        if (isdigit(password[i]))
+        if (isdigit(*pass_char))
             has_digit = true;
     }
 

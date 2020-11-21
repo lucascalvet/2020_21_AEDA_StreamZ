@@ -154,10 +154,9 @@ void Stream::addView() {
  * @param id the viewer's id
  * @return
  */
-bool Stream::addLike(unsigned id) {
-    if (alreadyLikedOrDisliked(id)) return false;
+void Stream::addLike(unsigned id) {
+    if (alreadyLikedOrDisliked(id)) throw AlreadyInteracted();
     viewers_liked.push_back(id);
-    return true;
 }
 
 /**
@@ -166,10 +165,9 @@ bool Stream::addLike(unsigned id) {
  * @param id the viewer's id
  * @return
  */
-bool Stream::addDislike(unsigned id) {
-    if (alreadyLikedOrDisliked(id)) return false;
+void Stream::addDislike(unsigned id) {
+    if (alreadyLikedOrDisliked(id)) throw AlreadyInteracted();
     viewers_disliked.push_back(id);
-    return true;
 }
 
 /**
@@ -178,11 +176,10 @@ bool Stream::addDislike(unsigned id) {
  * @param id the viewer's id
  * @return
  */
-bool Stream::remLike(unsigned id) {
+void Stream::remLike(unsigned id) {
     vector<unsigned>::iterator viewer = find(viewers_liked.begin(), viewers_liked.end(), id);
-    if (viewer == viewers_liked.end()) return false;
+    if (viewer == viewers_liked.end()) throw HasNotInteracted();
     viewers_liked.erase(viewer);
-    return true;
 }
 
 /**
@@ -191,11 +188,10 @@ bool Stream::remLike(unsigned id) {
  * @param id the viewer's id
  * @return
  */
-bool Stream::remDislike(unsigned id) {
+void Stream::remDislike(unsigned id) {
     vector<unsigned>::iterator viewer = find(viewers_disliked.begin(), viewers_disliked.end(), id);
-    if (viewer == viewers_disliked.end()) return false;
+    if (viewer == viewers_disliked.end()) throw HasNotInteracted();
     viewers_disliked.erase(viewer);
-    return true;
 }
 
 /**

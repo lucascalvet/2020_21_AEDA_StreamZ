@@ -8,6 +8,10 @@
 
 using namespace std;
 
+/*
+ * Framework for interacting with the StreamZ platform in the console.
+ */
+
 //to maintain readability of the code where they are used and avoiding having them global
 void help_strings(string &help_main_menu, string &help_submenu) {
     help_main_menu =

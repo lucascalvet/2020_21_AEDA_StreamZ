@@ -43,7 +43,7 @@ std::ostream &operator<<(std::ostream &out, const Date &date) {
  * @param date2 the second date object to compare
  * @return true if date1 == date2, false otherwise
  */
-bool operator==(const Date &date1, const Date &date2){
+bool operator==(const Date &date1, const Date &date2) {
     return date1.day == date2.day && date1.month == date2.month && date1.year == date2.year;
 }
 
@@ -54,11 +54,11 @@ bool operator==(const Date &date1, const Date &date2){
  * @param date2 the second date object to compare
  * @return true if date1 < date2, false otherwise
  */
-bool operator<(const Date &date1, const Date &date2){
-    if(date1.year < date2.year) return true;
-    if(date1.year == date2.year){
-        if(date1.month < date2.month) return true;
-        if(date1.month == date2.month && date1.day < date2.day) return true;
+bool operator<(const Date &date1, const Date &date2) {
+    if (date1.year < date2.year) return true;
+    if (date1.year == date2.year) {
+        if (date1.month < date2.month) return true;
+        if (date1.month == date2.month && date1.day < date2.day) return true;
     }
     return false;
 }
@@ -70,7 +70,7 @@ bool operator<(const Date &date1, const Date &date2){
  * @param date2 the second date object to compare
  * @return true if date1 <= date2, false otherwise
  */
-bool operator<=(const Date &date1, const Date &date2){
+bool operator<=(const Date &date1, const Date &date2) {
     return date1 < date2 || date1 == date2;
 }
 
@@ -117,35 +117,36 @@ Date getCurrentDate() {
  * @param strength the strength of the password
  * @return true if password is strong or moderate, false otherwise
  */
-bool passwordStrength(const string& password, string &strength){
-        bool has_lower = false, has_upper = false;
-        bool has_digit = false, special_char = false;
+bool passwordStrength(const string &password, string &strength) {
+    bool has_lower = false, has_upper = false;
+    bool has_digit = false, special_char = false;
 
-        string normal_chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 ";
+    string normal_chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 ";
 
-        for (int i = 0; i < password.size(); i++) {
-            if (islower(password[i]))
-                has_lower = true;
-            if (isupper(password[i]))
-                has_upper = true;
-            if (isdigit(password[i]))
-                has_digit = true;
-        }
+    for (int i = 0; i < password.size(); i++) {
+        if (islower(password[i]))
+            has_lower = true;
+        if (isupper(password[i]))
+            has_upper = true;
+        if (isdigit(password[i]))
+            has_digit = true;
+    }
 
-        size_t special = password.find_first_not_of(normal_chars); // finds first character in password which is not present in normal_chars
+    size_t special = password.find_first_not_of(
+            normal_chars); // finds first character in password which is not present in normal_chars
 
-        if (special != string::npos)
-            special_char = true;
+    if (special != string::npos)
+        special_char = true;
 
-        if (has_lower && has_upper && has_digit && special_char && (password.size() >= 8))
-            strength = "strong";
-        else if (has_lower && has_upper && (password.size() >= 6))
-            strength =  "moderate";
-        else
-            strength =  "weak";
+    if (has_lower && has_upper && has_digit && special_char && (password.size() >= 8))
+        strength = "strong";
+    else if (has_lower && has_upper && (password.size() >= 6))
+        strength = "moderate";
+    else
+        strength = "weak";
 
-        if(strength == "strong" || strength == "moderate") return true;
-        else return false;
+    if (strength == "strong" || strength == "moderate") return true;
+    else return false;
 }
 
 /**
@@ -156,7 +157,7 @@ bool passwordStrength(const string& password, string &strength){
  * @param password the password inputted by user
  * @return hashed the encrypted string
  */
-string sha256Encode(const string& password){
+string sha256Encode(const string &password) {
     hashwrapper *sha_hasher = new sha256wrapper(); //wrapper object
 
     std::string hashed = sha_hasher->getHashFromString(password); //creating hash for string password
@@ -172,8 +173,8 @@ string sha256Encode(const string& password){
  * @param password the string inputted by user
  * @return true if hash and password correspond
  */
-bool sha256Verifier(const string& hash,const string& password){
-    if(hash == sha256Encode(password)) return true;
+bool sha256Verifier(const string &hash, const string &password) {
+    if (hash == sha256Encode(password)) return true;
 
     else return false;
 }

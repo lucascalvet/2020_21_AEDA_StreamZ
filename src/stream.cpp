@@ -53,6 +53,8 @@ Stream::Stream(const string &title, const Language &lang, unsigned min_age,
                const vector<unsigned int> &viewers_disliked) : Stream(title, lang, min_age) {
     this->starting_date = starting_date;
     this->num_total_views = num_viewers;
+    this->viewers_liked = viewers_liked;
+    this->viewers_disliked = viewers_disliked;
 }
 
 /**

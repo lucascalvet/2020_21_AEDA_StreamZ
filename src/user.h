@@ -9,6 +9,7 @@
  */
 class User {
 private:
+    /// A sha256 hash for the user password
     std::string password;
     static unsigned counter;
     unsigned id;
@@ -33,8 +34,6 @@ public:
  */
 class Viewer : public User {
 public:
-    bool alreadyLiked = false;
-    bool alreadyDisliked = false;
     Viewer(const std::string &nickname, const Date &birthday, const std::string &password);
     Viewer(const std::string &nickname, const Date &birthday, const std::string &password, unsigned id);
     std::string getInfo();
@@ -64,6 +63,7 @@ public:
 class Admin : public User {  //maybe not appropriate because its a framework so the people controling it is the admin
 public:
     Admin(const std::string &nickname, const Date &birthday, const std::string &password);
+    Admin(const std::string &nickname, const Date &birthday, const std::string &password, unsigned id);
 };
 
 

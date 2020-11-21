@@ -7,7 +7,7 @@
 using testing::Eq;
 
 TEST(test, SaveToFiles) {
-    Date bd0(1,1,1990);
+    Date bd0(1, 1, 1990);
     StreamZ sz1(20, "admin", bd0, "admin");
     Date bd1(14, 10, 2000);
     Date bd2(1, 1, 2001);
@@ -24,7 +24,7 @@ TEST(test, SaveToFiles) {
 }
 
 TEST(test, StartStopStreams) {
-    Date bd0(1,1,1990);
+    Date bd0(1, 1, 1990);
     StreamZ sz1(20, "admin", bd0, "admin");
     Date bd1(14, 10, 2000);
     Date bd2(1, 1, 2001);
@@ -32,16 +32,16 @@ TEST(test, StartStopStreams) {
     sz1.addStreamer("lucascs", bd1, "aa");
     sz1.addStreamer("sergio", bd2, "aa");
     sz1.addViewer("ze", bd3, "aa");
-    Streamer* strmr_lucas = sz1.getStreamerByName("lucascs");
-    if(strmr_lucas != nullptr) sz1.startPublicStream(strmr_lucas, "A stream do lucas", "PT", 18);
-    Viewer* viewer_ze = sz1.getViewerByName("ze");
-    if(viewer_ze != nullptr) sz1.enterStream(strmr_lucas, viewer_ze);
+    Streamer *strmr_lucas = sz1.getStreamerByName("lucascs");
+    if (strmr_lucas != nullptr) sz1.startPublicStream(strmr_lucas, "A stream do lucas", "PT", 18);
+    Viewer *viewer_ze = sz1.getViewerByName("ze");
+    if (viewer_ze != nullptr) sz1.enterStream(strmr_lucas, viewer_ze);
     sz1.stopStream(strmr_lucas);
     EXPECT_EQ(viewer_ze->s, nullptr);
 }
 
 TEST(test, EnterExitStream) {
-    Date bd0(1,1,1990);
+    Date bd0(1, 1, 1990);
     StreamZ sz1(20, "admin", bd0, "admin");
     Date bd1(14, 10, 2000);
     Date bd2(1, 1, 2001);
@@ -49,9 +49,9 @@ TEST(test, EnterExitStream) {
     sz1.addStreamer("lucascs", bd1, "aa");
     sz1.addStreamer("sergio", bd2, "aa");
     sz1.addViewer("ze", bd3, "aa");
-    Streamer* strmr_lucas = sz1.getStreamerByName("lucascs");
-    Viewer* viewer_ze = sz1.getViewerByName("ze");
-    std::vector<unsigned> auth {viewer_ze->getID()};
+    Streamer *strmr_lucas = sz1.getStreamerByName("lucascs");
+    Viewer *viewer_ze = sz1.getViewerByName("ze");
+    std::vector<unsigned> auth{viewer_ze->getID()};
     sz1.startPrivateStream(strmr_lucas, "A minha stream privada", "PT", 18, auth);
     EXPECT_EQ(true, sz1.enterStream(strmr_lucas, viewer_ze));
     EXPECT_EQ(false, sz1.enterStream(strmr_lucas, viewer_ze));
@@ -121,7 +121,7 @@ TEST(test, FileSavingFormat) {
     sz1.enterStream(strmr_lucas, viewer_i);
     sz1.exitStream(viewer_i);
     sz1.stopStream(strmr_lucas);
-    std::vector<unsigned> auth {viewer_ze->getID()};
+    std::vector<unsigned> auth{viewer_ze->getID()};
     sz1.startPrivateStream(strmr_lucas, "A minha stream privada", "PT", 18, auth);
     EXPECT_EQ(true, sz1.enterStream(strmr_lucas, viewer_ze));
     sz1.likeStream(viewer_ze);
@@ -140,7 +140,9 @@ TEST(test, FileSavingFormat) {
     sz1.enterStream(strmr_lucas, viewer_b);
     sz1.enterStream(strmr_lucas, viewer_c);
     sz1.stopStream(strmr_lucas);
-    sz1.save("TEST_FILE_FORMAT.txt");
+    sz1.save("streamz_save_test.txt");
+    StreamZ sz2("streamz_save_test.txt");
+    std::cout << "testing";
 }
 
 TEST(test, BestStreams) {
@@ -207,6 +209,9 @@ TEST(test, BestStreams) {
     sz1.enterStream(strmr_lucas, viewer_b);
     sz1.enterStream(strmr_lucas, viewer_c);
     sz1.stopStream(strmr_lucas);
+    sz1.save("streamz_save_test.txt");
+    StreamZ sz2("streamz_save_test.txt");
+    //std::cout << std::endl << "TESTING1" << std::endl;
     EXPECT_EQ(sz1.getBestStreams().at(0)->getTitle(), "A minha stream 12");
     EXPECT_EQ(sz1.getBestStreams().at(1)->getTitle(), "A minha stream 4");
     EXPECT_EQ(sz1.getBestStreams().at(2)->getTitle(), "A minha stream 3");

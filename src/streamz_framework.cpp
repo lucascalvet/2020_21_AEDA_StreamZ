@@ -2,6 +2,7 @@
 #include "streamz.h"
 #include "streamz_framework.h"
 #include "exceptions.h"
+#include <string>
 #include <limits>
 #include <algorithm>
 
@@ -56,15 +57,15 @@ string help_submenu =
         "\n\n";
 
 //the 3 following functions are used for inputs
-void minAgeInput(unsigned &min_age){
+void minAgeInput(unsigned &min_age) {
     bool in_min_age_input = true;
 
-    while(in_min_age_input) {
+    while (in_min_age_input) {
         in_min_age_input = false;
 
         cout << "Input the minimum age: ";
         cin >> min_age;
-
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
         if (cinFail()) {
             cout << endl << "Please input a number!!" << endl;
             in_min_age_input = true;
@@ -72,87 +73,88 @@ void minAgeInput(unsigned &min_age){
     }
 }
 
-void passwordInput(string& password) {
+void passwordInput(string &password) {
     string password_strength;
     bool in_password_input = true;
 
     while (in_password_input) {
-        cout << "The password has a minimum 6 characters long and at least one upper case and one lower case" << endl;
+        cout << "The password needs need to be at least 6 characters long and have at least one upper case and one lower case letter."
+             << endl;
         cout << "Enter the password: ";
         cin >> password;
-
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
         if (!passwordStrength(password, password_strength)) in_password_input = true;
         else {
             in_password_input = false;
-            cout << "Password not accepted!";
+            cout << "Password accepted! ";
         }
-
-        cout << endl << "Your password is " << password_strength << endl;
+        cout << "Your password is " << password_strength << endl << endl;
     }
 }
 
-void dateInput(Date& birthday, bool birth_date){
+void dateInput(Date &birthday, bool birth_date) {
     unsigned day, year, month;
     char sep;
     bool in_date_selection = true;
 
-    while(in_date_selection) {
+    while (in_date_selection) {
         in_date_selection = false;
 
-        if(birth_date) cout << "Enter birthday date in the format dd-mm-yy: ";
-        else cout << "Enter the date in the format dd-mm-yy: ";
+        if (birth_date) cout << "Enter birthday date in the format dd-mm-yyyy: ";
+        else cout << "Enter the date in the format dd-mm-yyyy: ";
 
         cin >> day >> sep >> month >> sep >> year;
-
+        //TODO: Check input here
         try {
             birthday = Date(day, month, year);
         } catch (InvalidDate &) {
             in_date_selection = true;
         }
 
-        if(!in_date_selection && getCurrentDate() < birthday) in_date_selection = true;
-        if(cin.fail()){
+        if (!in_date_selection && getCurrentDate() < birthday) in_date_selection = true;
+        if (cin.fail()) {
             in_date_selection = true;
             cin.clear(); //reset failbit
             cin.ignore(numeric_limits<streamsize>::max(), '\n');  //ignore bad input
         }
 
-        if(in_date_selection) cout << "Input date again, invalid date" << endl;
+        if (in_date_selection) cout << "Input date again, invalid date" << endl;
     }
 }
 
 //the following 4 functions are used in the users menus
-void create_streamer(StreamZ* sz_selected){
+void create_streamer(StreamZ *sz_selected) {
     string nickname, password;
     Date birthday;
 
-    cout << "Enter the streamer nickname: ";
+    cout << "Enter the streamer's nickname: ";
     cin >> nickname;
-
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
     dateInput(birthday, true);
 
     passwordInput(password);
-
-    if(!sz_selected->addStreamer(nickname, birthday, password)) cout << "Unable to create streamer! :( Username already used or not minimum age" << endl;
+    //TODO: Handle with exceptions as well?
+    if (!sz_selected->addStreamer(nickname, birthday, password))
+        cout << "Unable to create streamer! :( Username already used or not minimum age" << endl;
     else cout << "Streamer created successfully, go back to sign in" << endl;
 }
 
-void create_viewer(StreamZ* sz_selected){
+void create_viewer(StreamZ *sz_selected) {
     string nickname, password, inp;
     Date birthday;
 
-    cout << "Enter the viewer nickname: ";
+    cout << "Enter the viewer's nickname: ";
     cin >> nickname;
-
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
     dateInput(birthday, true);
 
     passwordInput(password);
-
-    if(!sz_selected->addViewer(nickname, birthday, password)) cout << "Unable to create viewer! :(" << endl;
+    //TODO: Handle with exceptions as well?
+    if (!sz_selected->addViewer(nickname, birthday, password)) cout << "Unable to create viewer! :(" << endl;
     else cout << "Viewer created successfully, go back to sign in!" << endl;
 }
 
-void streamer_menu_loop(Menu streamerMenu, Streamer* s_selected, StreamZ* sz_selected){
+void streamer_menu_loop(Menu streamerMenu, Streamer *s_selected, StreamZ *sz_selected) {
     bool streamer_loop = true;
 
     streamerMenu.changeTitle("Streamer " + s_selected->getName());
@@ -176,11 +178,11 @@ void streamer_menu_loop(Menu streamerMenu, Streamer* s_selected, StreamZ* sz_sel
                     string title, lang;
                     unsigned min_age;
 
-                    cout << "Input the stream title: ";
-                    cin >> title;
-                    cout << "Input the stream language: ";
+                    cout << "Input the stream's title: ";
+                    cin.get(); getline(cin, title);
+                    cout << "Input the stream's language: ";
                     cin >> lang;
-
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
                     minAgeInput(min_age);
 
                     bool exception_caught = true;
@@ -188,15 +190,17 @@ void streamer_menu_loop(Menu streamerMenu, Streamer* s_selected, StreamZ* sz_sel
                     try {
                         sz_selected->startPublicStream(s_selected, title, lang, min_age);
                         exception_caught = false;
-                    } catch (AlreadyStreaming&) {
+                    } catch (AlreadyStreaming &) {
                         cout << "The streamer is already streaming!" << endl;
-                    } catch (FullCapacity&) {
-                        cout << "StreamZ has reached is full capacity of active streams: " << sz_selected->getCapacity() << endl;
-                    } catch (InvalidLanguage& invalidL) {
-                        cout << "User have inputted an invalid language: " << invalidL.getLanguage() << endl;
+                    } catch (FullCapacity &) {
+                        cout << "StreamZ has reached its full capacity of active streams: "
+                             << sz_selected->getCapacity()
+                             << endl;
+                    } catch (InvalidLanguage &invalidL) {
+                        cout << "User has inputted an invalid language: " << invalidL.getLanguage() << endl;
                     }
 
-                    if(!exception_caught) cout << "Started Stream..." << endl;
+                    if (!exception_caught) cout << "Started Stream..." << endl;
                 }
                 break;
             }
@@ -206,47 +210,48 @@ void streamer_menu_loop(Menu streamerMenu, Streamer* s_selected, StreamZ* sz_sel
                 unsigned min_age, id_selected;
                 vector<unsigned> authorized_viewers;
 
-                if(s_selected->isActive()){ //also in exceptions, but here too to prevent user from inputing if is already active
+                if (s_selected->isActive()) { //also in exceptions, but here too to prevent user from inputing if is already active
                     cout << "This streamer is already streaming!" << endl;
                     cout << "If you want to start a new one you have to stop this first!" << endl;
                     stopConsole();
                 } else {
-                    cout << "Input the stream title: ";
-                    cin >> title;
-                    cout << "Input the stream language: ";
+                    cout << "Input the stream's title: ";
+                    cin.get(); getline(cin, title);
+                    cout << "Input the stream's language: ";
                     cin >> lang;
-
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
                     minAgeInput(min_age);
 
                     cout << "Input the authorized viewers by id: (to stop enter 'stop')" << endl << endl;
 
                     cout << "Viewers" << endl;
 
-                    vector<Viewer*> viewers = sz_selected->getViewers();
-                    vector<Viewer*>::const_iterator viewer;
+                    vector<Viewer *> viewers = sz_selected->getViewers();
+                    vector<Viewer *>::const_iterator viewer;
 
                     for (viewer = viewers.begin(); viewer != viewers.end(); viewer++) {
                         cout << "Id: " << to_string((*viewer)->getID()) + "  ";
                         cout << "Name: " << (*viewer)->getName() << endl;
                     }
 
-                    while(true){
+                    while (true) {
                         cout << "Input the id: ";
                         cin >> inp;
-
+                        cin.ignore(numeric_limits<streamsize>::max(), '\n');
                         if (inp == "stop") break;
 
                         try {
                             id_selected = stoi(inp);
-                        } catch (invalid_argument&) {
+                        } catch (invalid_argument &) {
                             cout << "Invalid input!" << endl;
                             continue;
                         }
 
-                        if(find(authorized_viewers.begin(), authorized_viewers.end(), id_selected) != authorized_viewers.end())
+                        if (find(authorized_viewers.begin(), authorized_viewers.end(), id_selected) !=
+                            authorized_viewers.end())
                             cout << "Already inputted id" << endl;
-                        else if(sz_selected->getViewerByID(id_selected) == nullptr)
-                            cout <<"Invalid viewer id inputted!" << endl;
+                        else if (sz_selected->getViewerByID(id_selected) == nullptr)
+                            cout << "Invalid viewer id inputted!" << endl;
                         else {
                             authorized_viewers.push_back(id_selected);
                             cout << "Successfully inputted viewer" << endl;
@@ -259,30 +264,31 @@ void streamer_menu_loop(Menu streamerMenu, Streamer* s_selected, StreamZ* sz_sel
                         sz_selected->startPrivateStream(s_selected, title, lang, min_age, authorized_viewers);
                         exception_caught = false;
 
-                    } catch (AlreadyStreaming&) {
+                    } catch (AlreadyStreaming &) {
                         cout << "The streamer is already streaming!" << endl;
-                    } catch (FullCapacity&) {
-                        cout << "StreamZ has reached is full capacity of active streams: " << sz_selected->getCapacity() << endl;
-                    } catch (InvalidLanguage& invalidL) {
+                    } catch (FullCapacity &) {
+                        cout << "StreamZ has reached is full capacity of active streams: " << sz_selected->getCapacity()
+                             << endl;
+                    } catch (InvalidLanguage &invalidL) {
                         cout << "User have inputted an invalid language: " << invalidL.getLanguage() << endl;
                     }
 
-                    if(!exception_caught) cout << "Started Stream..." << endl;
+                    if (!exception_caught) cout << "Started Stream..." << endl;
                 }
                 break;
             }
                 //stop stream
-            case 3:{
+            case 3: {
                 bool exception_caught = true;
 
                 try {
                     sz_selected->stopStream(s_selected);
                     exception_caught = false;
-                } catch (NotStreaming&) {
+                } catch (NotStreaming &) {
                     cout << "There is no stream to stop! Streamer is not streaming!" << endl;
                 }
 
-                if(!exception_caught) cout << "Stream stopped..." << endl;
+                if (!exception_caught) cout << "Stream stopped..." << endl;
 
                 stopConsole();
 
@@ -297,7 +303,7 @@ void streamer_menu_loop(Menu streamerMenu, Streamer* s_selected, StreamZ* sz_sel
     }
 }
 
-void viewer_menu_loop(Menu viewerMenu, Viewer* v_selected, StreamZ* sz_selected){
+void viewer_menu_loop(Menu viewerMenu, Viewer *v_selected, StreamZ *sz_selected) {
     viewerMenu.changeTitle("Viewer " + v_selected->getName());
 
     bool viewer_loop = true, inInput = true;
@@ -325,14 +331,13 @@ void viewer_menu_loop(Menu viewerMenu, Viewer* v_selected, StreamZ* sz_selected)
                     cout << "Enter the respective streamer id" << endl;
 
                     cin >> choice;
-
-                    if(!cinFail()) {
-                        if(sz_selected->getStreamerByID(choice) == nullptr) {
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                    if (!cinFail()) {
+                        if (sz_selected->getStreamerByID(choice) == nullptr) {
                             cout << "Invalid streamer id inputted!" << endl;
                             break;
                         }
-                    }
-                    else{
+                    } else {
                         cout << "No valid number inputted!" << endl;
                         break;
                     }
@@ -373,7 +378,7 @@ void viewer_menu_loop(Menu viewerMenu, Viewer* v_selected, StreamZ* sz_selected)
                     if (sz_selected->dislikeStream(v_selected))
                         cout << "Disliked the stream that viewer is watching!" << endl;
                     else
-                        cout << "You have already liked os disliked the stream!" << endl;
+                        cout << "You have already liked or disliked the stream!" << endl;
                 }
                 break;
             }
@@ -408,7 +413,7 @@ void viewer_menu_loop(Menu viewerMenu, Viewer* v_selected, StreamZ* sz_selected)
                 string comment;
 
                 cout << "Input the comment you want to make: " << endl;
-                cout <<" --> ";
+                cout << " --> ";
 
                 cin.get();
                 getline(cin, comment);
@@ -416,11 +421,11 @@ void viewer_menu_loop(Menu viewerMenu, Viewer* v_selected, StreamZ* sz_selected)
                 try {
                     v_selected->comment(comment);
                 }
-                catch (InactiveUser&) {
+                catch (InactiveUser &) {
                     cout << "Not viweing any stream!" << endl;
                     break;
                 }
-                catch (NotInPrivateStream&) {
+                catch (NotInPrivateStream &) {
                     cout << "You can't comment on a public stream! Only on private ones." << endl;
                     break;
                 }
@@ -441,8 +446,9 @@ void viewer_menu_loop(Menu viewerMenu, Viewer* v_selected, StreamZ* sz_selected)
 /**
  * Main loop for interaction with the StreamZ framework
  */
-void streamzFramework() { //TODO: Allow stream titles with more than one word. Gets stuck when choosing user, because of ID!
-    bool auto_save = false;  //used to enable disable the auto_save
+void
+streamzFramework() {
+    bool auto_save = true;  //used to enable disable the auto_save //TODO: I turned it into true. Right?
     bool loop = true, sub_loop; //(loop) used in main loop // (sub_loop) used in other sub loops
     bool stats_loop, admin_bool = false; //access control
 
@@ -519,16 +525,16 @@ void streamzFramework() { //TODO: Allow stream titles with more than one word. G
                 unsigned cap;  //streamz capacity
 
                 while (inCreation) {
-                    cout << "Enter StreamZ active streamers capacity: " << endl;
+                    cout << "Enter StreamZ active streamers capacity: ";
                     cin >> cap;
-
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
                     if (cinFail()) {
                         cout << endl << "Please input a number!!" << endl;
                         continue;
                     }
                     cout << "Enter admin name: ";
                     cin >> nickname;
-
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
                     dateInput(birthday, true);
 
                     passwordInput(password);
@@ -540,6 +546,7 @@ void streamzFramework() { //TODO: Allow stream titles with more than one word. G
                     cout << "To create another one input anything, to go back input 'e'" << endl;
                     cout << "Input: ";
                     cin >> inp;
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
                     if (inp == "e")
                         inCreation = false;
                 }
@@ -569,20 +576,22 @@ void streamzFramework() { //TODO: Allow stream titles with more than one word. G
 
                     sub_loop = true;
 
-                    while(sub_loop) {
+                    while (sub_loop) {
 
-                    loginMenu.startMenu();
+                        loginMenu.startMenu();
 
                         switch (loginMenu.getSelected()) {
                             //sign In
                             case 0: {
-                                cout << "Enter the user nick name: ";
+                                cout << "Enter the user's nick name: ";
                                 cin >> nickname;
-                                cout << "Enter the user password: ";
+                                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                                cout << "Enter the user's password: ";
                                 cin >> password;
-
+                                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                                //TODO: throws error std::out_of_range if logging in with admin after creating other users!
                                 if (!sz_selected->loginVerifier(nickname, password))
-                                    cout << "User not found, incorrect input given!!";
+                                    cout << "User not found or incorrect password, incorrect input given!!";
                                 else {
                                     User *user = sz_selected->getUserByName(nickname);
 
@@ -608,7 +617,7 @@ void streamzFramework() { //TODO: Allow stream titles with more than one word. G
                                 while (notCorrect) {
                                     cout << "Input s to register as streamer and v as viewer: ";
                                     cin >> signUpChoice;
-
+                                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
                                     if (signUpChoice == "s") {
                                         create_streamer(sz_selected);
                                         notCorrect = false;
@@ -659,18 +668,16 @@ void streamzFramework() { //TODO: Allow stream titles with more than one word. G
                                     cout << "Id: " << to_string((*streamer)->getID()) + "  ";
                                     cout << "Name: " << (*streamer)->getName() << endl;
                                 }
-                                cout << endl << "Select the Streamer by it's id" << endl;
-
+                                cout << endl << "Select the Streamer by its id" << endl;
                                 cout << "--> ";
                                 cin >> input;
-
-                                if(!cinFail()) {
-                                    if(sz_selected->getStreamerByID(input) == nullptr) {
+                                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                                if (!cinFail()) {
+                                    if (sz_selected->getStreamerByID(input) == nullptr) {
                                         cout << "Invalid streamer id inputted!" << endl;
                                         break;
                                     }
-                                }
-                                else{
+                                } else {
                                     cout << "No valid number inputted!" << endl;
                                     break;
                                 }
@@ -690,7 +697,7 @@ void streamzFramework() { //TODO: Allow stream titles with more than one word. G
                             }
                                 //choose viewer
                             case 4: {
-                                    
+
                                 unsigned input;
 
                                 cout << "Viewers" << endl;
@@ -700,18 +707,16 @@ void streamzFramework() { //TODO: Allow stream titles with more than one word. G
                                     cout << "Id: " << to_string((*viewer)->getID()) + "  ";
                                     cout << "Name: " << (*viewer)->getName() << endl;
                                 }
-                                cout << endl << "Select the Viewer by it's id" << endl;
-
+                                cout << endl << "Select the Viewer by its id" << endl;
                                 cout << "--> ";
                                 cin >> input;
-
-                                if(!cinFail()) {
-                                    if(sz_selected->getViewerByID(input) == nullptr) {
+                                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                                if (!cinFail()) {
+                                    if (sz_selected->getViewerByID(input) == nullptr) {
                                         cout << "Invalid viewer id inputted!" << endl;
                                         break;
                                     }
-                                }
-                                else{
+                                } else {
                                     cout << "No valid number inputted!" << endl;
                                     break;
                                 }
@@ -722,7 +727,7 @@ void streamzFramework() { //TODO: Allow stream titles with more than one word. G
 
                                 break;
                             }
-                            //statistics
+                                //statistics
                             case 5: {
                                 stats_loop = true;
 
@@ -743,22 +748,22 @@ void streamzFramework() { //TODO: Allow stream titles with more than one word. G
                                                  << to_string(sz_selected->getAverageViews()) << endl;
                                             break;
                                         }
-                                        //best streams
+                                            //best streams
                                         case 1: {
                                             cout << "Best streams: (upwards order)" << endl;
 
-                                            vector<Stream*> best = sz_selected->getBestStreams();
+                                            vector<Stream *> best = sz_selected->getBestStreams();
 
                                             cout << "Most viewed streams: " << endl;
 
-                                            for(int i = 0; i < 10; i++){
-                                                if(best.at(i) != nullptr) cout << best.at(i)->getInfo();
+                                            for (int i = 0; i < 10; i++) {
+                                                if (best.at(i) != nullptr) cout << best.at(i)->getInfo();
                                             }
 
                                             cout << "Most liked streams: " << endl;
 
-                                            for(int i = 10; i < 20; i++){
-                                                if(best.at(i) != nullptr) cout << best.at(i)->getInfo();
+                                            for (int i = 10; i < 20; i++) {
+                                                if (best.at(i) != nullptr) cout << best.at(i)->getInfo();
                                             }
 
                                             stopConsole();
@@ -768,10 +773,9 @@ void streamzFramework() { //TODO: Allow stream titles with more than one word. G
                                             //best streamer
                                         case 2: {
                                             cout << "Best Streamer (with most views): " << endl;
-                                            if(sz_selected->getMostViewedStreamer() != nullptr) {
+                                            if (sz_selected->getMostViewedStreamer() != nullptr) {
                                                 cout << sz_selected->getMostViewedStreamer()->getInfo() << endl;
-                                            }
-                                            else cout << "none" << endl;
+                                            } else cout << "none" << endl;
 
                                             stopConsole();
                                             break;
@@ -787,11 +791,16 @@ void streamzFramework() { //TODO: Allow stream titles with more than one word. G
                                             cout << "End date-> ";
                                             dateInput(date2, false);
 
-                                            cout << endl << "Streams created between " << date1 << " and " << date2  << endl << endl;
+                                            cout << endl << "Streams created between " << date1 << " and " << date2
+                                                 << endl << endl;
 
-                                            cout << "Public streams: " << to_string(sz_selected->getNumCreatedStreams(true, date1, date2)) << endl;
+                                            cout << "Public streams: "
+                                                 << to_string(sz_selected->getNumCreatedStreams(true, date1, date2))
+                                                 << endl;
 
-                                            cout << "Private streams: " << to_string(sz_selected->getNumCreatedStreams(false, date1, date2)) << endl << endl;
+                                            cout << "Private streams: "
+                                                 << to_string(sz_selected->getNumCreatedStreams(false, date1, date2))
+                                                 << endl << endl;
 
                                             stopConsole();
                                             break;
@@ -802,8 +811,8 @@ void streamzFramework() { //TODO: Allow stream titles with more than one word. G
                                             break;
                                     }
                                 }
-                                    break;
-                                }
+                                break;
+                            }
                                 //back
                             case 6: {
                                 sub_loop = false;
@@ -829,23 +838,21 @@ void streamzFramework() { //TODO: Allow stream titles with more than one word. G
                             else
                                 cout << "Auto save is on" << endl;
 
-                            cout << endl << "Enter 'c' to change it's state and anything else to exit" << endl;
+                            cout << endl << "Enter 'c' to change its state and anything else to exit" << endl;
                             cout << "Input: ";
 
                             string off_or_on;
-
                             cin >> off_or_on;
-
-                            if (off_or_on == "c" && auto_save) auto_save = false;
-                            else if (off_or_on == "c" && !auto_save) auto_save = true;
+                            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                            if (off_or_on == "c") auto_save = !auto_save;
+                            //TODO: Shouldn't else just exit?
                             else cout << endl << "Invalid input!" << endl;
-
                             break;
                         }
                             //TODO: save (save all StreamZ instances? or only one?)
                         case 1: {
-                            vector<StreamZ*>::iterator it;
-                            for(it = streamz_vector.begin(); it != streamz_vector.end();){
+                            vector<StreamZ *>::iterator it;
+                            for (it = streamz_vector.begin(); it != streamz_vector.end();) {
                                 string filename = "StreamZ_" + to_string((*it)->getID()) + ".txt";
                                 (*it)->save(filename);
                             }
@@ -882,17 +889,18 @@ void streamzFramework() { //TODO: Allow stream titles with more than one word. G
                 if (!auto_save) {
                     cout << "Don't forget to save if you want!" << endl;
                 } else {
-                    vector<StreamZ*>::iterator it;
-                    for(it = streamz_vector.begin(); it != streamz_vector.end();){
-                        //(*it)->save();
+                    vector<StreamZ *>::iterator it;
+                    for (it = streamz_vector.begin(); it != streamz_vector.end();) {
+                        string filename = "StreamZ_" + to_string((*it)->getID()) + ".txt";
+                        (*it)->save(filename);
                     }
-                    cout << "Log file has been saved automatically." << endl;
+                    cout << "StreamZ's have been saved automatically." << endl;
                 }
                 cout << "Are you sure you want exit? (if yes enter 'y')" << endl;
                 cout << "--> ";
 
                 cin >> choice;
-
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
                 if (choice == "y") {
                     cout << "Thank you for using our framework!" << endl;
                     stopConsole();

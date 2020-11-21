@@ -491,48 +491,6 @@ void StreamZ::stopStream(Streamer *streamer) {
 }
 
 /**
- * Enters a certain viewer into a certain streamer's stream
- *
- * Checks if the viewer is not already in a stream and if the streamer has an active stream.
- * If so, enters the viewer into the streamer's stream.
- *
- * @param streamer the streamer streaming the stream in which the viewer wants to enter
- * @param v the viewer that wants to enter the stream
- * @return true if the operation was successful, false otherwise
- */
-bool StreamZ::enterStream(Streamer *streamer, Viewer *v) {
-    if (v->isActive()) {
-        return false;
-    }
-    if (!streamer->isActive()) {
-        return false;
-    }
-    PrivateStream *stream = dynamic_cast<PrivateStream *>(streamer->s);
-    if (stream != nullptr && !stream->isAuthorized(v->getID())) return false;
-    streamer->s->addView();
-    v->s = streamer->s;
-    return true;
-}
-
-/**
- * Removes a viewer from the stream he's watching
- *
- * Checks if the viewer is indeed watching a stream. If so, it removes him from the stream.
- *
- * @param v the viewer to remove from the stream
- * @return true if the operation was successful, false otherwise
- */
-bool StreamZ::exitStream(Viewer *v) {
-    if (!v->isActive()) {
-        cout << "User is not viewing any stream!" << endl;
-        return false;
-    }
-    //TODO: change number of viewers in stream?????
-    v->s = nullptr;  //exiting stream
-    return true;
-}
-
-/**
  * Adds a user of type streamer to the StreamZ platform
  *
  * @param nickname the user's nickname

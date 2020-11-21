@@ -52,10 +52,6 @@ public:
     void startPublicStream(Streamer *streamer, const std::string &title, const Language &lang, unsigned min_age) const;
     void startPrivateStream(Streamer *streamer, const std::string &title, const Language &lang, unsigned min_age, const std::vector<unsigned>& authorized_viewers) const;
     void stopStream(Streamer* streamer) ;
-    //for viewers
-    //TODO: Doesn't it make more sense for these static to be part of the viewer class;
-    static bool enterStream(Streamer* streamer, Viewer *v) ;  //can only be in one stream at the time
-    static bool exitStream(Viewer *v) ;   //they can exit at any time (needs to check if the stream should be added to the top 10)
     void printStreams(const std::vector<Streamer *> &streams) const;
     std::vector<Streamer*> getStreams(const Language& lang, Age min_age) const;
     void stopAllStreams();

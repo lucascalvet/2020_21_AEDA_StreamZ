@@ -29,7 +29,7 @@ public:
     Date getDate() const;
     Language getLanguage() const;
     Age getMinAge() const;
-    unsigned int getNumTotalViews() const;
+    unsigned getNumTotalViews() const;
     const std::vector<unsigned int> &getViewersLiked() const;
     const std::vector<unsigned int> &getViewersDisliked() const;
     unsigned getNumLikes() const;

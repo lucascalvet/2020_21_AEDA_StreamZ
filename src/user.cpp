@@ -128,6 +128,42 @@ string Viewer::getInfo() {
 }
 
 /**
+ * Enters the viewer into a streamer's stream
+ *
+ * Checks if the viewer is not already in a stream and if the streamer has an active stream.
+ * If so, enters the viewer into the streamer's stream.
+ *
+ * @param streamer the streamer streaming the stream in which the viewer wants to enter
+ */
+void Viewer::enterStream(Streamer *streamer) {
+    if (isActive()) {
+        throw AlreadyViewing();
+    }
+    if (!streamer->isActive()) {
+        throw NotStreaming();
+    }
+    PrivateStream *stream = dynamic_cast<PrivateStream *>(streamer->s);
+    if (stream != nullptr && !stream->isAuthorized(getID())) throw UnauthorizedViewer();
+    streamer->s->addView();
+    s = streamer->s;
+}
+
+/**
+ * Removes a viewer from the stream he's watching
+ *
+ * Checks if the viewer is indeed watching a stream. If so, it removes him from the stream.
+ *
+ * @param v the viewer to remove from the stream
+ * @return true if the operation was successful, false otherwise
+ */
+ void Viewer::exitStream() {
+    if (!isActive()) {
+        throw InactiveUser();
+    }
+    s = nullptr;  //exiting stream
+ }
+
+/**
  * Likes the stream that the viewer is watching
  *
  * @param v the viewer liking the stream

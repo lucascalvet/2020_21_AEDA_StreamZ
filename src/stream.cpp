@@ -111,7 +111,7 @@ Age Stream::getMinAge() const {
  * Get the number of total views of the stream
  * @return the number of total views
  */
-unsigned int Stream::getNumTotalViews() const {
+unsigned Stream::getNumTotalViews() const {
     return this->num_total_views;
 }
 

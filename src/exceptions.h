@@ -33,6 +33,8 @@ public:
     std::string getFileName() const {return filename;}
 };
 
+class AlreadyViewing : std::exception {};
+
 class AlreadyStreaming : std::exception {};
 
 class AlreadyInteracted : std::exception {};;
@@ -44,6 +46,8 @@ class NotStreaming : std::exception {};
 class FullCapacity : std::exception{};
 
 class InactiveUser : std::exception{};
+
+class UnauthorizedViewer : std::exception{};
 
 class NotInPrivateStream : std::exception{};
 

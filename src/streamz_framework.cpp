@@ -380,27 +380,47 @@ void viewer_menu_loop(Menu viewerMenu, Viewer *v_selected, StreamZ *sz_selected,
                         cin >> choice;
                         cin.ignore(numeric_limits<streamsize>::max(), '\n');
                         if (!cinFail()) {
-                            if (sz_selected->getStreamerByID(choice) == nullptr) {
+                            Streamer *selection = sz_selected->getStreamerByID(choice);
+                            if (selection == nullptr) {
                                 cout << "Invalid streamer id inputted!" << endl;
                                 break;
                             }
+                            try {
+                                v_selected->enterStream(selection);
+                            }
+                            catch (AlreadyViewing&) {
+                                //TODO: Redundant?
+                                break;
+                            }
+                            catch (NotStreaming&){
+                                //TODO: Redundant?
+                                break;
+                            }
+                            catch (UnauthorizedViewer&) {
+                                cout << "This is a private stream. You are not authorized to enter it.";
+                                break;
+                            }
+                            cout << "Entered stream successfully!" << endl;
                         } else {
                             cout << "No valid number inputted!" << endl;
                             break;
                         }
-
-                        sz_selected->enterStream(sz_selected->getStreamerByID(choice), v_selected);
-                        cout << "Entered stream successfully!" << endl;
                     }
                 }
                 break;
             }
                 //exit stream
             case 2: {
-                if (!v_selected->isActive()) {
+                if (!v_selected->isActive()) { //TODO: Remove and use exception?
                     cout << "This viewer is not in a stream!" << endl;
                 } else {
-                    sz_selected->exitStream(v_selected);
+                    try {
+                        v_selected->exitStream();
+                    }
+                    catch(InactiveUser&){
+                        cout << "This viewer is not in a stream!" << endl;
+                        break;
+                    }
                     cout << "Exiting stream successfully!" << endl;
                 }
                 stopConsole();

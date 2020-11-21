@@ -14,11 +14,22 @@ using namespace std;
  * @param year the date's year
  */
 Date::Date(unsigned int day, unsigned int month, unsigned int year) {
-    if (month > 12)
+    if(day < 1 || day > 31) {
+        throw InvalidDate(DAY, day);
+    } else if(month < 1 || month > 12) {
         throw InvalidDate(MONTH, month);
-    if (day > 31)
+    } else if (year < 1900) {
+        throw InvalidDate(YEAR, year);
+    }
+
+    if ((month == 4 || month == 6 || month == 9 || month == 11) && day == 31) {
+        throw InvalidDate(DAY, day);
+    } else if ((month == 2) && (year % 4 == 0) && day > 29) {
         throw InvalidDate(DAY, day);
 
+    } else if ((month == 2) && (year % 4 != 0) && day > 28) {
+        throw InvalidDate(DAY, day);
+    }
     this->day = day;
     this->month = month;
     this->year = year;

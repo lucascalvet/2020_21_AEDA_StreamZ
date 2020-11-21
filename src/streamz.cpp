@@ -2,6 +2,7 @@
 #include <fstream>
 #include "exceptions.h"
 #include <limits>
+#include <map>
 
 using namespace std;
 
@@ -25,7 +26,6 @@ StreamZ::StreamZ(unsigned capacity, const std::string &nickname, const Date &bir
  * Constructor for the StreamZ class, from a formatted file
  */
 StreamZ::StreamZ(const string &filename) {
-    id = counter++;
     capacity = 0;
     ifstream file;
     file.open(filename);
@@ -113,6 +113,7 @@ StreamZ::StreamZ(const string &filename) {
         }
         file.get();
     }
+    id = counter++;
 }
 
 /**
@@ -369,6 +370,16 @@ unsigned StreamZ::getNumCreatedStreams(bool public_streams, const Date &dt1, con
         }
     }
     return count;
+}
+
+/**
+ * Get the language that is most used in the streams
+ * @return the language most used in the streams
+ */
+std::string StreamZ::getMostUsedLanguage() {
+    map<string, unsigned> frequency;
+
+    return std::__cxx11::string();
 }
 
 /**

@@ -347,7 +347,7 @@ void streamer_menu_loop(Menu streamer_menu, Streamer *s_selected, StreamZ *sz_se
                 try {
                     sz_selected->stopStream(s_selected);
                     exception_caught = false;
-                } catch (NotStreaming &) {
+                } catch (InactiveUser &) {
                     cout << "There is no stream to stop! Streamer is not streaming!" << endl;
                 }
 
@@ -414,7 +414,7 @@ void viewer_menu_loop(Menu viewer_menu, Viewer *v_selected, StreamZ *sz_selected
                                 //TODO: Redundant?
                                 break;
                             }
-                            catch (NotStreaming&){
+                            catch (InactiveUser&){
                                 //TODO: Redundant?
                                 break;
                             }
@@ -493,7 +493,7 @@ void viewer_menu_loop(Menu viewer_menu, Viewer *v_selected, StreamZ *sz_selected
                                 cout << "Not viewing any stream!" << endl;
                             } else {
                                 try {
-                                    v_selected->remlikeStream();
+                                    v_selected->remLikeStream();
                                 }
                                 catch (HasNotInteracted &) {
                                     cout << "You haven't liked the stream!" << endl;
@@ -509,7 +509,7 @@ void viewer_menu_loop(Menu viewer_menu, Viewer *v_selected, StreamZ *sz_selected
                                 cout << "Not viewing any stream!" << endl;
                             } else {
                                 try {
-                                    v_selected->remdislikeStream();
+                                    v_selected->remDislikeStream();
                                 }
                                 catch (HasNotInteracted &) {
                                     cout << "You haven't disliked the stream!" << endl;
@@ -1013,9 +1013,16 @@ streamzFramework() {
                     cout << "Don't forget to save if you want!" << endl;
                 } else {
                     vector<StreamZ *>::iterator it;
-                    for (it = streamz_vector.begin(); it != streamz_vector.end(); it++) {
-                        string filename = "StreamZ_" + to_string((*it)->getID()) + ".txt";
-                        (*it)->save(filename);
+                    try {
+                        for (it = streamz_vector.begin(); it != streamz_vector.end(); it++) {
+                            string filename = "StreamZ_" + to_string((*it)->getID()) + ".txt";
+                            (*it)->stopAllStreams();
+                            (*it)->save(filename);
+                        }
+                    }
+                    catch (InvalidFile&) {
+                        cout << "Error saving to files!";
+                        break;
                     }
                     cout << "StreamZ's have been saved automatically." << endl;
                 }

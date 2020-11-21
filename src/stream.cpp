@@ -23,7 +23,7 @@ const vector<Language> Stream::LANGS = {"AB", "AA", "AF", "AK", "SQ", "AM", "AR"
                                         "ZA", "ZU"};
 
 /**
- * Constructs a stream object
+ * Construct a stream object
  *
  * @param title the stream´s title
  * @param lang the stream's language (must be one of the languages in LANG)
@@ -40,13 +40,15 @@ Stream::Stream(const string &title, const Language &lang, unsigned min_age) {
 }
 
 /**
- * Constructs a stream object with attributes usually set at runtime (for loading from a file)
+ * Construct a stream object with attributes usually set at runtime (for loading from a file)
  *
  * @param title the stream´s title
  * @param lang the stream's language (must be one of the languages in LANG)
  * @param min_age the stream's minimum age
  * @param starting_date the stream's starting date
  * @param num_viewers the stream's number of viewers
+ * @param viewers_liked a list with the IDs of the viewers that liked the stream
+ * @param viewers_disliked a list with the IDs of the viewers that disliked the stream
  */
 Stream::Stream(const string &title, const Language &lang, unsigned min_age,
                const Date &starting_date, unsigned num_viewers, const vector<unsigned int> &viewers_liked,
@@ -58,7 +60,7 @@ Stream::Stream(const string &title, const Language &lang, unsigned min_age,
 }
 
 /**
- * Gets a formatted string with the information of the stream (its title, starting date, language and minimum age)
+ * Get a formatted string with the information of the stream (its title, starting date, language and minimum age)
  *
  * @return a string with the stream's information
  */
@@ -67,39 +69,30 @@ string Stream::getInfo() const {
     info << "Title: " << this->title << "\tStarting Date: " << this->starting_date <<
          "\tLanguage: " << this->lang << "\tMin Age: " << this->min_age <<
          "\tLikes: " << getNumLikes() << "\tDislikes: " << getNumDislikes() <<
-         "\tTotal Views: " << this->num_total_views <<'\n';
+         "\tTotal Views: " << this->num_total_views << '\n';
     return info.str();
 }
 
 /**
- * Gets the stream's title
+ * Get the stream's title
  *
- * @return a string with the stream's title
+ * @return the stream's title
  */
 string Stream::getTitle() const {
     return this->title;
 }
 
 /**
- * Gets the stream's starting date
+ * Get the stream's language
  *
- * @return a Date object with the stream's starting date
- */
-Date Stream::getDate() const {
-    return this->starting_date;
-}
-
-/**
- * Gets the stream's language
- *
- * @return the stream's language in the predefined language initials
+ * @return the stream's language in the predefined language initials (in LANGS)
  */
 Language Stream::getLanguage() const {
     return this->lang;
 }
 
 /**
- * Gets the stream's minimum viewing age
+ * Get the stream's minimum viewing age
  *
  * @return the stream's minimum viewing age
  */
@@ -108,7 +101,17 @@ Age Stream::getMinAge() const {
 }
 
 /**
- * Get the number of total views of the stream
+ * Get the stream's starting date
+ *
+ * @return the stream's starting date
+ */
+Date Stream::getDate() const {
+    return this->starting_date;
+}
+
+/**
+ * Get the number of the stream's total views
+ *
  * @return the number of total views
  */
 unsigned Stream::getNumTotalViews() const {
@@ -133,11 +136,21 @@ unsigned Stream::getNumDislikes() const {
     return viewers_disliked.size();
 }
 
-const vector<unsigned int> &Stream::getViewersLiked() const {
+/**
+ * Get the IDs of the viewers that liked the stream
+ *
+ * @return the IDs of the viewers that liked the stream
+ */
+vector<unsigned int> Stream::getViewersLiked() const {
     return viewers_liked;
 }
 
-const vector<unsigned int> &Stream::getViewersDisliked() const {
+/**
+ * Get the IDs of the viewers that disliked the stream
+ *
+ * @return the IDs of the viewers that disliked the stream
+ */
+vector<unsigned int> Stream::getViewersDisliked() const {
     return viewers_disliked;
 }
 
@@ -152,7 +165,6 @@ void Stream::addView() {
  * Add a like to the stream
  *
  * @param id the viewer's id
- * @return
  */
 void Stream::addLike(unsigned id) {
     if (alreadyLikedOrDisliked(id)) throw AlreadyInteracted();
@@ -163,7 +175,6 @@ void Stream::addLike(unsigned id) {
  * Add a dislike to the stream
  *
  * @param id the viewer's id
- * @return
  */
 void Stream::addDislike(unsigned id) {
     if (alreadyLikedOrDisliked(id)) throw AlreadyInteracted();
@@ -174,7 +185,6 @@ void Stream::addDislike(unsigned id) {
  * Remove a like from the stream
  *
  * @param id the viewer's id
- * @return
  */
 void Stream::remLike(unsigned id) {
     vector<unsigned>::iterator viewer = find(viewers_liked.begin(), viewers_liked.end(), id);
@@ -186,7 +196,6 @@ void Stream::remLike(unsigned id) {
  * Remove a dislike from the stream
  *
  * @param id the viewer's id
- * @return
  */
 void Stream::remDislike(unsigned id) {
     vector<unsigned>::iterator viewer = find(viewers_disliked.begin(), viewers_disliked.end(), id);
@@ -198,7 +207,7 @@ void Stream::remDislike(unsigned id) {
  * Checks if a viewer has already liked or disliked the stream
  *
  * @param id the viewer's id
- * @return true if a viewer has already liked or disliked the stream, false otherwise
+ * @return true if the viewer has already liked or disliked the stream, false otherwise
  */
 bool Stream::alreadyLikedOrDisliked(unsigned id) {
     if (find(viewers_liked.begin(), viewers_liked.end(), id) != viewers_liked.end())
@@ -209,9 +218,9 @@ bool Stream::alreadyLikedOrDisliked(unsigned id) {
 }
 
 /**
- * Constructs a public stream
+ * Construct a public stream
  *
- * Just calls the constructor for a stream, since it doesn't have unique methods or attributes
+ * Just initializes a Stream, since it doesn't have unique methods or attributes
  *
  * @param title the stream's title
  * @param lang the stream's language (must be one of the languages in LANG)
@@ -220,41 +229,60 @@ bool Stream::alreadyLikedOrDisliked(unsigned id) {
 PublicStream::PublicStream(string title, Language lang, Age min_age) : Stream(title, lang, min_age) {
 }
 
+/**
+ * Construct a public stream object with attributes usually set at runtime (for loading from a file)
+ *
+ * @param title the stream´s title
+ * @param lang the stream's language (must be one of the languages in LANG)
+ * @param min_age the stream's minimum age
+ * @param starting_date the stream's starting date
+ * @param num_viewers the stream's number of viewers
+ * @param viewers_liked a list with the IDs of the viewers that liked the stream
+ * @param viewers_disliked a list with the IDs of the viewers that disliked the stream
+ */
 PublicStream::PublicStream(const string &title, const Language &lang, unsigned int minAge, const Date &startingDate,
                            unsigned int numViewers, const vector<unsigned int> &viewersLiked,
                            const vector<unsigned int> &viewersDisliked) : Stream(title, lang, minAge, startingDate,
                                                                                  numViewers, viewersLiked,
                                                                                  viewersDisliked) {}
 
-PublicStream::~PublicStream() {
-}
-
 /**
- * Constructs a private stream
+ * Construct a private stream
  *
  * @param title the stream's title
  * @param lang the stream's language (must be one of the languages in LANG)
  * @param min_age the stream's minimum age
+ * @param authorized_viewers the IDs of the authorized viewers
  */
 PrivateStream::PrivateStream(string title, Language lang, Age min_age, vector<unsigned> authorized_viewers) : Stream(
         title, lang, min_age) {
     this->authorized_viewers = authorized_viewers;
 }
 
+/**
+ * Construct a public stream object with attributes usually set at runtime (for loading from a file)
+ *
+ * @param title the stream´s title
+ * @param lang the stream's language (must be one of the languages in LANG)
+ * @param min_age the stream's minimum age
+ * @param starting_date the stream's starting date
+ * @param num_viewers the stream's number of viewers
+ * @param viewers_liked a list with the IDs of the viewers that liked the stream
+ * @param viewers_disliked a list with the IDs of the viewers that disliked the stream
+ * @param authorizedViewers the IDs of the authorized viewers
+ * @param comments the stream's comments
+ */
 PrivateStream::PrivateStream(const string &title, const Language &lang, unsigned int minAge, const Date &startingDate,
                              unsigned int numViewers, const vector<unsigned int> &viewersLiked,
                              const vector<unsigned int> &viewersDisliked, const vector<unsigned int> &authorizedViewers,
                              const vector<std::string> &comments) : Stream(title, lang, minAge, startingDate,
-                                                                           numViewers, viewersLiked, viewersDisliked){
+                                                                           numViewers, viewersLiked, viewersDisliked) {
     this->authorized_viewers = authorizedViewers;
     this->comments = comments;
 }
 
-PrivateStream::~PrivateStream() {
-}
-
 /**
- * Gets a formatted string with the normal information of the stream plus the information of the private stream
+ * Get a formatted string with the normal information of the stream plus the information of the private stream
  *
  * @return a string with the private stream's information
  */
@@ -266,7 +294,7 @@ std::string PrivateStream::getInfo() const {
         vector<unsigned>::const_iterator viewer;
         for (viewer = authorized_viewers.begin(); viewer != authorized_viewers.end(); viewer++) {
             info << *viewer;
-            if (viewer == authorized_viewers.end()-1) info << ", ";
+            if (viewer == authorized_viewers.end() - 1) info << ", ";
         }
         info << '\n';
     } else info << "\nNo authorized viewers. No one will be able to enter the stream!\n";
@@ -274,7 +302,7 @@ std::string PrivateStream::getInfo() const {
         info << "\nComments:\n";
         vector<string>::const_iterator comment;
         for (comment = comments.begin(); comment != comments.end(); comment++) {
-            info << "-->" <<  *comment << '\n';
+            info << "-->" << *comment << '\n';
         }
     } else info << "\nNo comments.\n";
     info << '\n';
@@ -286,15 +314,16 @@ std::string PrivateStream::getInfo() const {
  *
  * @return a vector with the id's of the authorized viewers
  */
-const vector<unsigned int> &PrivateStream::getAuthorizedViewers() const {
+vector<unsigned int> PrivateStream::getAuthorizedViewers() const {
     return authorized_viewers;
 }
 
 /**
  * Get the comments on the private stream
- * @return a vector with the comments
+ *
+ * @return the comments on the private stream
  */
-const vector<std::string> &PrivateStream::getComments() const {
+vector<std::string> PrivateStream::getComments() const {
     return comments;
 }
 
@@ -315,4 +344,3 @@ bool PrivateStream::isAuthorized(unsigned int user_id) const {
 void PrivateStream::addComment(const string &comment) {
     comments.push_back(comment);
 }
-

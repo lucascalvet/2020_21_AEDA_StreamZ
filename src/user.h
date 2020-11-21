@@ -20,13 +20,12 @@ public:
     Stream *s = nullptr;
     User(const std::string &nickname, const Date &birthday, const std::string &password);
     User(const std::string &nickname, const Date &birthday, const std::string &password, unsigned id);
-    std::string getName() const;
-    unsigned getID() const;
-    std::string getPassword() const;
-    Date getBirthday() const;
-    bool isActive() const;
     virtual std::string getInfo();
-    ~User();
+    std::string getName() const;
+    Date getBirthday() const;
+    std::string getPassword() const;
+    unsigned getID() const;
+    bool isActive() const;
 };
 
 /**
@@ -40,7 +39,6 @@ public:
     Streamer(const std::string &nickname, const Date &birthday, const std::string &password, unsigned id);
     ~Streamer();
     std::string getInfo();
-    unsigned getTotalViews() const;
     std::vector<Stream *> getHistory() const;
     void addToHistory(Stream *stream);
     void stopStreaming();
@@ -54,12 +52,12 @@ public:
     Viewer(const std::string &nickname, const Date &birthday, const std::string &password);
     Viewer(const std::string &nickname, const Date &birthday, const std::string &password, unsigned id);
     std::string getInfo();
-    void enterStream(Streamer* streamer);
+    void enterStream(Streamer *streamer);
     void exitStream();
     void likeStream() const;
-    void remlikeStream() const;
+    void remLikeStream() const;
     void dislikeStream() const;
-    void remdislikeStream() const;
+    void remDislikeStream() const;
     void comment(const std::string &comment) const;
 };
 
@@ -71,6 +69,5 @@ public:
     Admin(const std::string &nickname, const Date &birthday, const std::string &password);
     Admin(const std::string &nickname, const Date &birthday, const std::string &password, unsigned id);
 };
-
 
 #endif //STREAMZ_USER_H

@@ -9,9 +9,12 @@ using namespace std;
 int StreamZ::counter = 0;
 
 /**
- * Constructor for the StreamZ class
+ * Construct a StreamZ class object
  *
  * @param capacity the maximum capacity of streams the platform may have at any time
+ * @param nickname the admin's nickname
+ * @param birthday the admin's date of birth
+ * @param password the admin's password
  */
 StreamZ::StreamZ(unsigned capacity, const std::string &nickname, const Date &birthday, const std::string &password) {
 
@@ -23,7 +26,9 @@ StreamZ::StreamZ(unsigned capacity, const std::string &nickname, const Date &bir
 }
 
 /**
- * Constructor for the StreamZ class, from a formatted file
+ * Construct a StreamZ class object, from a formatted file
+ *
+ * @param filename the name of the file to import the StreamZ from
  */
 StreamZ::StreamZ(const string &filename) {
     capacity = 0;
@@ -107,7 +112,7 @@ StreamZ::StreamZ(const string &filename) {
                 comments.push_back(comment);
             }
             PrivateStream *private_stream = new PrivateStream(title, lang, min_age, starting_date, num_views,
-                                                           viewers_liked, viewers_disliked, auth_viewers, comments);
+                                                              viewers_liked, viewers_disliked, auth_viewers, comments);
             streamer->addToHistory(private_stream);
             file.get();
         }
@@ -117,7 +122,7 @@ StreamZ::StreamZ(const string &filename) {
 }
 
 /**
- * Deletes all pointers
+ * Delete all pointers
  */
 StreamZ::~StreamZ() {
     vector<Streamer *>::iterator streamer;
@@ -133,7 +138,7 @@ StreamZ::~StreamZ() {
 }
 
 /**
- * Gets the capacity of the StreamZ platform
+ * Get the capacity of the StreamZ platform
  *
  * @return the capacity of the StreamZ platform
  */
@@ -142,7 +147,7 @@ unsigned int StreamZ::getCapacity() const {
 }
 
 /**
- * Gets the ID of the StreamZ platform
+ * Get the ID of the StreamZ platform
  *
  * @return the ID of the StreamZ platform
  */
@@ -151,7 +156,7 @@ unsigned StreamZ::getID() const {
 }
 
 /**
- * Gets the number of registered viewers
+ * Get the number of registered viewers
  *
  * @return the number of registered viewers
  */
@@ -161,6 +166,8 @@ unsigned StreamZ::getNumViewers() const {
 
 /**
  * Get the number of viewers in a stream
+ *
+ * @param stream the stream to get the number of viewers from
  * @return the number of viewers in a stream
  */
 unsigned StreamZ::getNumStreamViewers(Stream *stream) const {
@@ -173,7 +180,8 @@ unsigned StreamZ::getNumStreamViewers(Stream *stream) const {
 }
 
 /**
- * Gets all the registered viewers
+ * Get all the registered viewers
+ *
  * @return a vector with pointers to all the registered viewers
  */
 vector<Viewer *> StreamZ::getViewers() const {
@@ -181,7 +189,7 @@ vector<Viewer *> StreamZ::getViewers() const {
 }
 
 /**
- * Gets a viewer by its ID
+ * Get a viewer by its ID
  *
  * @param user_id the viewer's ID
  * @return a pointer to the viewer, a nullptr if the ID is invalid
@@ -196,7 +204,7 @@ Viewer *StreamZ::getViewerByID(unsigned user_id) const {
 }
 
 /**
- * Gets a viewer by its nickname
+ * Get a viewer by its nickname
  *
  * @param user_id the viewer's nickname
  * @return a pointer to the viewer, a nullptr if the nickname is invalid
@@ -211,7 +219,7 @@ Viewer *StreamZ::getViewerByName(const string &nickname) const {
 }
 
 /**
- * Gets the number of registered streamers
+ * Get the number of registered streamers
  *
  * @return the number of registered streamers
  */
@@ -220,7 +228,7 @@ unsigned StreamZ::getNumStreamers() const {
 }
 
 /**
- * Gets all the registered streamers
+ * Get all the registered streamers
  * @return a vector with pointers to all the registered streamers
  */
 vector<Streamer *> StreamZ::getStreamers() const {
@@ -228,7 +236,7 @@ vector<Streamer *> StreamZ::getStreamers() const {
 }
 
 /**
- * Gets a streamer by its ID
+ * Get a streamer by its ID
  *
  * @param user_id the streamer's ID
  * @return a pointer to the streamer, a nullptr if the ID is invalid
@@ -243,7 +251,7 @@ Streamer *StreamZ::getStreamerByID(unsigned user_id) const {
 }
 
 /**
- * Gets a streamer by its nickname
+ * Get a streamer by its nickname
  *
  * @param user_id the streamer's nickname
  * @return a pointer to the streamer, a nullptr if the nickname is invalid
@@ -258,9 +266,9 @@ Streamer *StreamZ::getStreamerByName(const string &nickname) const {
 }
 
 /**
- * Gets the number of active streams
+ * Get the number of current active streamers
  *
- * @return the number of active streams
+ * @return the number of active streamers
  */
 unsigned StreamZ::getNumActiveStreamers() const {
     unsigned count = 0;
@@ -273,7 +281,8 @@ unsigned StreamZ::getNumActiveStreamers() const {
 }
 
 /**
- * Gets all the active streamers
+ * Get all the active streamers
+ *
  * @return a vector with pointers to all the active streamers
  */
 vector<Streamer *> StreamZ::getActiveStreamers() const {
@@ -286,8 +295,9 @@ vector<Streamer *> StreamZ::getActiveStreamers() const {
 }
 
 /**
- * Gets the best ten streams from the StreamZ platform
- * @return the best ten streams
+ * Get the best streams from the StreamZ platform (10 most viewed and 10 most liked)
+ *
+ * @return the best streams
  */
 vector<Stream *> StreamZ::getBestStreams() const {
     return this->best_streams;
@@ -295,6 +305,7 @@ vector<Stream *> StreamZ::getBestStreams() const {
 
 /**
  * Get the streamer with the most total views
+ *
  * @return the most viewed streamer
  */
 Streamer *StreamZ::getMostViewedStreamer() const {
@@ -339,6 +350,12 @@ unsigned StreamZ::getNumCreatedStreams() const {
     return count;
 }
 
+/**
+ * Get the number of created streams of a specific language
+ *
+ * @param lang the language of the streams
+ * @return the number of created streams with language lang
+ */
 unsigned StreamZ::getNumCreatedStreams(const Language &lang) const {
     unsigned count = 0;
     vector<Stream *> streams;
@@ -353,6 +370,13 @@ unsigned StreamZ::getNumCreatedStreams(const Language &lang) const {
     return count;
 }
 
+/**
+ * Get the number of created public or private streams, optionally between a set time frame
+ * @param public_streams true to get the number of public streams, false to get the number of private streams
+ * @param dt1 lower bound time frame date
+ * @param dt2 upper bound time frame date
+ * @return the number of created public or private streams
+ */
 unsigned StreamZ::getNumCreatedStreams(bool public_streams, const Date &dt1, const Date &dt2) const {
     unsigned count = 0;
     vector<Stream *> streams;
@@ -374,12 +398,35 @@ unsigned StreamZ::getNumCreatedStreams(bool public_streams, const Date &dt1, con
 
 /**
  * Get the language that is most used in the streams
+ *
  * @return the language most used in the streams
  */
 std::string StreamZ::getMostUsedLanguage() {
+    if (getNumCreatedStreams() == 0) return "";
+    string lang;
     map<string, unsigned> frequency;
-
-    return std::__cxx11::string();
+    vector<Stream *> streams;
+    vector<Streamer *>::const_iterator streamer;
+    vector<Stream *>::const_iterator stream;
+    for (streamer = streamers.begin(); streamer != streamers.end(); streamer++) {
+        streams = (*streamer)->getHistory();
+        if ((*streamer)->isActive()) streams.push_back((*streamer)->s);
+        for (stream = streams.begin(); stream != streams.end(); stream++) {
+            lang = (*stream)->getLanguage();
+            if (frequency.find(lang) == frequency.end()) frequency.insert(make_pair(lang, 1));
+            else {
+                frequency.at(lang)++;
+            }
+        }
+    }
+    pair<string, unsigned> max_lang = make_pair("", 0);
+    map<string, unsigned>::const_iterator current_entry;
+    for (current_entry = frequency.begin(); current_entry != frequency.end(); current_entry++) {
+        if (current_entry->second > max_lang.second) {
+            max_lang = make_pair(current_entry->first, current_entry->second);
+        }
+    }
+    return max_lang.first;
 }
 
 /**
@@ -405,7 +452,7 @@ double StreamZ::getAverageViews() const {
 
 
 /**
- * Starts a public stream, with all of its initial properties
+ * Start a public stream, with all of its initial properties
  *
  * Checks if the streamer already has an active stream and if the StreamZ platform hasn't reached
  * its maximum capacity of streams. If so, it starts the stream.
@@ -414,7 +461,6 @@ double StreamZ::getAverageViews() const {
  * @param title the stream's title
  * @param lang the stream's language
  * @param min_age the stream's minimum age
- * @return
  */
 void StreamZ::startPublicStream(Streamer *streamer, const string &title, const Language &lang, unsigned min_age) const {
     if (streamer->isActive()) throw AlreadyStreaming();
@@ -429,18 +475,16 @@ void StreamZ::startPublicStream(Streamer *streamer, const string &title, const L
 }
 
 /**
- * Starts a private stream, with all of its initial properties
+ * Start a private stream, with all of its initial properties
  *
  * Checks if the streamer already has an active stream and if the StreamZ platform hasn't reached
- * its maximum cap of streams. If so, it starts the stream.
+ * its maximum capacity of streams. If so, it starts the stream.
  *
  * @param streamer the streamer starting the stream
  * @param title the stream's title
  * @param lang the stream's language
  * @param min_age the stream's minimum age
  * @param authorized_viewers a list of of the authorized viewers of the stream
- * @param cap the cap of the stream
- * @return
  */
 void StreamZ::startPrivateStream(Streamer *streamer, const string &title, const Language &lang, unsigned min_age,
                                  const vector<unsigned int> &authorized_viewers) const {
@@ -455,13 +499,12 @@ void StreamZ::startPrivateStream(Streamer *streamer, const string &title, const 
 }
 
 /**
- * Stops a streamer's stream and adds or not to best streams. Checks if the streamer has indeed an active stream
+ * Stops a streamer's stream and adds it or not to the best streams. Checks if the streamer has indeed an active stream
  *
  * @param streamer the streamer that stopped its stream
- * @return
  */
 void StreamZ::stopStream(Streamer *streamer) {
-    if (!streamer->isActive()) throw NotStreaming();
+    if (!streamer->isActive()) throw InactiveUser();
 
     vector<Viewer *>::const_iterator viewer;
     for (viewer = viewers.begin(); viewer != viewers.end(); viewer++) {
@@ -502,11 +545,11 @@ void StreamZ::stopStream(Streamer *streamer) {
 }
 
 /**
- * Adds a user of type streamer to the StreamZ platform
+ * Add a user of type streamer to the StreamZ platform
  *
- * @param nickname the user's nickname
- * @param birthday the user's date of birth
- * @return true if the operation was successful, false otherwise
+ * @param nickname the streamer's nickname
+ * @param birthday the streamer's date of birth
+ * @param password the streamer's password
  */
 void StreamZ::addStreamer(const string &nickname, const Date &birthday, const std::string &password) {
     if (calculateAge(birthday) < MIN_AGE_STREAMER) throw NoMinimumAge();
@@ -525,11 +568,11 @@ void StreamZ::addStreamer(const string &nickname, const Date &birthday, const st
 }
 
 /**
- * Adds a user of type viewer to the StreamZ platform
+ * Add a user of type viewer to the StreamZ platform
  *
- * @param nickname the user's nickname
- * @param birthday the user's date of birth
- * @return true if the operation was successful, false otherwise
+ * @param nickname the viewer's nickname
+ * @param birthday the viewer's date of birth
+ * @param password the viewer's password
  */
 void StreamZ::addViewer(const string &nickname, const Date &birthday, const std::string &password) {
     if (calculateAge(birthday) < MIN_AGE_VIEWER) throw NoMinimumAge();
@@ -548,7 +591,7 @@ void StreamZ::addViewer(const string &nickname, const Date &birthday, const std:
 }
 
 /**
- * Prints a list of streams
+ * Print a list of streams
  * @param streams the streams to be printed
  */
 void StreamZ::printStreams(const vector<Streamer *> &streams) const {
@@ -560,7 +603,7 @@ void StreamZ::printStreams(const vector<Streamer *> &streams) const {
 }
 
 /**
- * Gets a list of streamers streaming a stream with certain characteristics
+ * Get a list of streamers streaming a stream with certain characteristics
  *
  * Selects the active streamers which the stream matches the language and has a minimum age smaller or
  * equal to the one specified. One can call the function without parameters in order to get all active
@@ -570,7 +613,7 @@ void StreamZ::printStreams(const vector<Streamer *> &streams) const {
  * @param min_age the maximum minimum age for the streams to search for. Leave blank for any minimum age.
  * @return the list of streamers streaming the specified streams
  */
-vector<Streamer *> StreamZ::getStreams(const Language &lang = "", Age min_age = UINT_MAX) const {
+vector<Streamer *> StreamZ::getStreams(const Language &lang, Age min_age) const {
     vector<Streamer *> ret_streams;
     vector<Streamer *>::const_iterator streamer;
     for (streamer = this->streamers.begin(); streamer != this->streamers.end(); streamer++) {
@@ -581,6 +624,9 @@ vector<Streamer *> StreamZ::getStreams(const Language &lang = "", Age min_age = 
     return ret_streams;
 }
 
+/**
+ * Stops all active streams
+ */
 void StreamZ::stopAllStreams() {
     vector<Streamer *> active_streamers = getActiveStreamers();
     vector<Streamer *>::iterator streamer;
@@ -595,10 +641,10 @@ void StreamZ::stopAllStreams() {
  * @param filename the name of the file to save to
  * @return true if the operation was successful, false otherwise
  */
-bool StreamZ::save(const string &filename) const {
+void StreamZ::save(const string &filename) const {
     ofstream file;
     file.open(filename, ofstream::trunc);
-    if (file.fail()) return false;
+    if (file.fail()) throw InvalidFile(filename);
     file << VALIDATION_STRING << '\n';
     file << this->capacity << '\n';
     file << admin->getID() << '\t' << admin->getName() << '\t' << admin->getPassword() << '\t'
@@ -647,7 +693,6 @@ bool StreamZ::save(const string &filename) const {
         }
         file << '\n';
     }
-    return true;
 }
 
 /**
@@ -670,9 +715,10 @@ bool StreamZ::loginVerifier(string nickname, string password_inputted) const {
 }
 
 /**
- * Gets user by it's nickname
- * @param nickname the user nickname
- * @return user pointer to user if it exists, nullptr otherwise
+ * Get a user by its nickname
+ *
+ * @param nickname the user's nickname
+ * @return user a pointer to the user, if it exists, nullptr otherwise
  */
 User *StreamZ::getUserByName(const string &nickname) {
     if (admin->getName() == nickname) return admin;

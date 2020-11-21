@@ -32,24 +32,30 @@ StreamZ::StreamZ(const string &filename) {
     if (validate != VALIDATION_STRING) throw InvalidFile(filename);
     file >> capacity;
     file.get();
+    string nickname, password;
+    unsigned user_id, day, month, year;
+    char sep;
+    file >> user_id;
+    file.get();
+    getline(file, nickname, '\t');
+    getline(file, password, '\t');
+    file >> day >> sep >> month >> sep >> year;
+    Date birthday(day, month, year);
+    admin = new Admin(nickname, birthday, password, user_id);
+    file.ignore(numeric_limits<streamsize>::max(), '\n');
     while (file.peek() != '\n') {
-        string nickname, password;
-        unsigned viewer_id, day, month, year;
-        char sep;
-        file >> viewer_id; file.get();
+        file >> user_id;
+        file.get();
         getline(file, nickname, '\t');
         getline(file, password, '\t');
         file >> day >> sep >> month >> sep >> year;
         Date birthday(day, month, year);
-        Viewer *viewer = new Viewer(nickname, birthday, password, viewer_id);
+        Viewer *viewer = new Viewer(nickname, birthday, password, user_id);
         viewers.push_back(viewer);
         file.ignore(numeric_limits<streamsize>::max(), '\n');
     }
     file.get();
     while (file.peek() != EOF && file.peek() != '\n') {
-        string nickname, password;
-        unsigned user_id, day, month, year;
-        char sep;
         file >> user_id;
         file.get();
         getline(file, nickname, '\t');
@@ -60,7 +66,6 @@ StreamZ::StreamZ(const string &filename) {
         streamers.push_back(streamer);
         file.ignore(numeric_limits<streamsize>::max(), '\n');
         while (file.peek() != '\n') {
-            cout << "REACH1";
             string title, lang;
             unsigned min_age, num_views;
             getline(file, title, '\t');
@@ -70,20 +75,17 @@ StreamZ::StreamZ(const string &filename) {
             getline(file, lang, '\t');
             file >> min_age >> num_views;
             vector<unsigned> viewers_liked;
-            cout << "REACH2";
-            while(file.get() == ','){
+            file.get();
+            while (file.get() == ',') {
                 file >> user_id;
                 viewers_liked.push_back(user_id);
             }
             vector<unsigned> viewers_disliked;
-            cout << "REACH2";
-            while(file.peek() == ','){
-                file.get();
+            while (file.get() == ',') {
                 file >> user_id;
                 viewers_disliked.push_back(user_id);
             }
-            cout << "REACH3";
-            if(file.peek() == '\n'){
+            if (file.peek() == '\n') {
                 PublicStream *pub_stream = new PublicStream(title, lang, min_age, starting_date, num_views,
                                                             viewers_liked, viewers_disliked);
                 streamer->addToHistory(pub_stream);
@@ -91,24 +93,22 @@ StreamZ::StreamZ(const string &filename) {
                 continue;
             }
             vector<unsigned> auth_viewers;
-            cout << "REACH4";
-            while(file.get() == ','){
+            while (file.get() == ',') {
                 file >> user_id;
                 auth_viewers.push_back(user_id);
             }
             string comment;
             vector<string> comments;
-            cout << "REACH5";
-            while(file.get() == '|'){
-                file >> comment;
+            while (file.peek() != '\n') {
+                getline(file, comment, '\t');
                 comments.push_back(comment);
             }
             PrivateStream *priv_stream = new PrivateStream(title, lang, min_age, starting_date, num_views,
-                                                        viewers_liked, viewers_disliked, auth_viewers, comments);
+                                                           viewers_liked, viewers_disliked, auth_viewers, comments);
             streamer->addToHistory(priv_stream);
+            file.get();
         }
         file.get();
-        cout << "testing...";
     }
 }
 
@@ -430,9 +430,10 @@ void StreamZ::startPublicStream(Streamer *streamer, const string &title, const L
  * @param cap the cap of the stream
  * @return
  */
-void StreamZ::startPrivateStream(Streamer *streamer, const string &title, const Language &lang, unsigned min_age, const vector<unsigned int> &authorized_viewers) const {
+void StreamZ::startPrivateStream(Streamer *streamer, const string &title, const Language &lang, unsigned min_age,
+                                 const vector<unsigned int> &authorized_viewers) const {
     if (streamer->isActive()) throw AlreadyStreaming();
-    if(getNumActiveStreamers() == this->capacity) throw FullCapacity();
+    if (getNumActiveStreamers() == this->capacity) throw FullCapacity();
     try {
         streamer->s = new PrivateStream(title, lang, min_age, authorized_viewers);
     }
@@ -450,15 +451,18 @@ void StreamZ::startPrivateStream(Streamer *streamer, const string &title, const 
 void StreamZ::stopStream(Streamer *streamer) {
     if (!streamer->isActive()) throw NotStreaming();
 
-    vector<Viewer*>::const_iterator viewer;
-    for(viewer = viewers.begin(); viewer != viewers.end(); viewer++){
-        if((*viewer)->s == streamer->s) (*viewer)->s = nullptr;
+    vector<Viewer *>::const_iterator viewer;
+    for (viewer = viewers.begin(); viewer != viewers.end(); viewer++) {
+        if ((*viewer)->s == streamer->s) (*viewer)->s = nullptr;
     }
 
-    if(dynamic_cast<PrivateStream*>(streamer->s) != nullptr) streamer->stopStreaming();  //private streams doesn't enter in best streams
+    if (dynamic_cast<PrivateStream *>(streamer->s) != nullptr) {
+        streamer->stopStreaming();  //private streams doesn't enter in best streams
+        return;
+    }
 
-    for (unsigned i = 0; i < 9; i++){
-        if (best_streams.at(i) == nullptr){
+    for (unsigned i = 0; i < 9; i++) {
+        if (best_streams.at(i) == nullptr) {
             best_streams.at(i) = streamer->s;
             break;
         }
@@ -524,8 +528,6 @@ bool StreamZ::exitStream(Viewer *v) {
     }
     //TODO: change number of viewers in stream?????
     v->s = nullptr;  //exiting stream
-    v->alreadyLiked = false;
-    v->alreadyDisliked = false;
     return true;
 }
 
@@ -683,6 +685,8 @@ bool StreamZ::save(const string &filename) const {
     if (file.fail()) return false;
     file << VALIDATION_STRING << '\n';
     file << this->capacity << '\n';
+    file << admin->getID() << '\t' << admin->getName() << '\t' << admin->getPassword() << '\t'
+         << admin->getBirthday() << '\n';
     vector<Viewer *>::const_iterator viewer;
     for (viewer = viewers.begin(); viewer != viewers.end(); viewer++) {
         file << (*viewer)->getID() << '\t' << (*viewer)->getName() << '\t' << (*viewer)->getPassword() << '\t'
@@ -701,7 +705,7 @@ bool StreamZ::save(const string &filename) const {
             vector<unsigned>::const_iterator id;
             vector<unsigned> viewers_liked = (*stream)->getViewersLiked();
             for (id = viewers_liked.begin(); id != viewers_liked.end(); id++) {
-                file << ','<< (*id);
+                file << ',' << (*id);
             }
             file << '\t';
             vector<unsigned> viewers_disliked = (*stream)->getViewersDisliked();
@@ -711,7 +715,6 @@ bool StreamZ::save(const string &filename) const {
             file << '\t';
             PrivateStream *private_stream = dynamic_cast<PrivateStream *>(*stream);
             if (private_stream != nullptr) {
-                file << 1;
                 vector<unsigned> auth = (*private_stream).getAuthorizedViewers();
                 vector<unsigned>::const_iterator id;
                 for (id = auth.begin(); id != auth.end(); id++) {
@@ -721,7 +724,7 @@ bool StreamZ::save(const string &filename) const {
                 vector<string> comments = (*private_stream).getComments();
                 vector<string>::const_iterator comment;
                 for (comment = comments.begin(); comment != comments.end(); comment++) {
-                    file << '|' << (*comment);
+                    file << (*comment) << '\t';
                 }
             }
             file << '\n';
@@ -737,16 +740,16 @@ bool StreamZ::save(const string &filename) const {
  * @param password the user password
  * @return true if it is already registered, false otherwise
  */
-bool StreamZ::loginVerifier(string nickname,string password_inputted) const{
-    for(int i = 0; i < streamers.size(); i++){
-        if(streamers.at(i)->getName() == nickname && sha256Verifier(streamers.at(i)->getPassword(), password_inputted))
+bool StreamZ::loginVerifier(string nickname, string password_inputted) const {
+    for (int i = 0; i < streamers.size(); i++) {
+        if (streamers.at(i)->getName() == nickname && sha256Verifier(streamers.at(i)->getPassword(), password_inputted))
             return true;
     }
-    for(int i = 0; i < viewers.size(); i++){
-        if(viewers.at(i)->getName() == nickname && sha256Verifier(viewers.at(i)->getPassword(), password_inputted))
+    for (int i = 0; i < viewers.size(); i++) {
+        if (viewers.at(i)->getName() == nickname && sha256Verifier(viewers.at(i)->getPassword(), password_inputted))
             return true;
     }
-    if(admin->getName() == nickname && sha256Verifier(admin->getPassword(), password_inputted)) return true;
+    if (admin->getName() == nickname && sha256Verifier(admin->getPassword(), password_inputted)) return true;
     return false;
 }
 
@@ -755,12 +758,12 @@ bool StreamZ::loginVerifier(string nickname,string password_inputted) const{
  * @param nickname the user nickname
  * @return user pointer to user if it exists, nullptr otherwise
  */
-User* StreamZ::getUserByName(std::string nickname){
-    for(int i = 0; i < streamers.size(); i++) {
+User *StreamZ::getUserByName(std::string nickname) {
+    for (int i = 0; i < streamers.size(); i++) {
         if (streamers.at(i)->getName() == nickname) return streamers.at(i);
     }
     for (int i = 0; viewers.size(); i++) {
         if (viewers.at(i)->getName() == nickname) return viewers.at(i);
     }
     return nullptr;
-}
+} //TODO: What about the admin?

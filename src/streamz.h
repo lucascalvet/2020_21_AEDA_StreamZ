@@ -7,7 +7,6 @@
 #include "utils.h"
 #include "user.h"
 #include "stream.h"
-#include <typeinfo>
 
 /**
  * Main class for handling a StreamZ platform

@@ -45,8 +45,8 @@ public:
     unsigned getNumCreatedStreams(bool public_streams, const Date &dt1 = Date(0,0,0), const Date &dt2 = Date(31,12,UINT_MAX)) const;
     double getAverageViews() const;
     //map<int, std::vector<Stream*>> history; ;  //history per id of streamer
-    bool addStreamer(const std::string& nickname, const Date& birthday, const std::string& password);
-    bool addViewer(const std::string& nickname, const Date& birthday, const std::string& password);
+    void addStreamer(const std::string& nickname, const Date& birthday, const std::string& password);
+    void addViewer(const std::string& nickname, const Date& birthday, const std::string& password);
     //when stream is ended by streamer, stream is added to history after total viewers data is added to stream
     // for streamers
     void startPublicStream(Streamer *streamer, const std::string &title, const Language &lang, unsigned min_age) const;

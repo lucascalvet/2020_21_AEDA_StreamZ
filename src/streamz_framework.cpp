@@ -171,11 +171,21 @@ void create_streamer(StreamZ *sz_selected) {
     dateInput(birthday, true);
 
     passwordInput(password);
-    //TODO: Handle with exceptions as well?
-    if (!sz_selected->addStreamer(nickname, birthday, password))
-        cout << "Unable to create streamer! :( Username already used or not minimum age" << endl;
-    else
-        cout << "Streamer created successfully!" << endl;
+
+    bool exception_caught = true;
+
+    try {
+        sz_selected->addStreamer(nickname, birthday, password);
+        exception_caught = false;
+
+    } catch (NoMinimumAge&) {
+        cout << "Unable to create streamer! No minimum age required:(" << endl;
+
+    } catch (NameAlreadyInUse&) {
+        cout << "Unable to create streamer! Username already used :(" << endl;
+    }
+
+    if(!exception_caught) cout << "Streamer created successfully!" << endl;
 }
 
 void create_viewer(StreamZ *sz_selected) {
@@ -188,20 +198,32 @@ void create_viewer(StreamZ *sz_selected) {
     dateInput(birthday, true);
 
     passwordInput(password);
-    //TODO: Handle with exceptions as well?
-    if (!sz_selected->addViewer(nickname, birthday, password)) cout << "Unable to create viewer! :(" << endl;
-    else cout << "Viewer created successfully!" << endl;
+
+    bool exception_caught = true;
+
+    try {
+        sz_selected->addViewer(nickname, birthday, password);
+        exception_caught = false;
+
+    } catch (NoMinimumAge&) {
+        cout << "Unable to create viewer! No minimum age required:(" << endl;
+
+    } catch (NameAlreadyInUse&) {
+        cout << "Unable to create viewer! Username already used :(" << endl;
+    }
+
+    if(!exception_caught) cout << "Viewer created successfully!" << endl;
 }
 
-void streamer_menu_loop(Menu streamerMenu, Streamer *s_selected, StreamZ *sz_selected) {
+void streamer_menu_loop(Menu streamer_menu, Streamer *s_selected, StreamZ *sz_selected) {
     bool streamer_loop = true;
 
-    streamerMenu.changeTitle("Streamer " + s_selected->getName());
+    streamer_menu.changeTitle("Streamer " + s_selected->getName());
 
     while (streamer_loop) {
-        streamerMenu.startMenu();
+        streamer_menu.startMenu();
 
-        switch (streamerMenu.getSelected()) {
+        switch (streamer_menu.getSelected()) {
             //streamer info
             case 0: {
                 cout << s_selected->getInfo();
@@ -345,15 +367,15 @@ void streamer_menu_loop(Menu streamerMenu, Streamer *s_selected, StreamZ *sz_sel
 }
 
 
-void viewer_menu_loop(Menu viewerMenu, Viewer *v_selected, StreamZ *sz_selected, Menu viewerInteractionMenu) {
-    viewerMenu.changeTitle("Viewer " + v_selected->getName());
+void viewer_menu_loop(Menu viewer_menu, Viewer *v_selected, StreamZ *sz_selected, Menu viewer_interaction_menu) {
+    viewer_menu.changeTitle("Viewer " + v_selected->getName());
 
     bool viewer_loop = true, inInput = true;
     bool interactions_loop = true;
 
     while (viewer_loop) {
-        viewerMenu.startMenu();
-        switch (viewerMenu.getSelected()) {
+        viewer_menu.startMenu();
+        switch (viewer_menu.getSelected()) {
             //viewer info
             case 0: {
                 cout << v_selected->getInfo();
@@ -428,11 +450,11 @@ void viewer_menu_loop(Menu viewerMenu, Viewer *v_selected, StreamZ *sz_selected,
             }
             case 3: {
 
-                viewerInteractionMenu.startMenu();
+                viewer_interaction_menu.startMenu();
 
                 while (interactions_loop) {
 
-                    switch (viewerInteractionMenu.getSelected()) {
+                    switch (viewer_interaction_menu.getSelected()) {
                         //like stream
                         case 0: {
                             if (!v_selected->isActive()) {
@@ -551,17 +573,17 @@ streamzFramework() {
 
     vector<StreamZ *> streamz_vector;
 
-    Menu mainMenu("StreamZ Framework", 5);
-    mainMenu.changeOption(0, "Help");
-    mainMenu.changeOption(1, "Create StreamZ");
-    mainMenu.changeOption(2, "Choose StreamZ");
-    mainMenu.changeOption(3, "Settings");
-    mainMenu.changeOption(4, "Exit");
+    Menu main_menu("StreamZ Framework", 5);
+    main_menu.changeOption(0, "Help");
+    main_menu.changeOption(1, "Create StreamZ");
+    main_menu.changeOption(2, "Choose StreamZ");
+    main_menu.changeOption(3, "Settings");
+    main_menu.changeOption(4, "Exit");
 
-    Menu loginMenu("Login", 3);
-    loginMenu.changeOption(0, "SignIn");
-    loginMenu.changeOption(1, "SignUp");
-    loginMenu.changeOption(2, "Back");
+    Menu login_menu("Login", 3);
+    login_menu.changeOption(0, "SignIn");
+    login_menu.changeOption(1, "SignUp");
+    login_menu.changeOption(2, "Back");
 
     Menu settings("Settings", 4);
     settings.changeOption(0, "Auto Save");
@@ -569,43 +591,43 @@ streamzFramework() {
     settings.changeOption(2, "Import");
     settings.changeOption(3, "Back");
 
-    Menu subMenu("StreamZ admin menu default title", 7);
-    subMenu.changeOption(0, "Help");
-    subMenu.changeOption(1, "Create Streamer");
-    subMenu.changeOption(2, "Choose Streamer");
-    subMenu.changeOption(3, "Create Viewer");
-    subMenu.changeOption(4, "Choose Viewer");
-    subMenu.changeOption(5, "Statistics");
-    subMenu.changeOption(6, "Back");
+    Menu sub_menu("StreamZ admin menu default title", 7);
+    sub_menu.changeOption(0, "Help");
+    sub_menu.changeOption(1, "Create Streamer");
+    sub_menu.changeOption(2, "Choose Streamer");
+    sub_menu.changeOption(3, "Create Viewer");
+    sub_menu.changeOption(4, "Choose Viewer");
+    sub_menu.changeOption(5, "Statistics");
+    sub_menu.changeOption(6, "Back");
 
-    Menu streamerMenu("Streamer default title", 5);
-    streamerMenu.changeOption(0, "Streamer Info");
-    streamerMenu.changeOption(1, "Start public stream");
-    streamerMenu.changeOption(2, "Start private stream");
-    streamerMenu.changeOption(3, "Stop stream");
-    streamerMenu.changeOption(4, "Back");
+    Menu streamer_menu("Streamer default title", 5);
+    streamer_menu.changeOption(0, "Streamer Info");
+    streamer_menu.changeOption(1, "Start public stream");
+    streamer_menu.changeOption(2, "Start private stream");
+    streamer_menu.changeOption(3, "Stop stream");
+    streamer_menu.changeOption(4, "Back");
 
-    Menu viewerMenu("Viewer default title", 5);
-    viewerMenu.changeOption(0, "Viewer info");
-    viewerMenu.changeOption(1, "Enter stream");
-    viewerMenu.changeOption(2, "Exit stream");
-    viewerMenu.changeOption(3, "Stream interactions");
-    viewerMenu.changeOption(4, "Back");
+    Menu viewer_menu("Viewer default title", 5);
+    viewer_menu.changeOption(0, "Viewer info");
+    viewer_menu.changeOption(1, "Enter stream");
+    viewer_menu.changeOption(2, "Exit stream");
+    viewer_menu.changeOption(3, "Stream interactions");
+    viewer_menu.changeOption(4, "Back");
 
-    Menu statsMenu("Admin Statistics", 5);
-    statsMenu.changeOption(0, "StreamZ statistics");
-    statsMenu.changeOption(1, "Best streams");
-    statsMenu.changeOption(2, "Best Streamer");
-    statsMenu.changeOption(3, "Streams at a given time");
-    statsMenu.changeOption(4, "Back");
+    Menu stats_menu("Admin Statistics", 5);
+    stats_menu.changeOption(0, "StreamZ statistics");
+    stats_menu.changeOption(1, "Best streams");
+    stats_menu.changeOption(2, "Best Streamer");
+    stats_menu.changeOption(3, "Streams at a given time");
+    stats_menu.changeOption(4, "Back");
 
-    Menu viewerInteractionMenu("Viewer Streaming Interactions", 6);
-    viewerInteractionMenu.changeOption(0, "Like stream");
-    viewerInteractionMenu.changeOption(1, "Dislike stream");
-    viewerInteractionMenu.changeOption(2, "Remove Like");
-    viewerInteractionMenu.changeOption(3, "Remove Dislike");
-    viewerInteractionMenu.changeOption(4, "Comment");
-    viewerInteractionMenu.changeOption(5, "Back");
+    Menu viewer_interaction_menu("Viewer Streaming Interactions", 6);
+    viewer_interaction_menu.changeOption(0, "Like stream");
+    viewer_interaction_menu.changeOption(1, "Dislike stream");
+    viewer_interaction_menu.changeOption(2, "Remove Like");
+    viewer_interaction_menu.changeOption(3, "Remove Dislike");
+    viewer_interaction_menu.changeOption(4, "Comment");
+    viewer_interaction_menu.changeOption(5, "Back");
 
     string help_main_menu, help_submenu;
 
@@ -613,9 +635,9 @@ streamzFramework() {
 
     while (loop) {
         admin_bool = false;
-        mainMenu.startMenu();
+        main_menu.startMenu();
 
-        switch (mainMenu.getSelected()) {
+        switch (main_menu.getSelected()) {
             //help
             case 0: {
                 cout << help_main_menu << endl;
@@ -680,9 +702,9 @@ streamzFramework() {
 
                     while (sub_loop) {
 
-                        loginMenu.startMenu();
+                        login_menu.startMenu();
 
-                        switch (loginMenu.getSelected()) {
+                        switch (login_menu.getSelected()) {
                             //sign In
                             case 0: {
                                 cout << "Enter the user's nick name: ";
@@ -691,7 +713,7 @@ streamzFramework() {
                                 cout << "Enter the user's password: ";
                                 cin >> password;
                                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                                //TODO: throws error std::out_of_range if logging in with admin after creating other users!
+
                                 if (!sz_selected->loginVerifier(nickname, password))
                                     cout << "User not found or incorrect password, incorrect input given!!";
                                 else {
@@ -701,9 +723,9 @@ streamzFramework() {
                                     Viewer *v_selected = dynamic_cast<Viewer *>(user);
 
                                     if (s_selected != nullptr) {
-                                        streamer_menu_loop(streamerMenu, s_selected, sz_selected);
+                                        streamer_menu_loop(streamer_menu, s_selected, sz_selected);
                                     } else if (v_selected != nullptr) {
-                                        viewer_menu_loop(viewerMenu, v_selected, sz_selected, viewerInteractionMenu);
+                                        viewer_menu_loop(viewer_menu, v_selected, sz_selected, viewer_interaction_menu);
                                     } else {
                                         admin_bool = true;
                                     }
@@ -740,14 +762,14 @@ streamzFramework() {
                         }
                     }
 
-                    subMenu.changeTitle("StreamZ " + to_string(sz_selected->getID()) + " Admin");
+                    sub_menu.changeTitle("StreamZ " + to_string(sz_selected->getID()) + " Admin");
 
                     sub_loop = true;
 
                     while (sub_loop && admin_bool) {
-                        subMenu.startMenu();
+                        sub_menu.startMenu();
 
-                        switch (subMenu.getSelected()) {
+                        switch (sub_menu.getSelected()) {
                             //help
                             case 0: {
                                 cout << help_submenu << endl;
@@ -787,7 +809,7 @@ streamzFramework() {
                                 Streamer *s_selected = sz_selected->getStreamerByID(
                                         input);
 
-                                streamer_menu_loop(streamerMenu, s_selected, sz_selected);
+                                streamer_menu_loop(streamer_menu, s_selected, sz_selected);
 
                                 break;
                             }
@@ -825,7 +847,7 @@ streamzFramework() {
 
                                 Viewer *v_selected = sz_selected->getViewerByID(input);  //not treating exceptions yet
 
-                                viewer_menu_loop(viewerMenu, v_selected, sz_selected, viewerInteractionMenu);
+                                viewer_menu_loop(viewer_menu, v_selected, sz_selected, viewer_interaction_menu);
 
                                 break;
                             }
@@ -835,9 +857,9 @@ streamzFramework() {
 
                                 while (stats_loop) {
 
-                                    statsMenu.startMenu();
+                                    stats_menu.startMenu();
 
-                                    switch (statsMenu.getSelected()) {
+                                    switch (stats_menu.getSelected()) {
                                         //streamz statistics
                                         case 0: {
                                             Language lang;

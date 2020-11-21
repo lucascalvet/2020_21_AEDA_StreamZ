@@ -58,7 +58,7 @@ public:
     void printStreams(const std::vector<Streamer *> &streams) const;
     std::vector<Streamer *> getStreams(const Language &lang = "", Age min_age = UINT_MAX) const;
     void stopAllStreams();
-    bool loginVerifier(std::string nickname, std::string password) const;
+    bool loginVerifier(const std::string &nickname,const std::string &password) const;
     void save(const std::string &filename) const;
 };
 

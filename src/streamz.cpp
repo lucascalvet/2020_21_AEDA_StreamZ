@@ -701,7 +701,7 @@ void StreamZ::save(const string &filename) const {
  * @param password the user password
  * @return true if it is already registered, false otherwise
  */
-bool StreamZ::loginVerifier(string nickname, string password_inputted) const {
+bool StreamZ::loginVerifier(const string &nickname,const string& password_inputted) const {
     if (admin->getName() == nickname && sha256Verifier(admin->getPassword(), password_inputted)) return true;
     for (int i = 0; i < streamers.size(); i++) {
         if (streamers.at(i)->getName() == nickname && sha256Verifier(streamers.at(i)->getPassword(), password_inputted))

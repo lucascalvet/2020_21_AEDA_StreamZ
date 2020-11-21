@@ -1,8 +1,5 @@
-#include "menu.h"
-#include "streamz.h"
 #include "streamz_framework.h"
 #include "exceptions.h"
-#include <string>
 #include <limits>
 #include <algorithm>
 
@@ -160,8 +157,87 @@ void dateInput(Date &birthday, bool birth_date) {
     }
 }
 
+//displays best streams to console
+void printBestStreams(StreamZ* sz_selected){
+    cout << "Best streams: (upwards order)" << endl;
+
+    vector<Stream *> best = sz_selected->getBestStreams();
+
+    cout << "Most viewed streams: " << endl;
+
+    for (int i = 0; i < 10; i++) {
+        if (best.at(i) != nullptr) cout << best.at(i)->getInfo();
+    }
+
+    cout << "Most liked streams: " << endl;
+
+    for (int i = 10; i < 20; i++) {
+        if (best.at(i) != nullptr) cout << best.at(i)->getInfo();
+    }
+
+    stopConsole();
+}
+
+//used to users to search streams by language or by min_age
+void searchStreams(StreamZ *sz_selected){
+    string choice;
+    bool lang_bool = false, min_age_bool = false, all_bool = false;
+    Language lang;
+    unsigned min_age;
+    vector<Streamer*> streams;
+
+    if(sz_selected->getNumActiveStreamers() == 0){
+        cout << "No active streams available right now!" << endl;
+    }
+    else {
+        cout << "Search Engine: " << endl;
+
+        cout << "-> Input 'all' to list all active streams" << endl;
+        cout << "-> Input 'l' to search by language" << endl;
+        cout << "-> Input 'm' to search by minimum age" << endl;
+        cout << "-> Input 'lm' to search using both" << endl;
+
+        cout << "Input: ";
+
+        cin >> choice;
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');  //ignore bad input
+
+        if (choice == "l" || choice == "L") lang_bool = true;
+        else if (choice == "m" || choice == "M") min_age_bool = true;
+        else if (choice == "lm" || choice == "LM") {
+            min_age_bool = true;
+            lang_bool = true;
+        } else if (choice == "all") {
+            all_bool = true;
+        } else cout << "Wrong input given, no valid option!" << endl;
+
+
+        if (lang_bool) {
+            cout << "Choose a language in the predefined format (ex. en)" << endl;
+            cout << "Input: ";
+            cin >> lang;
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');  //ignore bad input
+        }
+        if (min_age_bool) {
+            cout << "Choose the minimum age upper limit until you want to search" << endl;
+            cout << "Input: ";
+            cin >> min_age;
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');  //ignore bad input
+        }
+
+        if (min_age_bool && lang_bool) streams = sz_selected->getStreams(lang, min_age);
+        else if (lang_bool) streams = sz_selected->getStreams(lang);
+        else if (min_age_bool) streams = sz_selected->getStreams("", min_age);
+        else if (all_bool) streams = sz_selected->getStreams();
+
+        if(streams.size() == 0) cout << "Any streams active with those parameters!" << endl;
+        else if(min_age_bool || lang_bool || all_bool) sz_selected->printStreams(streams);
+    }
+    stopConsole();
+}
+
 //the following 4 functions are used in the users menus
-void create_streamer(StreamZ *sz_selected) {
+void createStreamer(StreamZ *sz_selected) {
     string nickname, password;
     Date birthday;
 
@@ -188,7 +264,7 @@ void create_streamer(StreamZ *sz_selected) {
     if(!exception_caught) cout << "Streamer created successfully!" << endl;
 }
 
-void create_viewer(StreamZ *sz_selected) {
+void createViewer(StreamZ *sz_selected) {
     string nickname, password, inp;
     Date birthday;
 
@@ -215,7 +291,7 @@ void create_viewer(StreamZ *sz_selected) {
     if(!exception_caught) cout << "Viewer created successfully!" << endl;
 }
 
-void streamer_menu_loop(Menu streamer_menu, Streamer *s_selected, StreamZ *sz_selected) {
+void streamerMenuLoop(Menu streamer_menu, Streamer *s_selected, StreamZ *sz_selected) {
     bool streamer_loop = true;
 
     streamer_menu.changeTitle("Streamer " + s_selected->getName());
@@ -229,8 +305,13 @@ void streamer_menu_loop(Menu streamer_menu, Streamer *s_selected, StreamZ *sz_se
                 cout << s_selected->getInfo();
                 break;
             }
+            //search streams
+            case 1:{
+                searchStreams(sz_selected);
+                break;
+            }
                 //start public stream
-            case 1: {
+            case 2: {
                 if (s_selected->isActive()) { //also in exceptions, but here too to prevent user from inputing if is already active
                     cout << "This streamer is already streaming!" << endl;
                     cout << "If you want to start a new one you have to stop this first!" << endl;
@@ -267,7 +348,7 @@ void streamer_menu_loop(Menu streamer_menu, Streamer *s_selected, StreamZ *sz_se
                 break;
             }
                 //start private stream
-            case 2: {
+            case 3: {
                 string title, lang, inp;
                 unsigned min_age, id_selected;
                 vector<unsigned> authorized_viewers;
@@ -341,7 +422,7 @@ void streamer_menu_loop(Menu streamer_menu, Streamer *s_selected, StreamZ *sz_se
                 break;
             }
                 //stop stream
-            case 3: {
+            case 4: {
                 bool exception_caught = true;
 
                 try {
@@ -357,8 +438,13 @@ void streamer_menu_loop(Menu streamer_menu, Streamer *s_selected, StreamZ *sz_se
 
                 break;
             }
+            //best streams
+            case 5:{
+                printBestStreams(sz_selected);
+                break;
+            }
                 //back
-            case 4: {
+            case 6: {
                 streamer_loop = false;
                 break;
             }
@@ -367,7 +453,7 @@ void streamer_menu_loop(Menu streamer_menu, Streamer *s_selected, StreamZ *sz_se
 }
 
 
-void viewer_menu_loop(Menu viewer_menu, Viewer *v_selected, StreamZ *sz_selected, Menu viewer_interaction_menu) {
+void viewerMenuLoop(Menu viewer_menu, Viewer *v_selected, StreamZ *sz_selected, Menu viewer_interaction_menu) {
     viewer_menu.changeTitle("Viewer " + v_selected->getName());
 
     bool viewer_loop = true, inInput = true;
@@ -381,8 +467,13 @@ void viewer_menu_loop(Menu viewer_menu, Viewer *v_selected, StreamZ *sz_selected
                 cout << v_selected->getInfo();
                 break;
             }
+            //search streams
+            case 1:{
+                searchStreams(sz_selected);
+                break;
+            }
                 //enter stream
-            case 1: {
+            case 2: {
                 if (v_selected->isActive()) {
                     cout << "This viewer is already in a stream!" << endl;
                     cout << "If you want to enter a new one you have to exit this one first!" << endl;
@@ -395,7 +486,7 @@ void viewer_menu_loop(Menu viewer_menu, Viewer *v_selected, StreamZ *sz_selected
                         stopConsole();
                     } else {
                         cout << "Active streams:" << endl << endl;
-                        //sz_selected->printActiveStreams(); //TODO: change method
+                        sz_selected->printStreams(sz_selected->getActiveStreamers());
                         cout << endl << "Chose the stream you want to enter" << endl;
                         cout << "Enter the respective streamer id" << endl;
 
@@ -410,15 +501,7 @@ void viewer_menu_loop(Menu viewer_menu, Viewer *v_selected, StreamZ *sz_selected
                             try {
                                 v_selected->enterStream(selection);
                             }
-                            catch (AlreadyViewing&) {
-                                //TODO: Redundant?
-                                break;
-                            }
-                            catch (InactiveUser&){
-                                //TODO: Redundant?
-                                break;
-                            }
-                            catch (UnauthorizedViewer&) {
+                            catch (UnauthorizedViewer&) { //only this exception is needed to catch, to avoid redundancy
                                 cout << "This is a private stream. You are not authorized to enter it.";
                                 break;
                             }
@@ -432,8 +515,8 @@ void viewer_menu_loop(Menu viewer_menu, Viewer *v_selected, StreamZ *sz_selected
                 break;
             }
                 //exit stream
-            case 2: {
-                if (!v_selected->isActive()) { //TODO: Remove and use exception?
+            case 3: {
+                if (!v_selected->isActive()) {
                     cout << "This viewer is not in a stream!" << endl;
                 } else {
                     try {
@@ -448,7 +531,8 @@ void viewer_menu_loop(Menu viewer_menu, Viewer *v_selected, StreamZ *sz_selected
                 stopConsole();
                 break;
             }
-            case 3: {
+            //viewer interactions
+            case 4: {
 
                 viewer_interaction_menu.startMenu();
 
@@ -545,6 +629,7 @@ void viewer_menu_loop(Menu viewer_menu, Viewer *v_selected, StreamZ *sz_selected
 
                             break;
                         }
+                        //back
                         case 5: {
                             interactions_loop = false;
                             break;
@@ -553,8 +638,13 @@ void viewer_menu_loop(Menu viewer_menu, Viewer *v_selected, StreamZ *sz_selected
                 }
                 break;
             }
+            //best streams
+            case 5:{
+                printBestStreams(sz_selected);
+                break;
+            }
                 //back
-            case 4: {
+            case 6: {
                 viewer_loop = false;
                 break;
             }
@@ -565,8 +655,7 @@ void viewer_menu_loop(Menu viewer_menu, Viewer *v_selected, StreamZ *sz_selected
 /**
  * Main loop for interaction with the StreamZ framework
  */
-void
-streamzFramework() {
+void streamzFramework() {
     bool auto_save = true;  //used to enable disable the auto_save (true by default)
     bool loop = true, sub_loop; //(loop) used in main loop // (sub_loop) used in other sub loops
     bool stats_loop, admin_bool = false; //access control
@@ -600,19 +689,23 @@ streamzFramework() {
     sub_menu.changeOption(5, "Statistics");
     sub_menu.changeOption(6, "Back");
 
-    Menu streamer_menu("Streamer default title", 5);
+    Menu streamer_menu("Streamer default title", 7);
     streamer_menu.changeOption(0, "Streamer Info");
-    streamer_menu.changeOption(1, "Start public stream");
-    streamer_menu.changeOption(2, "Start private stream");
-    streamer_menu.changeOption(3, "Stop stream");
-    streamer_menu.changeOption(4, "Back");
+    streamer_menu.changeOption(1, "Search Streams");
+    streamer_menu.changeOption(2, "Start public stream");
+    streamer_menu.changeOption(3, "Start private stream");
+    streamer_menu.changeOption(4, "Stop stream");
+    streamer_menu.changeOption(5, "Best streams");
+    streamer_menu.changeOption(6, "Back");
 
-    Menu viewer_menu("Viewer default title", 5);
+    Menu viewer_menu("Viewer default title", 7);
     viewer_menu.changeOption(0, "Viewer info");
-    viewer_menu.changeOption(1, "Enter stream");
-    viewer_menu.changeOption(2, "Exit stream");
-    viewer_menu.changeOption(3, "Stream interactions");
-    viewer_menu.changeOption(4, "Back");
+    viewer_menu.changeOption(1, "Search Streams");
+    viewer_menu.changeOption(2, "Enter stream");
+    viewer_menu.changeOption(3, "Exit stream");
+    viewer_menu.changeOption(4, "Stream interactions");
+    viewer_menu.changeOption(5, "Best streams");
+    viewer_menu.changeOption(6, "Back");
 
     Menu stats_menu("Admin Statistics", 5);
     stats_menu.changeOption(0, "StreamZ statistics");
@@ -723,9 +816,9 @@ streamzFramework() {
                                     Viewer *v_selected = dynamic_cast<Viewer *>(user);
 
                                     if (s_selected != nullptr) {
-                                        streamer_menu_loop(streamer_menu, s_selected, sz_selected);
+                                        streamerMenuLoop(streamer_menu, s_selected, sz_selected);
                                     } else if (v_selected != nullptr) {
-                                        viewer_menu_loop(viewer_menu, v_selected, sz_selected, viewer_interaction_menu);
+                                        viewerMenuLoop(viewer_menu, v_selected, sz_selected, viewer_interaction_menu);
                                     } else {
                                         admin_bool = true;
                                     }
@@ -743,10 +836,10 @@ streamzFramework() {
                                     cin >> signUpChoice;
                                     cin.ignore(numeric_limits<streamsize>::max(), '\n');
                                     if (signUpChoice == "s") {
-                                        create_streamer(sz_selected);
+                                        createStreamer(sz_selected);
                                         notCorrect = false;
                                     } else if (signUpChoice == "v") {
-                                        create_viewer(sz_selected);
+                                        createViewer(sz_selected);
                                         notCorrect = false;
                                     } else {
                                         cout << "Please input one of the two:";
@@ -778,7 +871,7 @@ streamzFramework() {
                             }
                                 //create streamer
                             case 1: {
-                                create_streamer(sz_selected);
+                                createStreamer(sz_selected);
                                 break;
                             }
                                 //choose streamer
@@ -809,14 +902,14 @@ streamzFramework() {
                                 Streamer *s_selected = sz_selected->getStreamerByID(
                                         input);
 
-                                streamer_menu_loop(streamer_menu, s_selected, sz_selected);
+                                streamerMenuLoop(streamer_menu, s_selected, sz_selected);
 
                                 break;
                             }
                                 //create viewer
                             case 3: {
 
-                                create_viewer(sz_selected);
+                                createViewer(sz_selected);
                                 break;
                             }
                                 //choose viewer
@@ -847,7 +940,7 @@ streamzFramework() {
 
                                 Viewer *v_selected = sz_selected->getViewerByID(input);  //not treating exceptions yet
 
-                                viewer_menu_loop(viewer_menu, v_selected, sz_selected, viewer_interaction_menu);
+                                viewerMenuLoop(viewer_menu, v_selected, sz_selected, viewer_interaction_menu);
 
                                 break;
                             }
@@ -862,10 +955,10 @@ streamzFramework() {
                                     switch (stats_menu.getSelected()) {
                                         //streamz statistics
                                         case 0: {
-                                            Language lang;
-                                            sz_selected->getNumCreatedStreams(lang);
+                                            Language lang = sz_selected->getMostUsedLanguage();
 
                                             cout << "Most used languages: " << lang << endl;
+
                                             cout << "Total streams created: "
                                                  << to_string(sz_selected->getNumCreatedStreams()) << endl;
                                             cout << "Average views per stream: "
@@ -874,24 +967,7 @@ streamzFramework() {
                                         }
                                             //best streams
                                         case 1: {
-                                            cout << "Best streams: (upwards order)" << endl;
-
-                                            vector<Stream *> best = sz_selected->getBestStreams();
-
-                                            cout << "Most viewed streams: " << endl;
-
-                                            for (int i = 0; i < 10; i++) {
-                                                if (best.at(i) != nullptr) cout << best.at(i)->getInfo();
-                                            }
-
-                                            cout << "Most liked streams: " << endl;
-
-                                            for (int i = 10; i < 20; i++) {
-                                                if (best.at(i) != nullptr) cout << best.at(i)->getInfo();
-                                            }
-
-                                            stopConsole();
-
+                                            printBestStreams(sz_selected);
                                             break;
                                         }
                                             //best streamer

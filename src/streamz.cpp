@@ -19,11 +19,11 @@ StreamZ::StreamZ(unsigned capacity, const std::string &nickname, const Date &bir
     admin = new Admin(nickname, birthday, hashed_password);
     id = counter++;
     this->capacity = capacity;
-    this->admin = admin;
 }
 
 StreamZ::StreamZ(const string &filename) {
     id = counter++;
+    capacity = 0;
     ifstream file;
     file.open(filename);
     if (file.fail()) throw InvalidFile(filename);
@@ -49,7 +49,7 @@ StreamZ::StreamZ(const string &filename) {
         getline(file, nickname, '\t');
         getline(file, password, '\t');
         file >> day >> sep >> month >> sep >> year;
-        Date birthday(day, month, year);
+        birthday = Date(day, month, year);
         Viewer *viewer = new Viewer(nickname, birthday, password, user_id);
         viewers.push_back(viewer);
         file.ignore(numeric_limits<streamsize>::max(), '\n');
@@ -61,7 +61,7 @@ StreamZ::StreamZ(const string &filename) {
         getline(file, nickname, '\t');
         getline(file, password, '\t');
         file >> day >> sep >> month >> sep >> year;
-        Date birthday(day, month, year);
+        birthday = Date(day, month, year);
         Streamer *streamer = new Streamer(nickname, birthday, password, user_id);
         streamers.push_back(streamer);
         file.ignore(numeric_limits<streamsize>::max(), '\n');
@@ -103,9 +103,9 @@ StreamZ::StreamZ(const string &filename) {
                 getline(file, comment, '\t');
                 comments.push_back(comment);
             }
-            PrivateStream *priv_stream = new PrivateStream(title, lang, min_age, starting_date, num_views,
+            PrivateStream *private_stream = new PrivateStream(title, lang, min_age, starting_date, num_views,
                                                            viewers_liked, viewers_disliked, auth_viewers, comments);
-            streamer->addToHistory(priv_stream);
+            streamer->addToHistory(private_stream);
             file.get();
         }
         file.get();
@@ -741,6 +741,7 @@ bool StreamZ::save(const string &filename) const {
  * @return true if it is already registered, false otherwise
  */
 bool StreamZ::loginVerifier(string nickname, string password_inputted) const {
+    if (admin->getName() == nickname && sha256Verifier(admin->getPassword(), password_inputted)) return true;
     for (int i = 0; i < streamers.size(); i++) {
         if (streamers.at(i)->getName() == nickname && sha256Verifier(streamers.at(i)->getPassword(), password_inputted))
             return true;
@@ -749,7 +750,6 @@ bool StreamZ::loginVerifier(string nickname, string password_inputted) const {
         if (viewers.at(i)->getName() == nickname && sha256Verifier(viewers.at(i)->getPassword(), password_inputted))
             return true;
     }
-    if (admin->getName() == nickname && sha256Verifier(admin->getPassword(), password_inputted)) return true;
     return false;
 }
 
@@ -758,12 +758,13 @@ bool StreamZ::loginVerifier(string nickname, string password_inputted) const {
  * @param nickname the user nickname
  * @return user pointer to user if it exists, nullptr otherwise
  */
-User *StreamZ::getUserByName(std::string nickname) {
+User *StreamZ::getUserByName(const string &nickname) {
+    if(admin->getName() == nickname) return admin;
     for (int i = 0; i < streamers.size(); i++) {
         if (streamers.at(i)->getName() == nickname) return streamers.at(i);
     }
-    for (int i = 0; viewers.size(); i++) {
+    for (int i = 0; i < viewers.size(); i++) {
         if (viewers.at(i)->getName() == nickname) return viewers.at(i);
     }
     return nullptr;
-} //TODO: What about the admin?
+}

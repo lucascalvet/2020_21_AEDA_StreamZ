@@ -6,6 +6,7 @@ set(CMAKE_CXX_STANDARD 14)
 add_subdirectory(lib/googletest-master)
 include_directories(lib/googletest-master/googletest/include)
 include_directories(lib/googletest-master/googlemock/include)
+include_directories(hashlib++)
 
 add_executable(StreamZ_AEDA_2020_21 main.cpp src/streamz.cpp src/streamz.h src/user.cpp src/user.h src/stream.cpp src/stream.h src/utils.cpp src/utils.h
         src/menu.cpp src/menu.h src/streamz_framework.cpp src/exceptions.h src/streamz_framework.h src/tests.cpp

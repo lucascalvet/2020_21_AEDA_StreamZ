@@ -5,20 +5,20 @@ using namespace std;
 
 bool cinFail() { //checks if user didn't input a number
     if (!cin) {
-        cin.clear(); //reset failbit
+        cin.clear(); //reset fail bit
         cin.ignore(numeric_limits<streamsize>::max(), '\n');  //ignore bad input
         return true;
     }
     return false;
 }
 
-//checks if user didn't input a number or a number in a determinated range
+//checks if user didn't input a number or a number in a determined range
 void inputChecker(unsigned &selected, unsigned options) {
     bool in_input = true;
     cout << "Input: ";
     while (in_input) {
         cin >> selected;
-
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
         if (cinFail()) {
             cout << "Please input a number!" << endl;
             cout << "Input: ";
@@ -33,10 +33,6 @@ void inputChecker(unsigned &selected, unsigned options) {
 
 //stops the console until user presses anything
 void stopConsole() {
-    /*
-    std::string stop;
-    getline(std::cin, stop);
-     */
     system("pause");
 }
 
@@ -70,7 +66,6 @@ void Menu::addOption(const string &opName) {
 }
 
 void Menu::startMenu() {
-    //gotoxy(0,0);
     cout << endl << string(title.size(), '*') << endl;
     cout << title << endl;
     cout << string(title.size(), '*') << endl << endl;

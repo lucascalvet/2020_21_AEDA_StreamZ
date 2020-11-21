@@ -489,7 +489,7 @@ void viewer_menu_loop(Menu viewerMenu, Viewer *v_selected, StreamZ *sz_selected)
  */
 void
 streamzFramework() {
-    bool auto_save = true;  //used to enable disable the auto_save //TODO: I turned it into true. Right?
+    bool auto_save = true;  //used to enable disable the auto_save //TODO: I turned it into true. Right? YES
     bool loop = true, sub_loop; //(loop) used in main loop // (sub_loop) used in other sub loops
     bool stats_loop, admin_bool = false; //access control
 
@@ -890,9 +890,8 @@ streamzFramework() {
                             cin >> off_or_on;
                             cin.ignore(numeric_limits<streamsize>::max(), '\n');
                             if (off_or_on == "c") auto_save = !auto_save;
-                            //TODO: Shouldn't else just exit?
-                            else cout << endl << "Invalid input!" << endl;
-                            break;
+
+                            else break;
                         }
                             //TODO: save (save all StreamZ instances? or only one?)
                         case 1: {

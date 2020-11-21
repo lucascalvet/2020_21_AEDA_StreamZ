@@ -2,7 +2,7 @@
 #include <string>
 #include "utils.h"
 #include "exceptions.h"
-#include "../hashlib++/hashlibpp.h"
+#include "hashlibpp.h"
 
 using namespace std;
 
@@ -108,7 +108,8 @@ Date getCurrentDate() {
     time_t current_time;
     time(&current_time);
     tm *date = localtime(&current_time);
-    return Date(date->tm_mday, date->tm_mon + 1, date->tm_year + 1900);
+    Date d(date->tm_mday, date->tm_mon + 1, date->tm_year + 1900);
+    return d;
 }
 
 /**

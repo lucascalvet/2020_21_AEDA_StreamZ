@@ -14,7 +14,6 @@ void inputChecker(unsigned &selected, unsigned options);
 class Menu{
 private:
     std::string title;
-    bool inMenu = true;
     unsigned options;
     unsigned selected = 0;
     std::vector<std::string> optionNaming;

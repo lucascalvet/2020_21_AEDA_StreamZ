@@ -95,16 +95,58 @@ void passwordInput(string &password) {
 void dateInput(Date &birthday, bool birth_date) {
     unsigned day, year, month;
     char sep;
-    bool in_date_selection = true;
+    bool in_date_selection = true;  //loop of date input
+    bool number_failed, separator_failed, ok; //used in checking date input (ok is used to prevent from next cin's to execute if previous fails)
 
     while (in_date_selection) {
+        number_failed = false, separator_failed = false;
+        ok = true;
         in_date_selection = false;
+
 
         if (birth_date) cout << "Enter birthday date in the format dd-mm-yyyy: ";
         else cout << "Enter the date in the format dd-mm-yyyy: ";
 
-        cin >> day >> sep >> month >> sep >> year;
-        //TODO: Check input here
+        //TODO: Check input here -> DONE :)
+        //cin >> day >> sep >> month >> sep >> year;
+
+        if(ok) cin >> day;
+        if (cinFail() && ok) {
+            number_failed = true;
+            ok = false;
+        }
+        if (ok) cin >> sep;
+        if (sep != '-' && ok) {  //TODO: maybe define a vector with possible separators
+            separator_failed = true;
+            ok = false;
+        }
+        if(ok) cin >> month;
+        if (cinFail() && ok) {
+            number_failed = true;
+            ok = false;
+        }
+        if (ok) cin >> sep;
+        if (sep != '-' && ok) {
+            separator_failed = true;
+            ok = false;
+        }
+        if(ok) cin >> year;
+        if(cinFail() && ok) {
+            number_failed = true;
+            ok = false;
+        }
+
+        if(separator_failed){
+            cout << "Expected '-' as separator!" << endl;
+            in_date_selection = true;
+            continue;
+        }
+        if(number_failed){
+            cout << "Input a number!!" << endl;
+            in_date_selection = true;
+            continue;
+        }
+
         try {
             birthday = Date(day, month, year);
         } catch (InvalidDate &) {
@@ -112,11 +154,6 @@ void dateInput(Date &birthday, bool birth_date) {
         }
 
         if (!in_date_selection && getCurrentDate() < birthday) in_date_selection = true;
-        if (cin.fail()) {
-            in_date_selection = true;
-            cin.clear(); //reset failbit
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');  //ignore bad input
-        }
 
         if (in_date_selection) cout << "Input date again, invalid date" << endl;
     }
@@ -136,7 +173,8 @@ void create_streamer(StreamZ *sz_selected) {
     //TODO: Handle with exceptions as well?
     if (!sz_selected->addStreamer(nickname, birthday, password))
         cout << "Unable to create streamer! :( Username already used or not minimum age" << endl;
-    else cout << "Streamer created successfully, go back to sign in" << endl;
+    else
+        cout << "Streamer created successfully, go back to sign in" << endl;
 }
 
 void create_viewer(StreamZ *sz_selected) {

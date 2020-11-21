@@ -1,11 +1,12 @@
 #include "menu.h"
+#include <limits>
 
 using namespace std;
 
 bool cinFail() { //checks if user didn't input a number
     if (!cin) {
         cin.clear(); //reset failbit
-        cin.ignore(10000, '\n');  //ignore bad input
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');  //ignore bad input
         return true;
     }
     return false;

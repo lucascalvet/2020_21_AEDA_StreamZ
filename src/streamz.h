@@ -23,7 +23,7 @@ private:
     std::vector<Stream*> best_streams = std::vector<Stream*>(20, nullptr);
 public:
     StreamZ(unsigned capacity, const std::string &nickname, const Date &birthday, const std::string &password);
-    StreamZ(const std::string& filename);
+    explicit StreamZ(const std::string& filename);
     ~StreamZ();
     unsigned getCapacity() const;
     unsigned getID() const;
@@ -61,7 +61,7 @@ public:
     void stopAllStreams();
     bool save(const std::string &filename) const;
     bool loginVerifier(std::string nickname, std::string password) const;
-    User* getUserByName(std::string nickname);
+    User* getUserByName(const std::string& nickname);
 };
 
 #endif // STREAMZ_H

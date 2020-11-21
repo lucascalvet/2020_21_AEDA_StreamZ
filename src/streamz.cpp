@@ -106,9 +106,9 @@ StreamZ::StreamZ(const string &filename) {
                 getline(file, comment, '\t');
                 comments.push_back(comment);
             }
-            PrivateStream *priv_stream = new PrivateStream(title, lang, min_age, starting_date, num_views,
+            PrivateStream *private_stream = new PrivateStream(title, lang, min_age, starting_date, num_views,
                                                            viewers_liked, viewers_disliked, auth_viewers, comments);
-            streamer->addToHistory(priv_stream);
+            streamer->addToHistory(private_stream);
             file.get();
         }
         file.get();
@@ -707,7 +707,7 @@ bool StreamZ::loginVerifier(string nickname, string password_inputted) const {
  * @param nickname the user nickname
  * @return user pointer to user if it exists, nullptr otherwise
  */
-User *StreamZ::getUserByName(std::string nickname) {
+User *StreamZ::getUserByName(const string &nickname) {
     if (admin->getName() == nickname) return admin;
     for (int i = 0; i < streamers.size(); i++) {
         if (streamers.at(i)->getName() == nickname) return streamers.at(i);

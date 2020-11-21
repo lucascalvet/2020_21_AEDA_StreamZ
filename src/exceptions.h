@@ -3,7 +3,7 @@
 
 #include "utils.h"
 
-class InvalidLanguage{
+class InvalidLanguage : std::exception{
 private:
     Language lang;
 public:
@@ -15,7 +15,7 @@ enum DateField {
     DAY, MONTH, YEAR
 };
 
-class InvalidDate{
+class InvalidDate : std::exception {
 private:
     DateField field;
     unsigned value;
@@ -25,26 +25,26 @@ public:
     unsigned getValue() const {return value;}
 };
 
-class InvalidFile{
+class InvalidFile : std::exception{
 private:
     std::string filename;
 public:
-    InvalidFile(const std::string& filename) {this->filename = filename;}
+    explicit InvalidFile(const std::string& filename) {this->filename = filename;}
     std::string getFileName() const {return filename;}
 };
 
-class AlreadyStreaming{};
+class AlreadyStreaming : std::exception {};
 
-class AlreadyInteracted{};
+class AlreadyInteracted : std::exception {};;
 
-class HasNotInteracted{};
+class HasNotInteracted : std::exception {};;
 
-class NotStreaming{};
+class NotStreaming : std::exception {};
 
-class FullCapacity{};
+class FullCapacity : std::exception{};
 
-class InactiveUser{};
+class InactiveUser : std::exception{};
 
-class NotInPrivateStream{};
+class NotInPrivateStream : std::exception{};
 
 #endif //STREAMZ_EXCEPTIONS_H

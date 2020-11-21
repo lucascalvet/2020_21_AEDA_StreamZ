@@ -40,7 +40,7 @@ void help_strings(string &help_main_menu, string &help_submenu) {
             "Best Streams:\n"
             "Prints the bests streams and their information."
             "\n\n"
-            "The next functionalities are all self explanatories, however here are their description."
+            "The next functionalities are all self explanatory, however here are their description."
             "\n\n"
             "Inside Streamer (after streamer chosen):\n"
             "Streamer info-> outputs the streamer's information.\n"
@@ -99,7 +99,7 @@ void dateInput(Date &birthday, bool birth_date) {
     unsigned day, year, month;
     char sep;
     bool in_date_selection = true;  //loop of date input
-    bool number_failed, separator_failed, ok; //used in checking date input (ok is used to prevent from next cin's to execute if previous fails)
+    bool number_failed, separator_failed, ok; //used in checking date input (ok is used to prevent from the next cin inputs to execute if previous fails)
 
     while (in_date_selection) {
         number_failed = false, separator_failed = false;
@@ -165,7 +165,7 @@ void dateInput(Date &birthday, bool birth_date) {
 //the following 4 functions are used in the users menus
 void create_streamer(StreamZ *sz_selected) {
     string nickname, password;
-    Date birthday;
+    Date birthday{};
 
     cout << "Enter the streamer's nickname: ";
     cin >> nickname;
@@ -182,7 +182,7 @@ void create_streamer(StreamZ *sz_selected) {
 
 void create_viewer(StreamZ *sz_selected) {
     string nickname, password, inp;
-    Date birthday;
+    Date birthday{};
 
     cout << "Enter the viewer's nickname: ";
     cin >> nickname;
@@ -211,7 +211,7 @@ void streamer_menu_loop(Menu streamerMenu, Streamer *s_selected, StreamZ *sz_sel
             }
                 //start public stream
             case 1: {
-                if (s_selected->isActive()) { //also in exceptions, but here too to prevent user from inputing if is already active
+                if (s_selected->isActive()) { //also in exceptions, but here too to prevent user from inputting if is already active
                     cout << "This streamer is already streaming!" << endl;
                     cout << "If you want to start a new one you have to stop this first!" << endl;
                     stopConsole();
@@ -251,7 +251,7 @@ void streamer_menu_loop(Menu streamerMenu, Streamer *s_selected, StreamZ *sz_sel
                 unsigned min_age, id_selected;
                 vector<unsigned> authorized_viewers;
 
-                if (s_selected->isActive()) { //also in exceptions, but here too to prevent user from inputing if is already active
+                if (s_selected->isActive()) { //also in exceptions, but here too to prevent user from inputting if is already active
                     cout << "This streamer is already streaming!" << endl;
                     cout << "If you want to start a new one you have to stop this first!" << endl;
                     stopConsole();
@@ -565,7 +565,7 @@ streamzFramework() {
                 //create streamz
             case 1: {
                 string inp, nickname, password;
-                Date birthday;
+                Date birthday{};
                 bool inCreation = true;
                 unsigned cap;  //streamz capacity
 
@@ -584,7 +584,7 @@ streamzFramework() {
 
                     passwordInput(password);
 
-                    StreamZ *sz1 = new StreamZ(cap, nickname, birthday, password);
+                    auto *sz1 = new StreamZ(cap, nickname, birthday, password);
                     streamz_vector.push_back(sz1);
 
                     cout << "StreamZ created successfully, go back to work with it!" << endl;
@@ -640,8 +640,8 @@ streamzFramework() {
                                 else {
                                     User *user = sz_selected->getUserByName(nickname);
 
-                                    Streamer *s_selected = dynamic_cast<Streamer *>(user);
-                                    Viewer *v_selected = dynamic_cast<Viewer *>(user);
+                                    auto *s_selected = dynamic_cast<Streamer *>(user);
+                                    auto *v_selected = dynamic_cast<Viewer *>(user);
 
                                     if (s_selected != nullptr) {
                                         streamer_menu_loop(streamerMenu, s_selected, sz_selected);
@@ -704,7 +704,7 @@ streamzFramework() {
                             }
                                 //choose streamer
                             case 2: {
-                                unsigned input;
+                                unsigned inp;
 
                                 cout << "Streamers" << endl;
                                 vector<Streamer *> streamers = sz_selected->getStreamers();
@@ -715,10 +715,10 @@ streamzFramework() {
                                 }
                                 cout << endl << "Select the Streamer by its id" << endl;
                                 cout << "--> ";
-                                cin >> input;
+                                cin >> inp;
                                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
                                 if (!cinFail()) {
-                                    if (sz_selected->getStreamerByID(input) == nullptr) {
+                                    if (sz_selected->getStreamerByID(inp) == nullptr) {
                                         cout << "Invalid streamer id inputted!" << endl;
                                         break;
                                     }
@@ -728,7 +728,7 @@ streamzFramework() {
                                 }
 
                                 Streamer *s_selected = sz_selected->getStreamerByID(
-                                        input);
+                                        inp);
 
                                 streamer_menu_loop(streamerMenu, s_selected, sz_selected);
 
@@ -743,7 +743,7 @@ streamzFramework() {
                                 //choose viewer
                             case 4: {
 
-                                unsigned input;
+                                unsigned inp;
 
                                 cout << "Viewers" << endl;
                                 vector<Viewer *> viewers = sz_selected->getViewers();
@@ -754,10 +754,10 @@ streamzFramework() {
                                 }
                                 cout << endl << "Select the Viewer by its id" << endl;
                                 cout << "--> ";
-                                cin >> input;
+                                cin >> inp;
                                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
                                 if (!cinFail()) {
-                                    if (sz_selected->getViewerByID(input) == nullptr) {
+                                    if (sz_selected->getViewerByID(inp) == nullptr) {
                                         cout << "Invalid viewer id inputted!" << endl;
                                         break;
                                     }
@@ -766,7 +766,7 @@ streamzFramework() {
                                     break;
                                 }
 
-                                Viewer *v_selected = sz_selected->getViewerByID(input);  //not treating exceptions yet
+                                Viewer *v_selected = sz_selected->getViewerByID(inp);  //not treating exceptions yet
 
                                 viewer_menu_loop(viewerMenu, v_selected, sz_selected);
 
@@ -827,7 +827,7 @@ streamzFramework() {
                                         }
                                             //streams at a given time
                                         case 3: {
-                                            Date date1, date2;
+                                            Date date1{}, date2{};
 
                                             cout << "Enter the period you want by entering two dates" << endl;
 
@@ -911,8 +911,8 @@ streamzFramework() {
                             try {
                                 streamz_vector.emplace_back(new StreamZ(filename));
                             }
-                            catch (InvalidFile &invf) {
-                                cout << "\"" << invf.getFileName() << "\" failed to load. StreamZ not imported!\n\n";
+                            catch (InvalidFile &invalid) {
+                                cout << "\"" << invalid.getFileName() << "\" failed to load. StreamZ not imported!\n\n";
                                 break;
                             }
                             cout << "StreamZ instance imported successfully!\n\n";

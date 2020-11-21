@@ -1,6 +1,5 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
-#include <string>
 #include "streamz.h"
 #include "exceptions.h"
 

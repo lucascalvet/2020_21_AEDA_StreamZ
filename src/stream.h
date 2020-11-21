@@ -30,18 +30,15 @@ public:
     Language getLanguage() const;
     Age getMinAge() const;
     unsigned int getNumTotalViews() const;
-
     const std::vector<unsigned int> &getViewersLiked() const;
-
     const std::vector<unsigned int> &getViewersDisliked() const;
-
     unsigned getNumLikes() const;
     unsigned getNumDislikes() const;
     void addView();
-    bool addLike(unsigned id);
-    bool addDislike(unsigned id);
-    bool remLike(unsigned id);
-    bool remDislike(unsigned id);
+    void addLike(unsigned id);
+    void addDislike(unsigned id);
+    void remLike(unsigned id);
+    void remDislike(unsigned id);
     bool alreadyLikedOrDisliked(unsigned id);
 };
 

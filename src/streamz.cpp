@@ -21,6 +21,9 @@ StreamZ::StreamZ(unsigned capacity, const std::string &nickname, const Date &bir
     this->capacity = capacity;
 }
 
+/**
+ * Constructor for the StreamZ class, from a formatted file
+ */
 StreamZ::StreamZ(const string &filename) {
     id = counter++;
     capacity = 0;
@@ -120,11 +123,9 @@ StreamZ::~StreamZ() {
     vector<Viewer *>::iterator viewer;
     vector<Stream *>::iterator stream;
     for (streamer = streamers.begin(); streamer != streamers.end(); streamer++) {
-        //delete (*viewer)->s;
         delete *streamer;
     }
     for (viewer = viewers.begin(); viewer != viewers.end(); viewer++) {
-        //delete (*viewer)->s;
         delete *viewer;
     }
     delete admin;
@@ -578,65 +579,13 @@ void StreamZ::addViewer(const string &nickname, const Date &birthday, const std:
 }
 
 /**
- * Likes the stream that the user is viewing
- *
- * Checks if the user already liked or disliked the stream. If not, likes the stream.
- *
- * @param v the viewer liking the stream
- * @return true if the operation was successful, false otherwise
+ * Prints a list of streams
+ * @param streams the streams to be printed
  */
-bool StreamZ::likeStream(Viewer *v) {
-    if (!v->isActive()) return false;
-    return v->s->addLike(v->getID());
-}
-
-/**
- * Dislikes the stream that the user is viewing
- *
- * Checks if the user already liked or disliked the stream. If not, dislikes the stream.
- *
- * @param v the viewer liking the stream
- * @return true if the operation was successful, false otherwise
- */
-bool StreamZ::dislikeStream(Viewer *v) {
-    if (!v->isActive()) return false;
-    return v->s->addDislike(v->getID());
-}
-
-/**
- * Removes a like from the stream that the user is viewing
- *
- * Checks if the user already liked. If so, removes the like.
- *
- * @param v the viewer that liked the stream
- * @return true if the operation was successful, false otherwise
- */
-bool StreamZ::remlikeStream(Viewer *v) {
-    if (!v->isActive()) return false;
-    return v->s->remLike(v->getID());
-}
-
-/**
- * Removes a dislike from the stream that the user is viewing
- *
- * Checks if the user already disliked. If so, removes the dislike.
- *
- * @param v the viewer that disliked the stream
- * @return true if the operation was successful, false otherwise
- */
-bool StreamZ::remdislikeStream(Viewer *v) {
-    if (!v->isActive()) return false;
-    return v->s->remDislike(v->getID());
-}
-
-/**
- * Prints the active streams
- */
-void StreamZ::printActiveStreams() const {
-    vector<Streamer *> active_streamers = getActiveStreamers();
+void StreamZ::printStreams(const vector<Streamer *> &streams) const {
     vector<Streamer *>::const_iterator streamer;
-    for (streamer = active_streamers.begin(); streamer != active_streamers.end(); streamer++) {
-        cout << "Streamer id: " << to_string((*streamer)->getID()) << "   Stream: " << (*streamer)->s->getInfo()
+    for (streamer = streams.begin(); streamer != streams.end(); streamer++) {
+        cout << "Streamer: " << (*streamer)->getName() << "\tStream-> " << (*streamer)->s->getInfo()
              << endl;
     }
 }
@@ -757,7 +706,7 @@ bool StreamZ::loginVerifier(string nickname, string password_inputted) const {
  * @return user pointer to user if it exists, nullptr otherwise
  */
 User *StreamZ::getUserByName(const string &nickname) {
-    if(admin->getName() == nickname) return admin;
+    if (admin->getName() == nickname) return admin;
     for (int i = 0; i < streamers.size(); i++) {
         if (streamers.at(i)->getName() == nickname) return streamers.at(i);
     }

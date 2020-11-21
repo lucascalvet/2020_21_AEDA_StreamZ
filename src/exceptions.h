@@ -35,6 +35,10 @@ public:
 
 class AlreadyStreaming : std::exception {};
 
+class AlreadyInteracted : std::exception {};;
+
+class HasNotInteracted : std::exception {};;
+
 class NotStreaming : std::exception {};
 
 class FullCapacity : std::exception{};

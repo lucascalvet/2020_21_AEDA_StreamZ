@@ -1035,7 +1035,7 @@ streamzFramework() {
     }
     //deleting pointers allocated in streamz_vector
     vector<StreamZ *>::iterator it;
-    for (it = streamz_vector.begin(); it != streamz_vector.end();) {
+    for (it = streamz_vector.begin(); it != streamz_vector.end(); it++) {
         delete *it;
     }
 }

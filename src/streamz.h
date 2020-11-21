@@ -43,6 +43,7 @@ public:
     unsigned getNumCreatedStreams() const;
     unsigned getNumCreatedStreams(const Language &lang) const;
     unsigned getNumCreatedStreams(bool public_streams, const Date &dt1 = Date(0,0,0), const Date &dt2 = Date(31,12,UINT_MAX)) const;
+    std::string getMostUsedLanguage();
     double getAverageViews() const;
     //map<int, std::vector<Stream*>> history; ;  //history per id of streamer
     void addStreamer(const std::string& nickname, const Date& birthday, const std::string& password);

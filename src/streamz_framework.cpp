@@ -20,10 +20,10 @@ void help_strings(string &help_main_menu, string &help_submenu) {
             "\n\n"
             "StreamZ:\n"
             "To create a streamz you only have to input the capacity number and create an admin (option 1).\n"
-            "Then, to enter it and work with it just go back and choose it (option 2)."
+            "Then, to enter it and work with it just have to choose it in the main menu (option 2)."
             "\n\n"
             "Settings:\n"
-            "Auto save-> if this is turned on, the framework will save all program data at the end, automatically.\n"
+            "Auto save-> if this is turned on, the framework will save all program data at the end, automatically. (turned on by default)\n"
             "Save-> used to save the program data manually.\n"
             "Import-> it imports a program data file."
             "\n\n";
@@ -49,7 +49,7 @@ void help_strings(string &help_main_menu, string &help_submenu) {
             "Stop Stream-> stops a stream"
             "\n\n"
             "Inside Viewer (after viewer chosen):\n"
-            "Viewer info-> outputs the user info"
+            "Viewer info-> outputs the user info\n"
             "Enter stream-> enters a stream (can only be at one at the time) and if stream is private, can only enter if it is allowed\n"
             "Exit stream-> used to exit the current stream it's in\n"
             "Like stream-> likes the stream it's in (can only like or dislike a stream and only once)\n"
@@ -110,16 +110,13 @@ void dateInput(Date &birthday, bool birth_date) {
         if (birth_date) cout << "Enter birthday date in the format dd-mm-yyyy: ";
         else cout << "Enter the date in the format dd-mm-yyyy: ";
 
-        //TODO: Check input here -> DONE :)
-        //cin >> day >> sep >> month >> sep >> year;
-
         if(ok) cin >> day;
         if (cinFail() && ok) {
             number_failed = true;
             ok = false;
         }
         if (ok) cin >> sep;
-        if (sep != '-' && ok) {  //TODO: maybe define a vector with possible separators
+        if (sep != '-' && ok) {
             separator_failed = true;
             ok = false;
         }
@@ -177,7 +174,7 @@ void create_streamer(StreamZ *sz_selected) {
     if (!sz_selected->addStreamer(nickname, birthday, password))
         cout << "Unable to create streamer! :( Username already used or not minimum age" << endl;
     else
-        cout << "Streamer created successfully, go back to sign in" << endl;
+        cout << "Streamer created successfully!" << endl;
 }
 
 void create_viewer(StreamZ *sz_selected) {
@@ -192,7 +189,7 @@ void create_viewer(StreamZ *sz_selected) {
     passwordInput(password);
     //TODO: Handle with exceptions as well?
     if (!sz_selected->addViewer(nickname, birthday, password)) cout << "Unable to create viewer! :(" << endl;
-    else cout << "Viewer created successfully, go back to sign in!" << endl;
+    else cout << "Viewer created successfully!" << endl;
 }
 
 void streamer_menu_loop(Menu streamerMenu, Streamer *s_selected, StreamZ *sz_selected) {
@@ -344,10 +341,12 @@ void streamer_menu_loop(Menu streamerMenu, Streamer *s_selected, StreamZ *sz_sel
     }
 }
 
-void viewer_menu_loop(Menu viewerMenu, Viewer *v_selected, StreamZ *sz_selected) {
+
+void viewer_menu_loop(Menu viewerMenu, Viewer *v_selected, StreamZ *sz_selected, Menu viewerInteractionMenu) {
     viewerMenu.changeTitle("Viewer " + v_selected->getName());
 
     bool viewer_loop = true, inInput = true;
+    bool interactions_loop = true;
 
     while (viewer_loop) {
         viewerMenu.startMenu();
@@ -366,25 +365,30 @@ void viewer_menu_loop(Menu viewerMenu, Viewer *v_selected, StreamZ *sz_selected)
                 } else {
                     unsigned choice;
 
-                    cout << "Active streams:" << endl << endl;
-                    sz_selected->printActiveStreams();
-                    cout << endl << "Chose the stream you want to enter" << endl;
-                    cout << "Enter the respective streamer id" << endl;
+                    if (sz_selected->getNumActiveStreamers() == 0) {
+                        cout << "There are no streams active right now" << endl;
+                        stopConsole();
+                    } else {
+                        cout << "Active streams:" << endl << endl;
+                        //sz_selected->printActiveStreams(); //TODO: change method
+                        cout << endl << "Chose the stream you want to enter" << endl;
+                        cout << "Enter the respective streamer id" << endl;
 
-                    cin >> choice;
-                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                    if (!cinFail()) {
-                        if (sz_selected->getStreamerByID(choice) == nullptr) {
-                            cout << "Invalid streamer id inputted!" << endl;
+                        cin >> choice;
+                        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                        if (!cinFail()) {
+                            if (sz_selected->getStreamerByID(choice) == nullptr) {
+                                cout << "Invalid streamer id inputted!" << endl;
+                                break;
+                            }
+                        } else {
+                            cout << "No valid number inputted!" << endl;
                             break;
                         }
-                    } else {
-                        cout << "No valid number inputted!" << endl;
-                        break;
-                    }
 
-                    sz_selected->enterStream(sz_selected->getStreamerByID(choice), v_selected);
-                    cout << "Entered stream successfully!" << endl;
+                        sz_selected->enterStream(sz_selected->getStreamerByID(choice), v_selected);
+                        cout << "Entered stream successfully!" << endl;
+                    }
                 }
                 break;
             }
@@ -399,84 +403,99 @@ void viewer_menu_loop(Menu viewerMenu, Viewer *v_selected, StreamZ *sz_selected)
                 stopConsole();
                 break;
             }
-                //like stream
             case 3: {
-                if (!v_selected->isActive()) {
-                    cout << "Not viewing any stream!" << endl;
-                } else {
-                    if (sz_selected->likeStream(v_selected))
-                        cout << "Liked the stream that viewer is watching!" << endl;
-                    else
-                        cout << "You have already liked or disliked the stream!" << endl;
+
+                viewerInteractionMenu.startMenu();
+
+                while (interactions_loop) {
+
+                    switch (viewerInteractionMenu.getSelected()) {
+                        //like stream
+                        case 0: {
+                            if (!v_selected->isActive()) {
+                                cout << "Not viewing any stream!" << endl;
+                            } else {
+                                if (sz_selected->likeStream(v_selected))
+                                    cout << "Liked the stream that viewer is watching!" << endl;
+                                else
+                                    cout << "You have already liked or disliked the stream!" << endl;
+                            }
+                            break;
+                        }
+                            //dislike stream
+                        case 1: {
+                            if (!v_selected->isActive()) {
+                                cout << "Not viewing any stream!" << endl;
+                            } else {
+                                if (sz_selected->dislikeStream(v_selected))
+                                    cout << "Disliked the stream that viewer is watching!" << endl;
+                                else
+                                    cout << "You have already liked or disliked the stream!" << endl;
+                            }
+                            break;
+                        }
+                            //remove like
+                        case 2: {
+                            if (!v_selected->isActive()) {
+                                cout << "Not viewing any stream!" << endl;
+                            } else {
+                                if (sz_selected->remlikeStream(v_selected))
+                                    cout << "Removed like to the stream that viewer is watching!"
+                                         << endl;
+                                else
+                                    cout << "You haven't liked the stream!" << endl;
+                            }
+                            break;
+                        }
+                            //remove dislike
+                        case 3: {
+                            if (!v_selected->isActive()) {
+                                cout << "Not viewing any stream!" << endl;
+                            } else {
+                                if (sz_selected->remdislikeStream(v_selected))
+                                    cout << "Removed dislike to the stream that viewer is watching!"
+                                         << endl;
+                                else
+                                    cout << "You haven't disliked the stream!" << endl;
+                            }
+                            break;
+                        }
+                            //comments
+                        case 4: {
+                            string comment;
+
+                            cout << "Input the comment you want to make: " << endl;
+                            cout << " --> ";
+
+                            cin.get();
+                            getline(cin, comment);
+
+                            try {
+                                v_selected->comment(comment);
+                            }
+                            catch (InactiveUser &) {
+                                cout << "Not viweing any stream!" << endl;
+                                break;
+                            }
+                            catch (NotInPrivateStream &) {
+                                cout << "You can't comment on a public stream! Only on private ones." << endl;
+                                break;
+                            }
+
+                            cout << "Your comment has been successfully made!" << endl;
+
+                            break;
+                        }
+                        case 5: {
+                            interactions_loop = false;
+                            break;
+                        }
+                    }
                 }
                 break;
             }
-                //dislike stream
+            //back
             case 4: {
-                if (!v_selected->isActive()) {
-                    cout << "Not viewing any stream!" << endl;
-                } else {
-                    if (sz_selected->dislikeStream(v_selected))
-                        cout << "Disliked the stream that viewer is watching!" << endl;
-                    else
-                        cout << "You have already liked or disliked the stream!" << endl;
-                }
-                break;
-            }
-                //remove like
-            case 5: {
-                if (!v_selected->isActive()) {
-                    cout << "Not viewing any stream!" << endl;
-                } else {
-                    if (sz_selected->remlikeStream(v_selected))
-                        cout << "Removed like to the stream that viewer is watching!"
-                             << endl;
-                    else
-                        cout << "You haven't liked the stream!" << endl;
-                }
-                break;
-            }
-                //remove dislike
-            case 6: {
-                if (!v_selected->isActive()) {
-                    cout << "Not viewing any stream!" << endl;
-                } else {
-                    if (sz_selected->remdislikeStream(v_selected))
-                        cout << "Removed dislike to the stream that viewer is watching!"
-                             << endl;
-                    else
-                        cout << "You haven't disliked the stream!" << endl;
-                }
-                break;
-            }
-                //comments
-            case 7: {
-                string comment;
-
-                cout << "Input the comment you want to make: " << endl;
-                cout << " --> ";
-
-                cin.get();
-                getline(cin, comment);
-
-                try {
-                    v_selected->comment(comment);
-                }
-                catch (InactiveUser &) {
-                    cout << "Not viweing any stream!" << endl;
-                    break;
-                }
-                catch (NotInPrivateStream &) {
-                    cout << "You can't comment on a public stream! Only on private ones." << endl;
-                    break;
-                }
-
-                cout << "Your comment has been successfully made!" << endl;
-
-                break;
-            }
-                //back
-            case 8: {
                 viewer_loop = false;
                 break;
             }
@@ -489,7 +508,7 @@ void viewer_menu_loop(Menu viewerMenu, Viewer *v_selected, StreamZ *sz_selected)
  */
 void
 streamzFramework() {
-    bool auto_save = true;  //used to enable disable the auto_save //TODO: I turned it into true. Right? YES
+    bool auto_save = true;  //used to enable disable the auto_save (true by default)
     bool loop = true, sub_loop; //(loop) used in main loop // (sub_loop) used in other sub loops
     bool stats_loop, admin_bool = false; //access control
 
@@ -529,16 +548,12 @@ streamzFramework() {
     streamerMenu.changeOption(3, "Stop stream");
     streamerMenu.changeOption(4, "Back");
 
-    Menu viewerMenu("Viewer default title", 9);
+    Menu viewerMenu("Viewer default title", 5);
     viewerMenu.changeOption(0, "Viewer info");
     viewerMenu.changeOption(1, "Enter stream");
     viewerMenu.changeOption(2, "Exit stream");
-    viewerMenu.changeOption(3, "Like stream");
-    viewerMenu.changeOption(4, "Dislike stream");
-    viewerMenu.changeOption(5, "Remove Like");
-    viewerMenu.changeOption(6, "Remove Dislike");
-    viewerMenu.changeOption(7, "Comment");
-    viewerMenu.changeOption(8, "Back");
+    viewerMenu.changeOption(3, "Stream interactions");
+    viewerMenu.changeOption(4, "Back");
 
     Menu statsMenu("Admin Statistics", 5);
     statsMenu.changeOption(0, "StreamZ statistics");
@@ -546,6 +561,14 @@ streamzFramework() {
     statsMenu.changeOption(2, "Best Streamer");
     statsMenu.changeOption(3, "Streams at a given time");
     statsMenu.changeOption(4, "Back");
+
+    Menu viewerInteractionMenu("Viewer Streaming Interactions", 6);
+    viewerInteractionMenu.changeOption(0, "Like stream");
+    viewerInteractionMenu.changeOption(1, "Dislike stream");
+    viewerInteractionMenu.changeOption(2, "Remove Like");
+    viewerInteractionMenu.changeOption(3, "Remove Dislike");
+    viewerInteractionMenu.changeOption(4, "Comment");
+    viewerInteractionMenu.changeOption(5, "Back");
 
     string help_main_menu, help_submenu;
 
@@ -585,15 +608,12 @@ streamzFramework() {
                     passwordInput(password);
 
                     auto *sz1 = new StreamZ(cap, nickname, birthday, password);
+
                     streamz_vector.push_back(sz1);
 
-                    cout << "StreamZ created successfully, go back to work with it!" << endl;
-                    cout << "To create another one input anything, to go back input 'e'" << endl;
-                    cout << "Input: ";
-                    cin >> inp;
-                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                    if (inp == "e")
-                        inCreation = false;
+                    cout << "StreamZ created successfully!" << endl;
+
+                    inCreation = false;
                 }
                 break;
             }
@@ -646,7 +666,7 @@ streamzFramework() {
                                     if (s_selected != nullptr) {
                                         streamer_menu_loop(streamerMenu, s_selected, sz_selected);
                                     } else if (v_selected != nullptr) {
-                                        viewer_menu_loop(viewerMenu, v_selected, sz_selected);
+                                        viewer_menu_loop(viewerMenu, v_selected, sz_selected, viewerInteractionMenu);
                                     } else {
                                         admin_bool = true;
                                     }
@@ -768,7 +788,7 @@ streamzFramework() {
 
                                 Viewer *v_selected = sz_selected->getViewerByID(inp);  //not treating exceptions yet
 
-                                viewer_menu_loop(viewerMenu, v_selected, sz_selected);
+                                viewer_menu_loop(viewerMenu, v_selected, sz_selected, viewerInteractionMenu);
 
                                 break;
                             }

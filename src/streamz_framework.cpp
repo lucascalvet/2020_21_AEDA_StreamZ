@@ -2,58 +2,68 @@
 #include "exceptions.h"
 #include <limits>
 #include <algorithm>
+#include <fstream>
 
 using namespace std;
 
-//to maintain readability of the code where they are used and avoiding having them global
+//encapsulated in a function to maintain readability of the code where they are used and avoiding having them global
+//help instructions to main framework menu and to the admin, the other menus are all self explanatory
+//adapted to 120 characters clion console max character size
 void help_strings(string &help_main_menu, string &help_submenu) {
     help_main_menu =
             "\nFramework Help Instructions"
+            "\n---------------------------"
             "\n\n"
             "Inputs:\n"
-            "All inputs have the respective instructions above them, but generally all the framework user has to do is to "
-            "input a number to choose an option in the menus or to input some kind of data.\n"
+            "All inputs have the respective instructions above them, but generally all the framework user has to do is to input\n"
+            "a number to choose an option in the menus or to input some kind of data.\n"
             "In the case of wrong input given, the user is warned and is able to try again."
             "\n\n"
             "StreamZ:\n"
             "To create a streamz you only have to input the capacity number and create an admin (option 1).\n"
-            "Then, to enter it and work with it just have to choose it in the main menu (option 2)."
+            "Then, to enter it and work with it just have to choose it in the main menu (option 2).\n"
+            "After a streamz selected you will have to enter the credentials of admin or create other user and sign in."
             "\n\n"
             "Settings:\n"
-            "Auto save-> if this is turned on, the framework will save all program data at the end, automatically. (turned on by default)\n"
+            "Auto save-> if this is turned on, the framework will save all program data at the end, automatically.\n"
+            "(turned on by default)\n"
             "Save-> used to save the program data manually.\n"
-            "Import-> it imports a program data file."
-            "\n\n";
+            "Import-> it imports a program data file.\n"
+            "For more detailed information about the program architecture consult the doxygen files.";
 
     help_submenu =
-            "\nStreamZ Help Instruction"
+            "\nAdmin Help Instruction"
+            "\n----------------------"
             "\n\n"
-            "Create Streamer or Viewer:\n"
-            "Only have to input the viewer's or streamer's data that is requested."
+            "The admin has access to everything, and can enter in all accounts by choosing them\n"
+            "and it can also create more users."
             "\n\n"
-            "Choose Streamer or viewer:\n"
-            "Just input the id of the streamer or viewer wanted. If any is created yet, it will warn the user."
+            "Create streamer or viewer:\n"
+            "Only have to input the viewer's or streamer's data, that is requested."
             "\n\n"
-            "Best Streams:\n"
-            "Prints the bests streams and their information."
+            "Choose streamer or viewer:\n"
+            "Just input the id of the streamer or viewer wanted. If any is created yet, it will warn the admin."
             "\n\n"
-            "The next functionalities are all self explanatory, however here are their description."
+            "Statistics:\n"
+            "Submenu with several options, with statistical information of the platform."
             "\n\n"
-            "Inside Streamer (after streamer chosen):\n"
-            "Streamer info-> outputs the streamer's information.\n"
-            "Start public stream-> starts a public stream and streamer can only have one stream at the time (private or public)\n"
-            "Start private stream-> used to start a private stream\n"
-            "Stop Stream-> stops a stream"
-            "\n\n"
-            "Inside Viewer (after viewer chosen):\n"
-            "Viewer info-> outputs the user info\n"
-            "Enter stream-> enters a stream (can only be at one at the time) and if stream is private, can only enter if it is allowed\n"
-            "Exit stream-> used to exit the current stream it's in\n"
-            "Like stream-> likes the stream it's in (can only like or dislike a stream and only once)\n"
-            "Dislike stream-> dislikes the stream being watched\n"
-            "Remove like-> removes the like given to a stream (can only be used if already liked)\n"
-            "Remove dislike-> removes the dislike given to a stream (can only be used if already disliked)"
-            "\n\n";
+            "The other functionalities are all self explanatory, as well has inside the streamer and viewer menus.";
+}
+
+//banner displayed only once when framework executed, at the beginning
+void banner(){
+    ifstream banner_file;
+    string banner_line;
+
+    banner_file.open("../banner.txt");
+
+    if (banner_file.fail()) cout << "Unable to show initial banner" << endl; //doesn't throw exception, because it's not essential
+    else{
+        while(banner_file.peek() != EOF){
+            getline(banner_file, banner_line);
+            cout << banner_line;
+        }
+    }
 }
 
 //the 3 following functions are used for inputs
@@ -78,9 +88,11 @@ void passwordInput(string &password) {
     bool in_password_input = true;
 
     while (in_password_input) {
-        cout
-                << "The password needs need to be at least 6 characters long and have at least one upper case and one lower case letter."
-                << endl;
+        cout << "-----------------------------------" << endl;
+        cout << "The password has to have least one" << endl;
+        cout << "upper case and one lower case letter" << endl;
+        cout << "And be at least 6 characters long." << endl;
+        cout << "-----------------------------------" << endl;
         cout << "Enter the password: ";
         cin >> password;
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
@@ -151,6 +163,8 @@ void dateInput(Date &birthday, bool birth_date) {
             in_date_selection = true;
         }
 
+        cout << endl;  //used to prevent console reformatting
+
         if (!in_date_selection && getCurrentDate() < birthday) in_date_selection = true;
 
         if (in_date_selection) cout << "Input date again, invalid date" << endl;
@@ -178,7 +192,7 @@ void printBestStreams(StreamZ* sz_selected){
     stopConsole();
 }
 
-//used to users to search streams by language or by min_age
+//used by users to search streams by language or by min_age
 void searchStreams(StreamZ *sz_selected){
     string choice;
     bool lang_bool = false, min_age_bool = false, all_bool = false;
@@ -230,7 +244,7 @@ void searchStreams(StreamZ *sz_selected){
         else if (min_age_bool) streams = sz_selected->getStreams("", min_age);
         else if (all_bool) streams = sz_selected->getStreams();
 
-        if(streams.size() == 0) cout << "Any streams active with those parameters!" << endl;
+        if(streams.empty()) cout << "Any streams active with those parameters!" << endl;
         else if(min_age_bool || lang_bool || all_bool) sz_selected->printStreams(streams);
     }
     stopConsole();
@@ -314,7 +328,7 @@ void streamerMenuLoop(Menu streamer_menu, Streamer *s_selected, StreamZ *sz_sele
             case 2: {
                 if (s_selected->isActive()) { //also in exceptions, but here too to prevent user from inputing if is already active
                     cout << "This streamer is already streaming!" << endl;
-                    cout << "If you want to start a new one you have to stop this first!" << endl;
+                    cout << "If you want to start a new one, stop this first!" << endl;
                     stopConsole();
                 } else {
                     string title, lang;
@@ -726,6 +740,8 @@ void streamzFramework() {
 
     help_strings(help_main_menu, help_submenu);
 
+    banner(); //only showed at the beginning
+
     while (loop) {
         admin_bool = false;
         main_menu.startMenu();
@@ -774,6 +790,7 @@ void streamzFramework() {
                 unsigned input;
                 string nickname, password;
 
+                cout << endl;
                 if (streamz_vector.empty()) {
                     cout << "No StreamZ's created yet!" << endl;
                     stopConsole();
@@ -878,7 +895,7 @@ void streamzFramework() {
                             case 2: {
                                 unsigned input;
 
-                                cout << "Streamers" << endl;
+                                cout << endl << "Streamers" << endl;
                                 vector<Streamer *> streamers = sz_selected->getStreamers();
                                 vector<Streamer *>::const_iterator streamer;
                                 for (streamer = streamers.begin(); streamer != streamers.end(); streamer++) {
@@ -917,7 +934,7 @@ void streamzFramework() {
 
                                 unsigned input;
 
-                                cout << "Viewers" << endl;
+                                cout << endl << "Viewers" << endl;
                                 vector<Viewer *> viewers = sz_selected->getViewers();
                                 vector<Viewer *>::const_iterator viewer;
                                 for (viewer = viewers.begin(); viewer != viewers.end(); viewer++) {
@@ -991,18 +1008,21 @@ void streamzFramework() {
                                             cout << "End date-> ";
                                             dateInput(date2, false);
 
-                                            cout << endl << "Streams created between " << date1 << " and " << date2
-                                                 << endl << endl;
+                                            unsigned public_streams = sz_selected->getNumCreatedStreams(true, date1, date2);
+                                            unsigned private_streams = sz_selected->getNumCreatedStreams(false, date1, date2);
 
-                                            cout << "Public streams: "
-                                                 << to_string(sz_selected->getNumCreatedStreams(true, date1, date2))
-                                                 << endl;
+                                            if(public_streams == 0 && private_streams == 0) cout << "Any streams at the given time!" << endl;
+                                            else {
+                                                cout << "Streams created between " << date1 << " and " << date2 << endl
+                                                     << endl;
 
-                                            cout << "Private streams: "
-                                                 << to_string(sz_selected->getNumCreatedStreams(false, date1, date2))
-                                                 << endl << endl;
+                                                cout << "Public streams: " << public_streams << endl;
+
+                                                cout << "Private streams: " << private_streams << endl;
+                                            }
 
                                             stopConsole();
+                                            cout << endl;
                                             break;
                                         }
                                             //back
@@ -1048,12 +1068,15 @@ void streamzFramework() {
 
                             else break;
                         }
-                            //TODO: save (save all StreamZ instances? or only one?)
                         case 1: {
                             vector<StreamZ *>::iterator it;
-                            for (it = streamz_vector.begin(); it != streamz_vector.end();) {
-                                string filename = "StreamZ_" + to_string((*it)->getID()) + ".txt";
-                                (*it)->save(filename);
+                            if(streamz_vector.empty()) cout << "Nothing to save yet!" << endl;
+                            else {
+                                for (it = streamz_vector.begin(); it != streamz_vector.end(); it++) {
+                                    string filename = "StreamZ_" + to_string((*it)->getID()) + ".txt";
+                                    (*it)->save(filename);
+                                }
+                                cout << "Everything saved!" << endl;
                             }
                             break;
                         }

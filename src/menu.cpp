@@ -33,7 +33,9 @@ void inputChecker(unsigned &selected, unsigned options) {
 
 //stops the console until user presses anything
 void stopConsole() {
-    system("pause");
+    cout << endl; //formatting console
+    cout << "Press enter to continue...";
+    cin.get();
 }
 
 Menu::Menu(const string &title, unsigned options) {

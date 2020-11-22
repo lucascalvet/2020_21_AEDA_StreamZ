@@ -7,6 +7,8 @@
 
 void help_strings(std::string &help_main_menu, std::string &help_submenu);
 
+void banner();
+
 void minAgeInput(unsigned &min_age);
 
 void passwordInput(std::string &password);

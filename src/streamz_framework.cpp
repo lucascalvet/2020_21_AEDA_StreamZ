@@ -59,7 +59,7 @@ void banner(){
     ifstream banner_file;
     string banner_line;
 
-    banner_file.open("../banner.txt");
+    banner_file.open("banner.txt");
 
     if (banner_file.fail()) cout << "Unable to show initial banner" << endl; //doesn't throw exception, because it's not essential
     else{
@@ -177,20 +177,20 @@ void dateInput(Date &birthday, bool birth_date) {
 
 //displays best streams to console
 void printBestStreams(StreamZ* sz_selected){
-    cout << "Best streams: (upwards order)" << endl;
+    cout << "Best streams: (downwards order)" << endl << endl;
 
     vector<Stream *> best = sz_selected->getBestStreams();
 
-    cout << "Most viewed streams: " << endl;
+    cout << "Most viewed streams: " << endl << endl;
 
     for (int i = 0; i < 10; i++) {
-        if (best.at(i) != nullptr) cout << best.at(i)->getInfo();
+        if (best.at(i) != nullptr) cout << "--> " << best.at(i)->getInfo();
     }
 
-    cout << "Most liked streams: " << endl;
+    cout << endl << "Most liked streams: " << endl << endl;
 
     for (int i = 10; i < 20; i++) {
-        if (best.at(i) != nullptr) cout << best.at(i)->getInfo();
+        if (best.at(i) != nullptr) cout << "--> " << best.at(i)->getInfo();
     }
 
     stopConsole();
@@ -248,8 +248,8 @@ void searchStreams(StreamZ *sz_selected){
         else if (min_age_bool) streams = sz_selected->getStreams("", min_age);
         else if (all_bool) streams = sz_selected->getStreams();
 
-        if(streams.empty()) cout << "Any streams active with those parameters!" << endl;
-        else if(min_age_bool || lang_bool || all_bool) sz_selected->printStreams(streams);
+        if(streams.empty()) cout << "No streams active with those parameters!" << endl;
+        else if(min_age_bool || lang_bool || all_bool) StreamZ::printStreams(streams);
     }
     stopConsole();
 }
@@ -320,7 +320,19 @@ void streamerMenuLoop(Menu streamer_menu, Streamer *s_selected, StreamZ *sz_sele
         switch (streamer_menu.getSelected()) {
             //streamer info
             case 0: {
-                cout << s_selected->getInfo();
+                cout << s_selected->getInfo() << endl;
+                vector<Stream *> history = s_selected->getHistory();
+                if (history.empty()){
+                    cout << "No streams in history.";
+                    break;
+                }
+                cout << "Streaming history:" << endl;
+                vector<Stream *>::const_iterator stream;
+                for (stream = history.begin(); stream != history.end(); stream++){
+                    cout << "--> " << (*stream)->getInfo();
+                }
+                cout << endl;
+                stopConsole();
                 break;
             }
             //search streams
@@ -339,7 +351,6 @@ void streamerMenuLoop(Menu streamer_menu, Streamer *s_selected, StreamZ *sz_sele
                     unsigned min_age;
 
                     cout << "Input the stream's title: ";
-                    cin.get();
                     getline(cin, title);
                     cout << "Input the stream's language: ";
                     cin >> lang;
@@ -377,7 +388,6 @@ void streamerMenuLoop(Menu streamer_menu, Streamer *s_selected, StreamZ *sz_sele
                     stopConsole();
                 } else {
                     cout << "Input the stream's title: ";
-                    cin.get();
                     getline(cin, title);
                     cout << "Input the stream's language: ";
                     cin >> lang;
@@ -505,9 +515,8 @@ void viewerMenuLoop(Menu viewer_menu, Viewer *v_selected, StreamZ *sz_selected, 
                     } else {
                         cout << "Active streams:" << endl << endl;
                         sz_selected->printStreams(sz_selected->getActiveStreamers());
-                        cout << endl << "Chose the stream you want to enter" << endl;
-                        cout << "Enter the respective streamer id" << endl;
-
+                        cout << endl << "Choose the stream you want to enter" << endl;
+                        cout << "Enter the respective streamer id: ";
                         cin >> choice;
                         cin.ignore(numeric_limits<streamsize>::max(), '\n');
                         if (!cinFail()) {
@@ -519,8 +528,12 @@ void viewerMenuLoop(Menu viewer_menu, Viewer *v_selected, StreamZ *sz_selected, 
                             try {
                                 v_selected->enterStream(selection);
                             }
-                            catch (UnauthorizedViewer&) { //only this exception is needed to catch, to avoid redundancy
-                                cout << "This is a private stream. You are not authorized to enter it.";
+                            catch (UnauthorizedViewer&) { //only this two exceptions are needed to catch, to avoid redundancy
+                                cout << "This is a private stream. You are not authorized to enter it." << endl;
+                                break;
+                            }
+                            catch (NoMinimumAge&) {
+                                cout << "You don't have the minimum age to enter this stream!" << endl;
                                 break;
                             }
                             cout << "Entered stream successfully!" << endl;
@@ -551,10 +564,9 @@ void viewerMenuLoop(Menu viewer_menu, Viewer *v_selected, StreamZ *sz_selected, 
             }
             //viewer interactions
             case 4: {
-
-                viewer_interaction_menu.startMenu();
-
+                interactions_loop = true;
                 while (interactions_loop) {
+                    viewer_interaction_menu.startMenu();
 
                     switch (viewer_interaction_menu.getSelected()) {
                         //like stream
@@ -627,8 +639,6 @@ void viewerMenuLoop(Menu viewer_menu, Viewer *v_selected, StreamZ *sz_selected, 
 
                             cout << "Input the comment you want to make: " << endl;
                             cout << " --> ";
-
-                            cin.get();
                             getline(cin, comment);
 
                             try {
@@ -1024,8 +1034,6 @@ void streamzFramework() {
 
                                                 cout << "Private streams: " << private_streams << endl;
                                             }
-
-                                            stopConsole();
                                             cout << endl;
                                             break;
                                         }
@@ -1070,7 +1078,7 @@ void streamzFramework() {
                             cin.ignore(numeric_limits<streamsize>::max(), '\n');
                             if (off_or_on == "c") auto_save = !auto_save;
 
-                            else break;
+                            break;
                         }
                         case 1: {
                             vector<StreamZ *>::iterator it;
@@ -1127,7 +1135,7 @@ void streamzFramework() {
                         cout << "Error saving to files!";
                         break;
                     }
-                    cout << "StreamZ's have been saved automatically." << endl;
+                    cout << "StreamZ's have been saved automatically with name StreamZ_[respective ID]." << endl;
                 }
                 cout << "Are you sure you want exit? (if yes enter 'y')" << endl;
                 cout << "--> ";

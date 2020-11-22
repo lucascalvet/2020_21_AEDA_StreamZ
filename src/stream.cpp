@@ -68,7 +68,7 @@ string Stream::getInfo() const {
     ostringstream info;
     info << "Title: " << this->title << "\tStarting Date: " << this->starting_date <<
          "\tLanguage: " << this->lang << "\tMin Age: " << this->min_age <<
-         "\tLikes: " << getNumLikes() << "\tDislikes: " << getNumDislikes() <<
+         "\nLikes: " << getNumLikes() << "\tDislikes: " << getNumDislikes() <<
          "\tTotal Views: " << this->num_total_views << '\n';
     return info.str();
 }
@@ -294,7 +294,7 @@ std::string PrivateStream::getInfo() const {
         vector<unsigned>::const_iterator viewer;
         for (viewer = authorized_viewers.begin(); viewer != authorized_viewers.end(); viewer++) {
             info << *viewer;
-            if (viewer == authorized_viewers.end() - 1) info << ", ";
+            if (viewer != authorized_viewers.end() - 1) info << ", ";
         }
         info << '\n';
     } else info << "\nNo authorized viewers. No one will be able to enter the stream!\n";

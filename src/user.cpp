@@ -145,9 +145,9 @@ string Streamer::getInfo() {
 
     ostringstream info;
     info << User::getInfo();
-    info << "\t" << "Streaming: " << active_status << "\t";
+    info << "\t" << "Streaming: " << active_status << "\n";
     if (isActive()) {
-        info << "Stream: " << s->getInfo() << endl;
+        info << "Stream-> " << s->getInfo() << endl;
     }
     cout << endl;
     return info.str();
@@ -240,6 +240,9 @@ void Viewer::enterStream(Streamer *streamer) {
     }
     if (!streamer->isActive()) {
         throw InactiveUser();
+    }
+    if (calculateAge(getBirthday()) < streamer->s->getMinAge()){
+        throw NoMinimumAge();
     }
     PrivateStream *stream = dynamic_cast<PrivateStream *>(streamer->s);
     if (stream != nullptr && !stream->isAuthorized(getID())) throw UnauthorizedViewer();

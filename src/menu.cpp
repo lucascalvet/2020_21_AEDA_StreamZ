@@ -37,7 +37,7 @@ void inputChecker(unsigned &selected, unsigned options) {
 void stopConsole() {
     cout << endl; //formatting console
     cout << "Press enter to continue...";
-    cin.get();
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
 }
 
 /**

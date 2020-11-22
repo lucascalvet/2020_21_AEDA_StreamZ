@@ -526,7 +526,7 @@ std::string StreamZ::getMostUsedLanguage() {
 void StreamZ::printStreams(const vector<Streamer *> &streams) {
     vector<Streamer *>::const_iterator streamer;
     for (streamer = streams.begin(); streamer != streams.end(); streamer++) {
-        cout << "Streamer: " << (*streamer)->getName() << "\tStream-> " << (*streamer)->s->getInfo()
+        cout << "ID:" << (*streamer)->getID() << " Streamer: " << (*streamer)->getName() << "\tStream-> " << (*streamer)->s->getInfo()
              << endl;
     }
 }

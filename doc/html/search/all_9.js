@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['nickname_68',['nickname',['../class_user.html#aebdb6953485740c33307118f91156832',1,'User']]],
-  ['numberinputfail_69',['numberInputFail',['../menu_8cpp.html#a6db764ab245b2fc77535dbd84ab22ade',1,'numberInputFail():&#160;menu.cpp'],['../menu_8h.html#a6db764ab245b2fc77535dbd84ab22ade',1,'numberInputFail():&#160;menu.cpp']]]
+  ['menu_67',['Menu',['../d2/db8/class_menu.html',1,'Menu'],['../d2/db8/class_menu.html#af3c64f2f5d489e5bb65350c31a4d1dad',1,'Menu::Menu()']]]
 ];

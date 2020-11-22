@@ -27,36 +27,34 @@ public:
     ~StreamZ();
     unsigned getCapacity() const;
     unsigned getID() const;
-    User *getUserByName(const std::string &nickname);
+    std::vector<Streamer *> getStreamers() const;
+    unsigned getNumStreamers() const;
+    std::vector<Streamer *> getActiveStreamers() const;
+    unsigned getNumActiveStreamers() const;
+    std::vector<Viewer *> getViewers() const;
     unsigned getNumViewers() const;
     unsigned getNumStreamViewers(Stream *stream) const;
-    std::vector<Viewer *> getViewers() const;
-    Viewer *getViewerByID(unsigned user_id) const;
-    Viewer *getViewerByName(const std::string &nickname) const;
-    unsigned getNumStreamers() const;
-    unsigned getNumActiveStreamers() const;
-    std::vector<Streamer *> getStreamers() const;
+    User *getUserByName(const std::string &nickname);
     Streamer *getStreamerByID(unsigned user_id) const;
     Streamer *getStreamerByName(const std::string &nickname) const;
-    std::vector<Streamer *> getActiveStreamers() const;
-    std::vector<Stream *> getBestStreams() const;
-    Streamer *getMostViewedStreamer() const;
+    Viewer *getViewerByID(unsigned user_id) const;
+    Viewer *getViewerByName(const std::string &nickname) const;
     unsigned getNumCreatedStreams() const;
     unsigned getNumCreatedStreams(const Language &lang) const;
     unsigned getNumCreatedStreams(bool public_streams, const Date &dt1 = Date(0, 0, 0),
                                   const Date &dt2 = Date(31, 12, UINT_MAX)) const;
-    std::string getMostUsedLanguage();
+    std::vector<Streamer *> getStreams(Language lang = "", Age min_age = UINT_MAX) const;
+    std::vector<Stream *> getBestStreams() const;
+    Streamer *getMostViewedStreamer() const;
     double getAverageViews() const;
+    std::string getMostUsedLanguage();
+    static void printStreams(const std::vector<Streamer *> &streams) ;
     void addStreamer(const std::string &nickname, const Date &birthday, const std::string &password);
     void addViewer(const std::string &nickname, const Date &birthday, const std::string &password);
-    //when stream is ended by streamer, stream is added to history after total viewers data is added to stream
-    // for streamers
     void startPublicStream(Streamer *streamer, const std::string &title, const Language &lang, unsigned min_age) const;
     void startPrivateStream(Streamer *streamer, const std::string &title, const Language &lang, unsigned min_age,
                             const std::vector<unsigned> &authorized_viewers) const;
     void stopStream(Streamer *streamer);
-    void printStreams(const std::vector<Streamer *> &streams) const;
-    std::vector<Streamer *> getStreams(const Language &lang = "", Age min_age = UINT_MAX) const;
     void stopAllStreams();
     bool loginVerifier(const std::string &nickname,const std::string &password) const;
     void save(const std::string &filename) const;

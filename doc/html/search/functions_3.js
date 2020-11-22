@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['enterstream_151',['enterStream',['../class_stream_z.html#a902e6caa9576c684aa324206568701d7',1,'StreamZ']]],
-  ['exitstream_152',['exitStream',['../class_stream_z.html#a7369857d227bf95327f0468ccdc55fed',1,'StreamZ']]]
+  ['enterstream_129',['enterStream',['../d0/d30/class_viewer.html#a08bbaef53a53a4eb62f612b125c68b17',1,'Viewer']]],
+  ['exitstream_130',['exitStream',['../d0/d30/class_viewer.html#a6bca97511d39913521c98a080d7700a8',1,'Viewer']]]
 ];

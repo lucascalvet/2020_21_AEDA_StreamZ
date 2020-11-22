@@ -24,10 +24,11 @@
 <table cellspacing="0" cellpadding="0">
  <tbody>
  <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="streamz_logo75.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">StreamZ
    </div>
-   <div id="projectbrief">Practical work for AEDA</div>
+   <div id="projectbrief">The Best Way To Stream</div>
   </td>
  </tr>
  </tbody>
@@ -84,7 +85,6 @@ $(document).ready(function(){initNavTree('class_viewer.html',''); initResizable(
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="class_viewer-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">Viewer Class Reference</div>  </div>
@@ -104,99 +104,147 @@ Inheritance diagram for Viewer:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a1603a2136e972f290688d8da5a839891"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_viewer.html#a1603a2136e972f290688d8da5a839891">Viewer</a> (std::string <a class="el" href="class_user.html#aebdb6953485740c33307118f91156832">nickname</a>, <a class="el" href="struct_date.html">Date</a> birthday)</td></tr>
-<tr class="separator:a1603a2136e972f290688d8da5a839891"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a87b884e80f3f6281238f3ba8f72ed41c"><td class="memItemLeft" align="right" valign="top"><a id="a87b884e80f3f6281238f3ba8f72ed41c"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>Viewer</b> (const std::string &amp;nickname, const <a class="el" href="struct_date.html">Date</a> &amp;birthday, const std::string &amp;password)</td></tr>
+<tr class="separator:a87b884e80f3f6281238f3ba8f72ed41c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aef0c0a907d40e0ffa95d66a57aa9b1a7"><td class="memItemLeft" align="right" valign="top"><a id="aef0c0a907d40e0ffa95d66a57aa9b1a7"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>Viewer</b> (const std::string &amp;nickname, const <a class="el" href="struct_date.html">Date</a> &amp;birthday, const std::string &amp;password, unsigned id)</td></tr>
+<tr class="separator:aef0c0a907d40e0ffa95d66a57aa9b1a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad2704ae5ff034ccfe5829cfafefcdcbe"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_viewer.html#ad2704ae5ff034ccfe5829cfafefcdcbe">getInfo</a> ()</td></tr>
 <tr class="separator:ad2704ae5ff034ccfe5829cfafefcdcbe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a324e5a6a1532fe5eac3f3b0e4792b2da"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_viewer.html#a324e5a6a1532fe5eac3f3b0e4792b2da">~Viewer</a> ()</td></tr>
-<tr class="separator:a324e5a6a1532fe5eac3f3b0e4792b2da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a08bbaef53a53a4eb62f612b125c68b17"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_viewer.html#a08bbaef53a53a4eb62f612b125c68b17">enterStream</a> (<a class="el" href="class_streamer.html">Streamer</a> *streamer)</td></tr>
+<tr class="separator:a08bbaef53a53a4eb62f612b125c68b17"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6bca97511d39913521c98a080d7700a8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_viewer.html#a6bca97511d39913521c98a080d7700a8">exitStream</a> ()</td></tr>
+<tr class="separator:a6bca97511d39913521c98a080d7700a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9364209d2f671e088b0b5ffdedd47ca0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_viewer.html#a9364209d2f671e088b0b5ffdedd47ca0">likeStream</a> () const</td></tr>
+<tr class="separator:a9364209d2f671e088b0b5ffdedd47ca0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a10d93828d32159f8c1fdfbb88eba7858"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_viewer.html#a10d93828d32159f8c1fdfbb88eba7858">remLikeStream</a> () const</td></tr>
+<tr class="separator:a10d93828d32159f8c1fdfbb88eba7858"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0ba3c53a4516d87b4c87a7bd83f49701"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_viewer.html#a0ba3c53a4516d87b4c87a7bd83f49701">dislikeStream</a> () const</td></tr>
+<tr class="separator:a0ba3c53a4516d87b4c87a7bd83f49701"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a966b8400a1f7db225b85b140319ac3fa"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_viewer.html#a966b8400a1f7db225b85b140319ac3fa">remDislikeStream</a> () const</td></tr>
+<tr class="separator:a966b8400a1f7db225b85b140319ac3fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3b5a332daad160d4d58817b0f0f4f30e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_viewer.html#a3b5a332daad160d4d58817b0f0f4f30e">comment</a> (const std::string &amp;comment) const</td></tr>
+<tr class="separator:a3b5a332daad160d4d58817b0f0f4f30e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_class_user"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_class_user')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_user.html">User</a></td></tr>
-<tr class="memitem:ace0f31afaecff3fcf58300bb0474b0f0 inherit pub_methods_class_user"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_user.html#ace0f31afaecff3fcf58300bb0474b0f0">User</a> (std::string <a class="el" href="class_user.html#aebdb6953485740c33307118f91156832">nickname</a>, <a class="el" href="struct_date.html">Date</a> birthday)</td></tr>
-<tr class="separator:ace0f31afaecff3fcf58300bb0474b0f0 inherit pub_methods_class_user"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a825253f0b05164d1e60fc6e690398fee inherit pub_methods_class_user"><td class="memItemLeft" align="right" valign="top"><a id="a825253f0b05164d1e60fc6e690398fee"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>User</b> (const std::string &amp;nickname, const <a class="el" href="struct_date.html">Date</a> &amp;birthday, const std::string &amp;password)</td></tr>
+<tr class="separator:a825253f0b05164d1e60fc6e690398fee inherit pub_methods_class_user"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6e9b862f05158029364b7fc0f7c7da1a inherit pub_methods_class_user"><td class="memItemLeft" align="right" valign="top"><a id="a6e9b862f05158029364b7fc0f7c7da1a"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>User</b> (const std::string &amp;nickname, const <a class="el" href="struct_date.html">Date</a> &amp;birthday, const std::string &amp;password, unsigned id)</td></tr>
+<tr class="separator:a6e9b862f05158029364b7fc0f7c7da1a inherit pub_methods_class_user"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab9b2b5feb6bdd1582696eb6d44cee384 inherit pub_methods_class_user"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_user.html#ab9b2b5feb6bdd1582696eb6d44cee384">getName</a> () const</td></tr>
 <tr class="separator:ab9b2b5feb6bdd1582696eb6d44cee384 inherit pub_methods_class_user"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a986c6f30aeac167bb5d311dd412cf604 inherit pub_methods_class_user"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_user.html#a986c6f30aeac167bb5d311dd412cf604">getID</a> () const</td></tr>
-<tr class="separator:a986c6f30aeac167bb5d311dd412cf604 inherit pub_methods_class_user"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa45b99c009d3bad915054f9b53e622ac inherit pub_methods_class_user"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_date.html">Date</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_user.html#aa45b99c009d3bad915054f9b53e622ac">getBirthday</a> () const</td></tr>
 <tr class="separator:aa45b99c009d3bad915054f9b53e622ac inherit pub_methods_class_user"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a180e5acdc4b150463652d90d54caa8fc inherit pub_methods_class_user"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_user.html#a180e5acdc4b150463652d90d54caa8fc">getPassword</a> () const</td></tr>
+<tr class="separator:a180e5acdc4b150463652d90d54caa8fc inherit pub_methods_class_user"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad3aaa2d4f651815785ae2a49c8b43e4f inherit pub_methods_class_user"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_user.html#ad3aaa2d4f651815785ae2a49c8b43e4f">getID</a> () const</td></tr>
+<tr class="separator:ad3aaa2d4f651815785ae2a49c8b43e4f inherit pub_methods_class_user"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9c6060d37c200406c1561fd211181127 inherit pub_methods_class_user"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_user.html#a9c6060d37c200406c1561fd211181127">isActive</a> () const</td></tr>
 <tr class="separator:a9c6060d37c200406c1561fd211181127 inherit pub_methods_class_user"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac00b72ad64eb4149f7b21b9f5468c2b2 inherit pub_methods_class_user"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_user.html#ac00b72ad64eb4149f7b21b9f5468c2b2">~User</a> ()</td></tr>
-<tr class="separator:ac00b72ad64eb4149f7b21b9f5468c2b2 inherit pub_methods_class_user"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
-Public Attributes</h2></td></tr>
-<tr class="memitem:ad43c0ee323b1d1401f15fea48f272ea3"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_viewer.html#ad43c0ee323b1d1401f15fea48f272ea3">alreadyLiked</a> = false</td></tr>
-<tr class="separator:ad43c0ee323b1d1401f15fea48f272ea3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afd52d4831cf3c7c1a976a2f339414670"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_viewer.html#afd52d4831cf3c7c1a976a2f339414670">alreadyDisliked</a> = false</td></tr>
-<tr class="separator:afd52d4831cf3c7c1a976a2f339414670"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="inherit_header pub_attribs_class_user"><td colspan="2" onclick="javascript:toggleInherit('pub_attribs_class_user')"><img src="closed.png" alt="-"/>&#160;Public Attributes inherited from <a class="el" href="class_user.html">User</a></td></tr>
-<tr class="memitem:a2aaa37e0fcd557b8b0f8c68b5a94ad1c inherit pub_attribs_class_user"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_stream.html">Stream</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_user.html#a2aaa37e0fcd557b8b0f8c68b5a94ad1c">s</a> = nullptr</td></tr>
-<tr class="separator:a2aaa37e0fcd557b8b0f8c68b5a94ad1c inherit pub_attribs_class_user"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
+<tr class="inherit_header pub_attribs_class_user"><td colspan="2" onclick="javascript:toggleInherit('pub_attribs_class_user')"><img src="closed.png" alt="-"/>&#160;Public Attributes inherited from <a class="el" href="class_user.html">User</a></td></tr>
+<tr class="memitem:a2aaa37e0fcd557b8b0f8c68b5a94ad1c inherit pub_attribs_class_user"><td class="memItemLeft" align="right" valign="top"><a id="a2aaa37e0fcd557b8b0f8c68b5a94ad1c"></a>
+<a class="el" href="class_stream.html">Stream</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>s</b> = nullptr</td></tr>
+<tr class="separator:a2aaa37e0fcd557b8b0f8c68b5a94ad1c inherit pub_attribs_class_user"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_attribs_class_user"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_class_user')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="class_user.html">User</a></td></tr>
-<tr class="memitem:aebdb6953485740c33307118f91156832 inherit pro_attribs_class_user"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_user.html#aebdb6953485740c33307118f91156832">nickname</a></td></tr>
+<tr class="memitem:aebdb6953485740c33307118f91156832 inherit pro_attribs_class_user"><td class="memItemLeft" align="right" valign="top"><a id="aebdb6953485740c33307118f91156832"></a>
+std::string&#160;</td><td class="memItemRight" valign="bottom"><b>nickname</b></td></tr>
 <tr class="separator:aebdb6953485740c33307118f91156832 inherit pro_attribs_class_user"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Class derived from <a class="el" href="class_user.html">User</a>, to represent a user of type viewer </p>
-</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a1603a2136e972f290688d8da5a839891"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1603a2136e972f290688d8da5a839891">&#9670;&nbsp;</a></span>Viewer()</h2>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="a3b5a332daad160d4d58817b0f0f4f30e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3b5a332daad160d4d58817b0f0f4f30e">&#9670;&nbsp;</a></span>comment()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">Viewer::Viewer </td>
+          <td class="memname">void Viewer::comment </td>
           <td>(</td>
-          <td class="paramtype">std::string&#160;</td>
-          <td class="paramname"><em>nickname</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="struct_date.html">Date</a>&#160;</td>
-          <td class="paramname"><em>birthday</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>comment</em></td><td>)</td>
+          <td> const</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Constructs a viewer object</p>
-<dl class="params"><dt>Parameters</dt><dd>
+<p>Add a comment to the stream. Checks if the viewer is watching a private stream </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">nickname</td><td>the viewer's nickname </td></tr>
-    <tr><td class="paramname">birthday</td><td>the viewer's date of birth </td></tr>
+    <tr><td class="paramname">comment</td><td></td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a id="a324e5a6a1532fe5eac3f3b0e4792b2da"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a324e5a6a1532fe5eac3f3b0e4792b2da">&#9670;&nbsp;</a></span>~Viewer()</h2>
+<a id="a0ba3c53a4516d87b4c87a7bd83f49701"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0ba3c53a4516d87b4c87a7bd83f49701">&#9670;&nbsp;</a></span>dislikeStream()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">Viewer::~Viewer </td>
+          <td class="memname">void Viewer::dislikeStream </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Dislike the stream that the viewer is watching </p>
+
+</div>
+</div>
+<a id="a08bbaef53a53a4eb62f612b125c68b17"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a08bbaef53a53a4eb62f612b125c68b17">&#9670;&nbsp;</a></span>enterStream()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Viewer::enterStream </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_streamer.html">Streamer</a> *&#160;</td>
+          <td class="paramname"><em>streamer</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Enter the viewer into a streamer's stream.</p>
+<p>Checks if the viewer is not already in a stream and if the streamer has an active stream. If so, enters the viewer into the streamer's stream.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">streamer</td><td>the streamer streaming the stream in which the viewer wants to enter </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a6bca97511d39913521c98a080d7700a8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6bca97511d39913521c98a080d7700a8">&#9670;&nbsp;</a></span>exitStream()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Viewer::exitStream </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Remove the viewer from the stream he's watching</p>
+<p>Checks if the viewer is indeed watching a stream. If so, it removes him from the stream. </p>
 
 </div>
 </div>
-<h2 class="groupheader">Member Function Documentation</h2>
 <a id="ad2704ae5ff034ccfe5829cfafefcdcbe"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ad2704ae5ff034ccfe5829cfafefcdcbe">&#9670;&nbsp;</a></span>getInfo()</h2>
 
@@ -219,45 +267,72 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Prints the viewer's information</p>
+<p>Get the viewer's information</p>
 <dl class="section return"><dt>Returns</dt><dd>a string with the viewer's information </dd></dl>
 
 <p>Reimplemented from <a class="el" href="class_user.html#a76fae268e9a1b3c13d85e127d58812fc">User</a>.</p>
 
 </div>
 </div>
-<h2 class="groupheader">Member Data Documentation</h2>
-<a id="afd52d4831cf3c7c1a976a2f339414670"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afd52d4831cf3c7c1a976a2f339414670">&#9670;&nbsp;</a></span>alreadyDisliked</h2>
+<a id="a9364209d2f671e088b0b5ffdedd47ca0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9364209d2f671e088b0b5ffdedd47ca0">&#9670;&nbsp;</a></span>likeStream()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool Viewer::alreadyDisliked = false</td>
+          <td class="memname">void Viewer::likeStream </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Like the stream that the viewer is watching </p>
 
 </div>
 </div>
-<a id="ad43c0ee323b1d1401f15fea48f272ea3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad43c0ee323b1d1401f15fea48f272ea3">&#9670;&nbsp;</a></span>alreadyLiked</h2>
+<a id="a966b8400a1f7db225b85b140319ac3fa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a966b8400a1f7db225b85b140319ac3fa">&#9670;&nbsp;</a></span>remDislikeStream()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool Viewer::alreadyLiked = false</td>
+          <td class="memname">void Viewer::remDislikeStream </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Remove a dislike from the stream that the viewer is watching</p>
+<p>Checks if the viewer already disliked. If so, removes the dislike. </p>
+
+</div>
+</div>
+<a id="a10d93828d32159f8c1fdfbb88eba7858"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a10d93828d32159f8c1fdfbb88eba7858">&#9670;&nbsp;</a></span>remLikeStream()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Viewer::remLikeStream </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Remove a like from the stream that the viewer is watching</p>
+<p>Checks if the viewer already liked. If so, removes the like. </p>
 
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li><a class="el" href="user_8h_source.html">user.h</a></li>
-<li><a class="el" href="user_8cpp.html">user.cpp</a></li>
+<li>C:/Users/Lucas/OneDrive - Universidade do Porto/AEDA/StreamZ_AEDA_2020_21/src/<a class="el" href="user_8h_source.html">user.h</a></li>
+<li>C:/Users/Lucas/OneDrive - Universidade do Porto/AEDA/StreamZ_AEDA_2020_21/src/user.cpp</li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

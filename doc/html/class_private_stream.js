@@ -1,8 +1,10 @@
 var class_private_stream =
 [
-    [ "PrivateStream", "class_private_stream.html#aa0a267a9b7cb89f2088404300fc94099", null ],
-    [ "~PrivateStream", "class_private_stream.html#a241e627af9006a448245add2fa082dd9", null ],
-    [ "authorized_viewers", "class_private_stream.html#a1924357a97ca8bfe2b229946775acfdd", null ],
-    [ "capacity", "class_private_stream.html#a41ba6e0b6cdcf6760bcd91343c53b330", null ],
-    [ "comments", "class_private_stream.html#a824c6984a53b904db76a1b66f1c99a9f", null ]
+    [ "PrivateStream", "class_private_stream.html#a47a5d793d1359c16a77ed420d3b167c7", null ],
+    [ "PrivateStream", "class_private_stream.html#a7e5eb8b024ed6498832296497d85c43c", null ],
+    [ "addComment", "class_private_stream.html#a4ca33e5b5e5eac0e00f42ba90ad183b4", null ],
+    [ "getAuthorizedViewers", "class_private_stream.html#a2ac6fe96c59f95cae3e0193f01ca473e", null ],
+    [ "getComments", "class_private_stream.html#a3351c9a88de9fa0aa62565b4a770b2b6", null ],
+    [ "getInfo", "class_private_stream.html#a04279376120c943fe6ac5b94654cb757", null ],
+    [ "isAuthorized", "class_private_stream.html#ae82b5a55338fcd01b803ac4d420b3244", null ]
 ];

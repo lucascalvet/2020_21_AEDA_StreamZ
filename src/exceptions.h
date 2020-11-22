@@ -3,12 +3,12 @@
 
 #include "utils.h"
 
-class InvalidLanguage : std::exception{
+class InvalidLanguage : std::exception {
 private:
     Language lang;
 public:
-    InvalidLanguage(const Language& lang) {this->lang = lang;}
-    Language getLanguage() const {return lang;}
+    InvalidLanguage(const Language &lang) { this->lang = lang; }
+    Language getLanguage() const { return lang; }
 };
 
 enum DateField {
@@ -20,17 +20,20 @@ private:
     DateField field;
     unsigned value;
 public:
-    InvalidDate(DateField field, unsigned value) {this->field = field; this->value = value;}
-    DateField getField() const {return field;}
-    unsigned getValue() const {return value;}
+    InvalidDate(DateField field, unsigned value) {
+        this->field = field;
+        this->value = value;
+    }
+    DateField getField() const { return field; }
+    unsigned getValue() const { return value; }
 };
 
-class InvalidFile : std::exception{
+class InvalidFile : std::exception {
 private:
     std::string filename;
 public:
-    explicit InvalidFile(const std::string& filename) {this->filename = filename;}
-    std::string getFileName() const {return filename;}
+    explicit InvalidFile(const std::string &filename) { this->filename = filename; }
+    std::string getFileName() const { return filename; }
 };
 
 class AlreadyViewing : std::exception {};

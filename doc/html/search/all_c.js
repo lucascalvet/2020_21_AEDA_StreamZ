@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['remdislike_74',['remDislike',['../class_stream.html#a6951dfcb0b446380666fbbb0632aa263',1,'Stream']]],
-  ['remdislikestream_75',['remdislikeStream',['../class_stream_z.html#ac83084de24db941ee3a91db6c2ab5dc6',1,'StreamZ']]],
-  ['remlike_76',['remLike',['../class_stream.html#afc63888c3832d3c9c794589d29f0401e',1,'Stream']]],
-  ['remlikestream_77',['remlikeStream',['../class_stream_z.html#a2edafca626a003bb13f166818f66371e',1,'StreamZ']]]
+  ['remdislike_74',['remDislike',['../d1/d51/class_stream.html#a4474a16fdfef42c00522a59743cadcd3',1,'Stream']]],
+  ['remdislikestream_75',['remDislikeStream',['../d0/d30/class_viewer.html#a966b8400a1f7db225b85b140319ac3fa',1,'Viewer']]],
+  ['remlike_76',['remLike',['../d1/d51/class_stream.html#a8ee8dddd8357cc90f83975b984b9ec8b',1,'Stream']]],
+  ['remlikestream_77',['remLikeStream',['../d0/d30/class_viewer.html#a10d93828d32159f8c1fdfbb88eba7858',1,'Viewer']]]
 ];

@@ -6,6 +6,10 @@
 
 using namespace std;
 
+/*
+ * Framework for interacting with the StreamZ platform in the console.
+ */
+
 //encapsulated in a function to maintain readability of the code where they are used and avoiding having them global
 //help instructions to main framework menu and to the admin, the other menus are all self explanatory
 //adapted to 120 characters clion console max character size

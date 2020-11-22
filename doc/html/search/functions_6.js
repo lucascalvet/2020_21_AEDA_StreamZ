@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['likestream_187',['likeStream',['../class_stream_z.html#a68d49deb5be996afad27f22b9624a740',1,'StreamZ']]]
+  ['likestream_170',['likeStream',['../d0/d30/class_viewer.html#a9364209d2f671e088b0b5ffdedd47ca0',1,'Viewer']]],
+  ['loginverifier_171',['loginVerifier',['../d5/d41/class_stream_z.html#a33c172faf8074b4331c7eb0d03a9c5e4',1,'StreamZ']]]
 ];

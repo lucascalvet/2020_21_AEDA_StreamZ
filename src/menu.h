@@ -2,7 +2,6 @@
 #define STREAMZ_MENU_H
 
 #include <vector>
-#include <iostream>
 #include <string>
 
 bool cinFail();
@@ -11,7 +10,7 @@ void stopConsole();
 
 void inputChecker(unsigned &selected, unsigned options);
 
-class Menu{
+class Menu {
 private:
     std::string title;
     unsigned options;
@@ -19,7 +18,6 @@ private:
     std::vector<std::string> optionNaming;
 public:
     Menu(const std::string &title, unsigned options);
-    //~Menu();
     unsigned int getSelected() const;
     void changeOption(unsigned index, const std::string &opName);
     void changeTitle(const std::string &newTitle);

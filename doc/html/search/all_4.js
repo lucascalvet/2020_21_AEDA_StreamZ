@@ -1,32 +1,4 @@
 var searchData=
 [
-  ['getactivestreamers_24',['getActiveStreamers',['../class_stream_z.html#a35b7b606ac95473324b75440c9c19038',1,'StreamZ']]],
-  ['getactiveviewers_25',['getActiveViewers',['../class_streamer.html#a3e34491fa9899fcd29ee875125c6f4bf',1,'Streamer']]],
-  ['getbeststreams_26',['getBestStreams',['../class_stream_z.html#a19fc56c88f592cd02f784852e8bf6333',1,'StreamZ']]],
-  ['getbirthday_27',['getBirthday',['../class_user.html#aa45b99c009d3bad915054f9b53e622ac',1,'User']]],
-  ['getcapacity_28',['getCapacity',['../class_stream_z.html#aeffecf26ad66ae78315fc9cbc406b50d',1,'StreamZ']]],
-  ['getcurrentdate_29',['getCurrentDate',['../utils_8cpp.html#a4cda7eef7a8e2d585593cae8b8ff38e3',1,'getCurrentDate():&#160;utils.cpp'],['../utils_8h.html#a4cda7eef7a8e2d585593cae8b8ff38e3',1,'getCurrentDate():&#160;utils.cpp']]],
-  ['getdate_30',['getDate',['../class_stream.html#aad821b8d68c6f836018b5212ac9ba46f',1,'Stream']]],
-  ['getfield_31',['getField',['../class_invalid_date.html#aa3d27a59ba0206654bd05676090536e2',1,'InvalidDate']]],
-  ['getfilename_32',['getFileName',['../class_invalid_file.html#a0b86e313c85edd834ffe2b040f00f39c',1,'InvalidFile']]],
-  ['gethistory_33',['getHistory',['../class_streamer.html#a8d211a97063db6a14045c5e2f7ba554f',1,'Streamer']]],
-  ['getid_34',['getID',['../class_stream_z.html#aa410be3135d72f35e935a5da6b1567f0',1,'StreamZ::getID()'],['../class_user.html#a986c6f30aeac167bb5d311dd412cf604',1,'User::getID()']]],
-  ['getinfo_35',['getInfo',['../class_stream.html#aed2a814a5fc6f589cc884e43dc901d1c',1,'Stream::getInfo()'],['../class_user.html#a76fae268e9a1b3c13d85e127d58812fc',1,'User::getInfo()'],['../class_viewer.html#ad2704ae5ff034ccfe5829cfafefcdcbe',1,'Viewer::getInfo()'],['../class_streamer.html#a27f4689255cb3111a3f0fed6a8eceff2',1,'Streamer::getInfo()']]],
-  ['getlanguage_36',['getLanguage',['../class_invalid_language.html#a5e0cec47d5f8848238935012b4528871',1,'InvalidLanguage::getLanguage()'],['../class_stream.html#ab5f68a240abfbf8aa2a8bc39182e55c5',1,'Stream::getLanguage()']]],
-  ['getminage_37',['getMinAge',['../class_stream.html#afdc1efe395470114244fc29b303e5405',1,'Stream']]],
-  ['getname_38',['getName',['../class_user.html#ab9b2b5feb6bdd1582696eb6d44cee384',1,'User']]],
-  ['getnumactivestreamers_39',['getNumActiveStreamers',['../class_stream_z.html#a6a9c177334baa5219679d74bf7b8b26c',1,'StreamZ']]],
-  ['getnumstreamers_40',['getNumStreamers',['../class_stream_z.html#aae20a31c0a7089cebf85eb89e000198b',1,'StreamZ']]],
-  ['getnumviewers_41',['getNumViewers',['../class_stream.html#a0cdf67015be8020f031e02d3799352be',1,'Stream::getNumViewers()'],['../class_stream_z.html#ad5f3c7602c74c7a70e90f6ffa0feb087',1,'StreamZ::getNumViewers()']]],
-  ['getselected_42',['getSelected',['../class_menu.html#ab0602a8ff9cc8a52056e7c9a111ac832',1,'Menu']]],
-  ['getstreamerbyid_43',['getStreamerByID',['../class_stream_z.html#ace927acfc105ced963b4f275b1fbee84',1,'StreamZ']]],
-  ['getstreamerbyname_44',['getStreamerByName',['../class_stream_z.html#a78ad7c3c7c42835038a0ba1c334c7620',1,'StreamZ']]],
-  ['getstreamers_45',['getStreamers',['../class_stream_z.html#aba6bd912659d996c61a8684b5ff5aaa5',1,'StreamZ']]],
-  ['getstreams_46',['getStreams',['../class_stream_z.html#a9fbd4f4072fa4335f140b5c47a6c8bd7',1,'StreamZ']]],
-  ['gettitle_47',['getTitle',['../class_stream.html#a4c8530018a56e2cd1ac7b10560b6eb8b',1,'Stream']]],
-  ['gettotalviews_48',['getTotalViews',['../class_streamer.html#ab7c192254d18a8ed58c223945d73f781',1,'Streamer']]],
-  ['getvalue_49',['getValue',['../class_invalid_date.html#a41924f45bee59c8191a29b44dad7d7ac',1,'InvalidDate']]],
-  ['getviewerbyid_50',['getViewerByID',['../class_stream_z.html#a71446c47bc7a6653b03c5a27b95b114a',1,'StreamZ']]],
-  ['getviewerbyname_51',['getViewerByName',['../class_stream_z.html#aa6fd1fa4e6074720e798270b7abd784a',1,'StreamZ']]],
-  ['getviewers_52',['getViewers',['../class_stream_z.html#a1a15268023ce4dc95ede798c904b7740',1,'StreamZ']]]
+  ['fullcapacity_20',['FullCapacity',['../d5/d52/class_full_capacity.html',1,'']]]
 ];

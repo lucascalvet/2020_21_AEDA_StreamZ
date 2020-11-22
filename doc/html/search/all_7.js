@@ -1,5 +1,9 @@
 var searchData=
 [
-  ['language_60',['Language',['../utils_8h.html#a31e512c5ab3268e7c24b9ce4a4064808',1,'utils.h']]],
-  ['likestream_61',['likeStream',['../class_stream_z.html#a68d49deb5be996afad27f22b9624a740',1,'StreamZ']]]
+  ['inactiveuser_59',['InactiveUser',['../d8/d05/class_inactive_user.html',1,'']]],
+  ['invaliddate_60',['InvalidDate',['../d8/d64/class_invalid_date.html',1,'']]],
+  ['invalidfile_61',['InvalidFile',['../d2/d8d/class_invalid_file.html',1,'']]],
+  ['invalidlanguage_62',['InvalidLanguage',['../d2/df2/class_invalid_language.html',1,'']]],
+  ['isactive_63',['isActive',['../d7/d23/class_user.html#a9c6060d37c200406c1561fd211181127',1,'User']]],
+  ['isauthorized_64',['isAuthorized',['../df/d6f/class_private_stream.html#ae82b5a55338fcd01b803ac4d420b3244',1,'PrivateStream']]]
 ];

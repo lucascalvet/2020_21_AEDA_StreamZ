@@ -5,10 +5,10 @@
 #include "src/streamz_framework.h"
 
 int main(int argc, char* argv[]){
-    streamzFramework();
-/*
+    //streamzFramework();
+
     testing::InitGoogleTest(&argc, argv);
     std::cout << "----------STREAMZ TESTS----------" << std::endl;
     return RUN_ALL_TESTS();
-    */
+
 }

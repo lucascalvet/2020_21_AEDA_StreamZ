@@ -146,7 +146,7 @@ TEST(test, FileSavingFormat) {
 
 TEST(test, BestStreams) {
     Date bd0(1, 1, 1990);
-    StreamZ sz1(20, "admin", bd0, "admin");
+    StreamZ sz1(20, "admin", bd0, "Administrator<3");
     Date bd1(14, 10, 2000);
     Date bd2(1, 1, 2001);
     Date bd3(28, 11, 2001);
@@ -164,7 +164,7 @@ TEST(test, BestStreams) {
     sz1.addViewer("i", bd1, "aa");
     sz1.addViewer("j", bd1, "aa");
     sz1.addViewer("k", bd1, "aa");
-    Streamer *strmr_lucas = sz1.getStreamerByName("lucascs");
+    Streamer *strmr_lucas = sz1.getStreamerByName("lucas");
     Viewer *viewer_ze = sz1.getViewerByName("ze");
     Viewer *viewer_a = sz1.getViewerByName("a");
     Viewer *viewer_b = sz1.getViewerByName("b");

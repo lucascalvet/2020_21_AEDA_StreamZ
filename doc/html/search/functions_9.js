@@ -1,4 +1,7 @@
 var searchData=
 [
-  ['operator_3c_3c_190',['operator&lt;&lt;',['../utils_8cpp.html#a979c6b0ce07a9560a2129b81363b84f9',1,'operator&lt;&lt;(std::ostream &amp;out, const Date &amp;date):&#160;utils.cpp'],['../utils_8h.html#a979c6b0ce07a9560a2129b81363b84f9',1,'operator&lt;&lt;(std::ostream &amp;out, const Date &amp;date):&#160;utils.cpp']]]
+  ['remdislike_174',['remDislike',['../d1/d51/class_stream.html#a4474a16fdfef42c00522a59743cadcd3',1,'Stream']]],
+  ['remdislikestream_175',['remDislikeStream',['../d0/d30/class_viewer.html#a966b8400a1f7db225b85b140319ac3fa',1,'Viewer']]],
+  ['remlike_176',['remLike',['../d1/d51/class_stream.html#a8ee8dddd8357cc90f83975b984b9ec8b',1,'Stream']]],
+  ['remlikestream_177',['remLikeStream',['../d0/d30/class_viewer.html#a10d93828d32159f8c1fdfbb88eba7858',1,'Viewer']]]
 ];

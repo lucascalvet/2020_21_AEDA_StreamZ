@@ -1,0 +1,197 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.20"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>StreamZ: Código-Fonte de C:/Users/Lucas/OneDrive - Universidade do Porto/AEDA/StreamZ_AEDA_2020_21/src/streamz.h</title>
+<link href="../../tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../jquery.js"></script>
+<script type="text/javascript" src="../../dynsections.js"></script>
+<link href="../../navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../resize.js"></script>
+<script type="text/javascript" src="../../navtreedata.js"></script>
+<script type="text/javascript" src="../../navtree.js"></script>
+<link href="../../search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../search/searchdata.js"></script>
+<script type="text/javascript" src="../../search/search.js"></script>
+<link href="../../doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="../../streamz_logo75.png"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">StreamZ
+   </div>
+   <div id="projectbrief">The Best Way To Stream</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Gerado por Doxygen 1.8.20 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+var searchBox = new SearchBox("searchBox", "../../search",false,'Localizar');
+/* @license-end */
+</script>
+<script type="text/javascript" src="../../menudata.js"></script>
+<script type="text/javascript" src="../../menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(function() {
+  initMenu('../../',true,false,'search.php','Localizar');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(document).ready(function(){initNavTree('d5/d04/streamz_8h_source.html','../../'); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="headertitle">
+<div class="title">streamz.h</div>  </div>
+</div><!--header-->
+<div class="contents">
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#ifndef STREAMZ_H</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#define STREAMZ_H</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160; </div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &lt;vector&gt;</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &lt;string&gt;</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;map&gt;</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &quot;utils.h&quot;</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &quot;user.h&quot;</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &quot;stream.h&quot;</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160; </div>
+<div class="line"><a name="l00014"></a><span class="lineno"><a class="line" href="../../d5/d41/class_stream_z.html">   14</a></span>&#160;<span class="keyword">class </span><a class="code" href="../../d5/d41/class_stream_z.html">StreamZ</a> {</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;    <a class="code" href="../../da/ddc/class_admin.html">Admin</a> *admin;</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">int</span> counter;</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    <span class="keywordtype">unsigned</span> id;</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    <span class="keywordtype">unsigned</span> capacity;   <span class="comment">//how many streamers can be active at same time</span></div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    std::vector&lt;Streamer *&gt; streamers;</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    std::vector&lt;Viewer *&gt; viewers;</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    std::vector&lt;Stream *&gt; best_streams = std::vector&lt;Stream *&gt;(20, <span class="keyword">nullptr</span>);</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    <a class="code" href="../../d5/d41/class_stream_z.html#a9077f8c91618517333e09b25c1ab1c8b">StreamZ</a>(<span class="keywordtype">unsigned</span> capacity, <span class="keyword">const</span> std::string &amp;nickname, <span class="keyword">const</span> <a class="code" href="../../d4/d53/struct_date.html">Date</a> &amp;birthday, <span class="keyword">const</span> std::string &amp;password);</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    <span class="keyword">explicit</span> <a class="code" href="../../d5/d41/class_stream_z.html#a9077f8c91618517333e09b25c1ab1c8b">StreamZ</a>(<span class="keyword">const</span> std::string &amp;filename);</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    <a class="code" href="../../d5/d41/class_stream_z.html#a89e6505efcc9e4bb40b9123f4bed2091">~StreamZ</a>();</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    <span class="keywordtype">unsigned</span> <a class="code" href="../../d5/d41/class_stream_z.html#aeffecf26ad66ae78315fc9cbc406b50d">getCapacity</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    <span class="keywordtype">unsigned</span> <a class="code" href="../../d5/d41/class_stream_z.html#aa410be3135d72f35e935a5da6b1567f0">getID</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    std::vector&lt;Streamer *&gt; <a class="code" href="../../d5/d41/class_stream_z.html#aba6bd912659d996c61a8684b5ff5aaa5">getStreamers</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    <span class="keywordtype">unsigned</span> <a class="code" href="../../d5/d41/class_stream_z.html#aae20a31c0a7089cebf85eb89e000198b">getNumStreamers</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    std::vector&lt;Streamer *&gt; <a class="code" href="../../d5/d41/class_stream_z.html#a35b7b606ac95473324b75440c9c19038">getActiveStreamers</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    <span class="keywordtype">unsigned</span> <a class="code" href="../../d5/d41/class_stream_z.html#a6a9c177334baa5219679d74bf7b8b26c">getNumActiveStreamers</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    std::vector&lt;Viewer *&gt; <a class="code" href="../../d5/d41/class_stream_z.html#a1a15268023ce4dc95ede798c904b7740">getViewers</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    <span class="keywordtype">unsigned</span> <a class="code" href="../../d5/d41/class_stream_z.html#ad5f3c7602c74c7a70e90f6ffa0feb087">getNumViewers</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <span class="keywordtype">unsigned</span> <a class="code" href="../../d5/d41/class_stream_z.html#a3983ca734d07518e87fc510c5f180982">getNumStreamViewers</a>(<a class="code" href="../../d1/d51/class_stream.html">Stream</a> *stream) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <a class="code" href="../../d7/d23/class_user.html">User</a> *<a class="code" href="../../d5/d41/class_stream_z.html#ae9b486a894004a57435f5928876d2bf8">getUserByName</a>(<span class="keyword">const</span> std::string &amp;nickname);</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    <a class="code" href="../../d7/dca/class_streamer.html">Streamer</a> *<a class="code" href="../../d5/d41/class_stream_z.html#ace927acfc105ced963b4f275b1fbee84">getStreamerByID</a>(<span class="keywordtype">unsigned</span> user_id) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <a class="code" href="../../d7/dca/class_streamer.html">Streamer</a> *<a class="code" href="../../d5/d41/class_stream_z.html#a78ad7c3c7c42835038a0ba1c334c7620">getStreamerByName</a>(<span class="keyword">const</span> std::string &amp;nickname) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <a class="code" href="../../d0/d30/class_viewer.html">Viewer</a> *<a class="code" href="../../d5/d41/class_stream_z.html#a71446c47bc7a6653b03c5a27b95b114a">getViewerByID</a>(<span class="keywordtype">unsigned</span> user_id) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <a class="code" href="../../d0/d30/class_viewer.html">Viewer</a> *<a class="code" href="../../d5/d41/class_stream_z.html#aa6fd1fa4e6074720e798270b7abd784a">getViewerByName</a>(<span class="keyword">const</span> std::string &amp;nickname) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <span class="keywordtype">unsigned</span> <a class="code" href="../../d5/d41/class_stream_z.html#a35dff0452ece144786386f32f4361a57">getNumCreatedStreams</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    <span class="keywordtype">unsigned</span> <a class="code" href="../../d5/d41/class_stream_z.html#a35dff0452ece144786386f32f4361a57">getNumCreatedStreams</a>(<span class="keyword">const</span> Language &amp;lang) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    <span class="keywordtype">unsigned</span> <a class="code" href="../../d5/d41/class_stream_z.html#a35dff0452ece144786386f32f4361a57">getNumCreatedStreams</a>(<span class="keywordtype">bool</span> public_streams, <span class="keyword">const</span> <a class="code" href="../../d4/d53/struct_date.html">Date</a> &amp;dt1 = <a class="code" href="../../d4/d53/struct_date.html">Date</a>(0, 0, 0),</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;                                  <span class="keyword">const</span> <a class="code" href="../../d4/d53/struct_date.html">Date</a> &amp;dt2 = <a class="code" href="../../d4/d53/struct_date.html">Date</a>(31, 12, UINT_MAX)) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    std::vector&lt;Streamer *&gt; <a class="code" href="../../d5/d41/class_stream_z.html#a978c8cd9abaa34b1ad6609d9d6e60ef7">getStreams</a>(Language lang = <span class="stringliteral">&quot;&quot;</span>, Age min_age = UINT_MAX) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    std::vector&lt;Stream *&gt; <a class="code" href="../../d5/d41/class_stream_z.html#a19fc56c88f592cd02f784852e8bf6333">getBestStreams</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <a class="code" href="../../d7/dca/class_streamer.html">Streamer</a> *<a class="code" href="../../d5/d41/class_stream_z.html#a47ea75fd3af2d5259b673b4129def1aa">getMostViewedStreamer</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <span class="keywordtype">double</span> <a class="code" href="../../d5/d41/class_stream_z.html#a8b4716ce28ea88d3ead7a2f7a4ecccad">getAverageViews</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    std::string <a class="code" href="../../d5/d41/class_stream_z.html#a0be88a33ccec23f4232731ccc499b206">getMostUsedLanguage</a>();</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="../../d5/d41/class_stream_z.html#a15a0f9358e924559de8f6c52fc4752fe">printStreams</a>(<span class="keyword">const</span> std::vector&lt;Streamer *&gt; &amp;streams) ;</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="../../d5/d41/class_stream_z.html#a1fad056fb8d49b42368f228f5faf7d8b">addStreamer</a>(<span class="keyword">const</span> std::string &amp;nickname, <span class="keyword">const</span> <a class="code" href="../../d4/d53/struct_date.html">Date</a> &amp;birthday, <span class="keyword">const</span> std::string &amp;password);</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="../../d5/d41/class_stream_z.html#a2e8d462429dd75691aabbc13e38c3c54">addViewer</a>(<span class="keyword">const</span> std::string &amp;nickname, <span class="keyword">const</span> <a class="code" href="../../d4/d53/struct_date.html">Date</a> &amp;birthday, <span class="keyword">const</span> std::string &amp;password);</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="../../d5/d41/class_stream_z.html#ad965e4b4f6cb5dfe69391b115aa38b9c">startPublicStream</a>(<a class="code" href="../../d7/dca/class_streamer.html">Streamer</a> *streamer, <span class="keyword">const</span> std::string &amp;title, <span class="keyword">const</span> Language &amp;lang, <span class="keywordtype">unsigned</span> min_age) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="../../d5/d41/class_stream_z.html#a11a9b6a8107392f8220c89e65f4fa6a4">startPrivateStream</a>(<a class="code" href="../../d7/dca/class_streamer.html">Streamer</a> *streamer, <span class="keyword">const</span> std::string &amp;title, <span class="keyword">const</span> Language &amp;lang, <span class="keywordtype">unsigned</span> min_age,</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;                            <span class="keyword">const</span> std::vector&lt;unsigned&gt; &amp;authorized_viewers) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="../../d5/d41/class_stream_z.html#ad66af5ef4912f88d1626c88109e23948">stopStream</a>(<a class="code" href="../../d7/dca/class_streamer.html">Streamer</a> *streamer);</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="../../d5/d41/class_stream_z.html#aeb7fceba1f0b1a1cb5a8ecf2ebb2c117">stopAllStreams</a>();</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="../../d5/d41/class_stream_z.html#a33c172faf8074b4331c7eb0d03a9c5e4">loginVerifier</a>(<span class="keyword">const</span> std::string &amp;nickname,<span class="keyword">const</span> std::string &amp;password) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="../../d5/d41/class_stream_z.html#ad057b29a0f481203af6aa78358f54534">save</a>(<span class="keyword">const</span> std::string &amp;filename) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;};</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160; </div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="preprocessor">#endif // STREAMZ_H</span></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<div class="ttc" id="aclass_stream_z_html_a6a9c177334baa5219679d74bf7b8b26c"><div class="ttname"><a href="../../d5/d41/class_stream_z.html#a6a9c177334baa5219679d74bf7b8b26c">StreamZ::getNumActiveStreamers</a></div><div class="ttdeci">unsigned getNumActiveStreamers() const</div><div class="ttdef"><b>Definition:</b> streamz.cpp:221</div></div>
+<div class="ttc" id="aclass_stream_z_html_a1a15268023ce4dc95ede798c904b7740"><div class="ttname"><a href="../../d5/d41/class_stream_z.html#a1a15268023ce4dc95ede798c904b7740">StreamZ::getViewers</a></div><div class="ttdeci">std::vector&lt; Viewer * &gt; getViewers() const</div><div class="ttdef"><b>Definition:</b> streamz.cpp:236</div></div>
+<div class="ttc" id="aclass_stream_z_html_a19fc56c88f592cd02f784852e8bf6333"><div class="ttname"><a href="../../d5/d41/class_stream_z.html#a19fc56c88f592cd02f784852e8bf6333">StreamZ::getBestStreams</a></div><div class="ttdeci">std::vector&lt; Stream * &gt; getBestStreams() const</div><div class="ttdef"><b>Definition:</b> streamz.cpp:431</div></div>
+<div class="ttc" id="aclass_stream_z_html_a71446c47bc7a6653b03c5a27b95b114a"><div class="ttname"><a href="../../d5/d41/class_stream_z.html#a71446c47bc7a6653b03c5a27b95b114a">StreamZ::getViewerByID</a></div><div class="ttdeci">Viewer * getViewerByID(unsigned user_id) const</div><div class="ttdef"><b>Definition:</b> streamz.cpp:317</div></div>
+<div class="ttc" id="aclass_stream_z_html_a0be88a33ccec23f4232731ccc499b206"><div class="ttname"><a href="../../d5/d41/class_stream_z.html#a0be88a33ccec23f4232731ccc499b206">StreamZ::getMostUsedLanguage</a></div><div class="ttdeci">std::string getMostUsedLanguage()</div><div class="ttdef"><b>Definition:</b> streamz.cpp:493</div></div>
+<div class="ttc" id="aclass_stream_z_html_ad057b29a0f481203af6aa78358f54534"><div class="ttname"><a href="../../d5/d41/class_stream_z.html#ad057b29a0f481203af6aa78358f54534">StreamZ::save</a></div><div class="ttdeci">void save(const std::string &amp;filename) const</div><div class="ttdef"><b>Definition:</b> streamz.cpp:710</div></div>
+<div class="ttc" id="aclass_stream_z_html_aa410be3135d72f35e935a5da6b1567f0"><div class="ttname"><a href="../../d5/d41/class_stream_z.html#aa410be3135d72f35e935a5da6b1567f0">StreamZ::getID</a></div><div class="ttdeci">unsigned getID() const</div><div class="ttdef"><b>Definition:</b> streamz.cpp:180</div></div>
+<div class="ttc" id="aclass_stream_z_html_a9077f8c91618517333e09b25c1ab1c8b"><div class="ttname"><a href="../../d5/d41/class_stream_z.html#a9077f8c91618517333e09b25c1ab1c8b">StreamZ::StreamZ</a></div><div class="ttdeci">StreamZ(unsigned capacity, const std::string &amp;nickname, const Date &amp;birthday, const std::string &amp;password)</div><div class="ttdef"><b>Definition:</b> streamz.cpp:19</div></div>
+<div class="ttc" id="aclass_stream_z_html_ae9b486a894004a57435f5928876d2bf8"><div class="ttname"><a href="../../d5/d41/class_stream_z.html#ae9b486a894004a57435f5928876d2bf8">StreamZ::getUserByName</a></div><div class="ttdeci">User * getUserByName(const std::string &amp;nickname)</div><div class="ttdef"><b>Definition:</b> streamz.cpp:270</div></div>
+<div class="ttc" id="aclass_stream_z_html_aba6bd912659d996c61a8684b5ff5aaa5"><div class="ttname"><a href="../../d5/d41/class_stream_z.html#aba6bd912659d996c61a8684b5ff5aaa5">StreamZ::getStreamers</a></div><div class="ttdeci">std::vector&lt; Streamer * &gt; getStreamers() const</div><div class="ttdef"><b>Definition:</b> streamz.cpp:189</div></div>
+<div class="ttc" id="astruct_date_html"><div class="ttname"><a href="../../d4/d53/struct_date.html">Date</a></div><div class="ttdef"><b>Definition:</b> utils.h:19</div></div>
+<div class="ttc" id="aclass_stream_z_html_aeffecf26ad66ae78315fc9cbc406b50d"><div class="ttname"><a href="../../d5/d41/class_stream_z.html#aeffecf26ad66ae78315fc9cbc406b50d">StreamZ::getCapacity</a></div><div class="ttdeci">unsigned getCapacity() const</div><div class="ttdef"><b>Definition:</b> streamz.cpp:171</div></div>
+<div class="ttc" id="aclass_admin_html"><div class="ttname"><a href="../../da/ddc/class_admin.html">Admin</a></div><div class="ttdef"><b>Definition:</b> user.h:67</div></div>
+<div class="ttc" id="aclass_stream_z_html_aa6fd1fa4e6074720e798270b7abd784a"><div class="ttname"><a href="../../d5/d41/class_stream_z.html#aa6fd1fa4e6074720e798270b7abd784a">StreamZ::getViewerByName</a></div><div class="ttdeci">Viewer * getViewerByName(const std::string &amp;nickname) const</div><div class="ttdef"><b>Definition:</b> streamz.cpp:332</div></div>
+<div class="ttc" id="aclass_stream_z_html_a47ea75fd3af2d5259b673b4129def1aa"><div class="ttname"><a href="../../d5/d41/class_stream_z.html#a47ea75fd3af2d5259b673b4129def1aa">StreamZ::getMostViewedStreamer</a></div><div class="ttdeci">Streamer * getMostViewedStreamer() const</div><div class="ttdef"><b>Definition:</b> streamz.cpp:440</div></div>
+<div class="ttc" id="aclass_stream_z_html_ad965e4b4f6cb5dfe69391b115aa38b9c"><div class="ttname"><a href="../../d5/d41/class_stream_z.html#ad965e4b4f6cb5dfe69391b115aa38b9c">StreamZ::startPublicStream</a></div><div class="ttdeci">void startPublicStream(Streamer *streamer, const std::string &amp;title, const Language &amp;lang, unsigned min_age) const</div><div class="ttdef"><b>Definition:</b> streamz.cpp:591</div></div>
+<div class="ttc" id="aclass_stream_z_html_aeb7fceba1f0b1a1cb5a8ecf2ebb2c117"><div class="ttname"><a href="../../d5/d41/class_stream_z.html#aeb7fceba1f0b1a1cb5a8ecf2ebb2c117">StreamZ::stopAllStreams</a></div><div class="ttdeci">void stopAllStreams()</div><div class="ttdef"><b>Definition:</b> streamz.cpp:677</div></div>
+<div class="ttc" id="aclass_stream_z_html_a33c172faf8074b4331c7eb0d03a9c5e4"><div class="ttname"><a href="../../d5/d41/class_stream_z.html#a33c172faf8074b4331c7eb0d03a9c5e4">StreamZ::loginVerifier</a></div><div class="ttdeci">bool loginVerifier(const std::string &amp;nickname, const std::string &amp;password) const</div><div class="ttdef"><b>Definition:</b> streamz.cpp:692</div></div>
+<div class="ttc" id="aclass_stream_z_html"><div class="ttname"><a href="../../d5/d41/class_stream_z.html">StreamZ</a></div><div class="ttdef"><b>Definition:</b> streamz.h:14</div></div>
+<div class="ttc" id="aclass_stream_z_html_a2e8d462429dd75691aabbc13e38c3c54"><div class="ttname"><a href="../../d5/d41/class_stream_z.html#a2e8d462429dd75691aabbc13e38c3c54">StreamZ::addViewer</a></div><div class="ttdeci">void addViewer(const std::string &amp;nickname, const Date &amp;birthday, const std::string &amp;password)</div><div class="ttdef"><b>Definition:</b> streamz.cpp:564</div></div>
+<div class="ttc" id="aclass_stream_z_html_a89e6505efcc9e4bb40b9123f4bed2091"><div class="ttname"><a href="../../d5/d41/class_stream_z.html#a89e6505efcc9e4bb40b9123f4bed2091">StreamZ::~StreamZ</a></div><div class="ttdeci">~StreamZ()</div><div class="ttdef"><b>Definition:</b> streamz.cpp:153</div></div>
+<div class="ttc" id="aclass_stream_z_html_ace927acfc105ced963b4f275b1fbee84"><div class="ttname"><a href="../../d5/d41/class_stream_z.html#ace927acfc105ced963b4f275b1fbee84">StreamZ::getStreamerByID</a></div><div class="ttdeci">Streamer * getStreamerByID(unsigned user_id) const</div><div class="ttdef"><b>Definition:</b> streamz.cpp:287</div></div>
+<div class="ttc" id="aclass_stream_z_html_a78ad7c3c7c42835038a0ba1c334c7620"><div class="ttname"><a href="../../d5/d41/class_stream_z.html#a78ad7c3c7c42835038a0ba1c334c7620">StreamZ::getStreamerByName</a></div><div class="ttdeci">Streamer * getStreamerByName(const std::string &amp;nickname) const</div><div class="ttdef"><b>Definition:</b> streamz.cpp:302</div></div>
+<div class="ttc" id="aclass_stream_z_html_a8b4716ce28ea88d3ead7a2f7a4ecccad"><div class="ttname"><a href="../../d5/d41/class_stream_z.html#a8b4716ce28ea88d3ead7a2f7a4ecccad">StreamZ::getAverageViews</a></div><div class="ttdeci">double getAverageViews() const</div><div class="ttdef"><b>Definition:</b> streamz.cpp:472</div></div>
+<div class="ttc" id="aclass_stream_z_html_a35dff0452ece144786386f32f4361a57"><div class="ttname"><a href="../../d5/d41/class_stream_z.html#a35dff0452ece144786386f32f4361a57">StreamZ::getNumCreatedStreams</a></div><div class="ttdeci">unsigned getNumCreatedStreams() const</div><div class="ttdef"><b>Definition:</b> streamz.cpp:346</div></div>
+<div class="ttc" id="aclass_stream_html"><div class="ttname"><a href="../../d1/d51/class_stream.html">Stream</a></div><div class="ttdef"><b>Definition:</b> stream.h:11</div></div>
+<div class="ttc" id="aclass_stream_z_html_a3983ca734d07518e87fc510c5f180982"><div class="ttname"><a href="../../d5/d41/class_stream_z.html#a3983ca734d07518e87fc510c5f180982">StreamZ::getNumStreamViewers</a></div><div class="ttdeci">unsigned getNumStreamViewers(Stream *stream) const</div><div class="ttdef"><b>Definition:</b> streamz.cpp:255</div></div>
+<div class="ttc" id="aclass_stream_z_html_aae20a31c0a7089cebf85eb89e000198b"><div class="ttname"><a href="../../d5/d41/class_stream_z.html#aae20a31c0a7089cebf85eb89e000198b">StreamZ::getNumStreamers</a></div><div class="ttdeci">unsigned getNumStreamers() const</div><div class="ttdef"><b>Definition:</b> streamz.cpp:198</div></div>
+<div class="ttc" id="aclass_user_html"><div class="ttname"><a href="../../d7/d23/class_user.html">User</a></div><div class="ttdef"><b>Definition:</b> user.h:10</div></div>
+<div class="ttc" id="aclass_stream_z_html_a11a9b6a8107392f8220c89e65f4fa6a4"><div class="ttname"><a href="../../d5/d41/class_stream_z.html#a11a9b6a8107392f8220c89e65f4fa6a4">StreamZ::startPrivateStream</a></div><div class="ttdeci">void startPrivateStream(Streamer *streamer, const std::string &amp;title, const Language &amp;lang, unsigned min_age, const std::vector&lt; unsigned &gt; &amp;authorized_viewers) const</div><div class="ttdef"><b>Definition:</b> streamz.cpp:615</div></div>
+<div class="ttc" id="aclass_stream_z_html_a1fad056fb8d49b42368f228f5faf7d8b"><div class="ttname"><a href="../../d5/d41/class_stream_z.html#a1fad056fb8d49b42368f228f5faf7d8b">StreamZ::addStreamer</a></div><div class="ttdeci">void addStreamer(const std::string &amp;nickname, const Date &amp;birthday, const std::string &amp;password)</div><div class="ttdef"><b>Definition:</b> streamz.cpp:541</div></div>
+<div class="ttc" id="aclass_stream_z_html_ad5f3c7602c74c7a70e90f6ffa0feb087"><div class="ttname"><a href="../../d5/d41/class_stream_z.html#ad5f3c7602c74c7a70e90f6ffa0feb087">StreamZ::getNumViewers</a></div><div class="ttdeci">unsigned getNumViewers() const</div><div class="ttdef"><b>Definition:</b> streamz.cpp:245</div></div>
+<div class="ttc" id="aclass_stream_z_html_a15a0f9358e924559de8f6c52fc4752fe"><div class="ttname"><a href="../../d5/d41/class_stream_z.html#a15a0f9358e924559de8f6c52fc4752fe">StreamZ::printStreams</a></div><div class="ttdeci">static void printStreams(const std::vector&lt; Streamer * &gt; &amp;streams)</div><div class="ttdef"><b>Definition:</b> streamz.cpp:526</div></div>
+<div class="ttc" id="aclass_stream_z_html_a35b7b606ac95473324b75440c9c19038"><div class="ttname"><a href="../../d5/d41/class_stream_z.html#a35b7b606ac95473324b75440c9c19038">StreamZ::getActiveStreamers</a></div><div class="ttdeci">std::vector&lt; Streamer * &gt; getActiveStreamers() const</div><div class="ttdef"><b>Definition:</b> streamz.cpp:207</div></div>
+<div class="ttc" id="aclass_stream_z_html_ad66af5ef4912f88d1626c88109e23948"><div class="ttname"><a href="../../d5/d41/class_stream_z.html#ad66af5ef4912f88d1626c88109e23948">StreamZ::stopStream</a></div><div class="ttdeci">void stopStream(Streamer *streamer)</div><div class="ttdef"><b>Definition:</b> streamz.cpp:632</div></div>
+<div class="ttc" id="aclass_streamer_html"><div class="ttname"><a href="../../d7/dca/class_streamer.html">Streamer</a></div><div class="ttdef"><b>Definition:</b> user.h:34</div></div>
+<div class="ttc" id="aclass_viewer_html"><div class="ttname"><a href="../../d0/d30/class_viewer.html">Viewer</a></div><div class="ttdef"><b>Definition:</b> user.h:50</div></div>
+<div class="ttc" id="aclass_stream_z_html_a978c8cd9abaa34b1ad6609d9d6e60ef7"><div class="ttname"><a href="../../d5/d41/class_stream_z.html#a978c8cd9abaa34b1ad6609d9d6e60ef7">StreamZ::getStreams</a></div><div class="ttdeci">std::vector&lt; Streamer * &gt; getStreams(Language lang=&quot;&quot;, Age min_age=UINT_MAX) const</div><div class="ttdef"><b>Definition:</b> streamz.cpp:414</div></div>
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="../../dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><b>streamz.h</b></li>
+    <li class="footer">Gerado por <a href="http://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20 </li>
+  </ul>
+</div>
+</body>
+</html>

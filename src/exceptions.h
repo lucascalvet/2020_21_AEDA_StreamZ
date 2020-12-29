@@ -56,4 +56,12 @@ class NoMinimumAge : std::exception{};
 
 class NameAlreadyInUse : std::exception{};
 
+class OrderAlreadyExists : std::exception{};
+
+class OrderDoesNotExist : std::exception{};
+
+class ExceededMaxQuantityPerPurchase : std::exception{};
+
+class InvalidPriority: std::exception{};
+
 #endif //STREAMZ_EXCEPTIONS_H

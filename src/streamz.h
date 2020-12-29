@@ -7,6 +7,8 @@
 #include "utils.h"
 #include "user.h"
 #include "stream.h"
+#include "order.h"
+#include <queue>
 
 /**
  * Main class for handling a StreamZ platform
@@ -21,6 +23,9 @@ private:
     std::vector<Viewer *> viewers;
     ///A container with the 10 most viewed streams, followed by the 10 most liked streams, sorted in descending order
     std::vector<Stream *> best_streams = std::vector<Stream *>(20, nullptr);
+
+    unsigned max_orders_per_viewer = 5;  //arbitrated the initial value that can be change in the streamz
+    std::priority_queue<Order> orders;
 public:
     StreamZ(unsigned capacity, const std::string &nickname, const Date &birthday, const std::string &password);
     explicit StreamZ(const std::string &filename);
@@ -58,6 +63,12 @@ public:
     void stopAllStreams();
     bool loginVerifier(const std::string &nickname,const std::string &password) const;
     void save(const std::string &filename) const;
+
+    Order searchOrder(std::string viewer_nickname, unsigned quantity, unsigned priority);
+    void makeOrder(Viewer *viewer, unsigned quantity, unsigned priority);
+    void deleteOrder(Viewer *viewer, unsigned quantity, unsigned priority); //can only make one order with same parameters to know which one to be deleted if wanted
+    void changeMaxOrdersPerViewer(unsigned new_limit);
+    std::priority_queue<Order> getOrders() const;
 };
 
 #endif // STREAMZ_H

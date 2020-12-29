@@ -688,40 +688,6 @@ void StreamZ::stopAllStreams() {
 }
 
 /**
- * Make a donation to a certain streamer with nickname nick
- *
- * @param nick the streamer's nickname
- * @param amnt the donation's amount
- * @param eval the evaluation given to the streamer
- */
-void StreamZ::makeDonation(const Streamer* strmr, unsigned amnt, unsigned eval) {
-    Donation donation(strmr->getName(), amnt, eval);
-    donations.insert(donation);
-}
-
-BST<Donation> StreamZ::getDonations() const {
-    return donations;
-}
-
-/**
- * Get a list with the n biggest donations (if n is specified, otherwise get all donations) with an evaluation between lower and upper
- * @param lower the lower bound of the evaluation
- * @param upper the upper bound of the evaluation
- * @param n the number of donations to list
- * @return a vector with the desired donations
- */
-vector<Donation> StreamZ::getDonations(unsigned int lower, unsigned int upper, unsigned int n) {
-    iteratorBST<Donation> it;
-    vector<Donation> res;
-    for (it = donations.begin(); it != donations.end(); it++) {
-        if (res.size() == n) break;
-        if ((*it).getEvaluation() >= lower && (*it).getEvaluation() <= upper)
-            res.push_back(*it);
-    }
-    return res;
-}
-
-/**
  * Verify if a user is already registered using sha256Verifier()
  *
  * @param nickname the user's nickname
@@ -798,6 +764,40 @@ void StreamZ::save(const string &filename) const {
         }
         file << '\n';
     }
+}
+
+/**
+ * Make a donation to a certain streamer with nickname nick
+ *
+ * @param nick the streamer's nickname
+ * @param amnt the donation's amount
+ * @param eval the evaluation given to the streamer
+ */
+void StreamZ::makeDonation(const Streamer* strmr, unsigned amnt, unsigned eval) {
+    Donation donation(strmr->getName(), amnt, eval);
+    donations.insert(donation);
+}
+
+BST<Donation> StreamZ::getDonations() const {
+    return donations;
+}
+
+/**
+ * Get a list with the n biggest donations (if n is specified, otherwise get all donations) with an evaluation between lower and upper
+ * @param lower the lower bound of the evaluation
+ * @param upper the upper bound of the evaluation
+ * @param n the number of donations to list
+ * @return a vector with the desired donations
+ */
+vector<Donation> StreamZ::getDonations(unsigned int lower, unsigned int upper, unsigned int n) {
+    iteratorBST<Donation> it;
+    vector<Donation> res;
+    for (it = donations.begin(); it != donations.end(); it++) {
+        if (res.size() == n) break;
+        if ((*it).getEvaluation() >= lower && (*it).getEvaluation() <= upper)
+            res.push_back(*it);
+    }
+    return res;
 }
 
 /**

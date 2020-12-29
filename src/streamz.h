@@ -40,6 +40,7 @@ private:
     std::vector<Viewer *> viewers;
     ///A container with the 10 most viewed streams, followed by the 10 most liked streams, sorted in descending order
     std::vector<Stream *> best_streams = std::vector<Stream *>(20, nullptr);
+
     BST<Donation> donations = BST<Donation>(Donation("", 0, 1));
     unsigned max_orders_per_viewer = 5;  //arbitrated the initial value that can be change in the streamz
     std::priority_queue<Order> orders;
@@ -78,12 +79,12 @@ public:
                             const std::vector<unsigned> &authorized_viewers) const;
     void stopStream(Streamer *streamer);
     void stopAllStreams();
-    void makeDonation(const Streamer* strmr, unsigned amnt, unsigned eval);
-    BST<Donation> getDonations() const;
-    vector<Donation> getDonations(unsigned int lower, unsigned int upper, unsigned int n = UINT_MAX);
     bool loginVerifier(const std::string &nickname,const std::string &password) const;
     void save(const std::string &filename) const;
 
+    void makeDonation(const Streamer* strmr, unsigned amnt, unsigned eval);
+    BST<Donation> getDonations() const;
+    vector<Donation> getDonations(unsigned int lower, unsigned int upper, unsigned int n = UINT_MAX);
     Order searchOrder(std::string viewer_nickname, unsigned quantity, unsigned priority);
     void makeOrder(Viewer *viewer, unsigned quantity, unsigned priority);
     void deleteOrder(Viewer *viewer, unsigned quantity, unsigned priority); //can only make one order with same parameters to know which one to be deleted if wanted

@@ -218,6 +218,14 @@ bool Stream::alreadyLikedOrDisliked(unsigned id) {
 }
 
 /**
+ * [Part 2] Adds LIKES_BONUS likes, as a bonus
+ */
+void Stream::addBonus() {
+    vector<unsigned> bonus(50, 0);
+    viewers_liked.insert(viewers_liked.end(), bonus.begin(), bonus.end());
+}
+
+/**
  * Construct a public stream
  *
  * Just initializes a Stream, since it doesn't have unique methods or attributes

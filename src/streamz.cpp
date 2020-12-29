@@ -72,6 +72,7 @@ StreamZ::StreamZ(const string &filename) {
         birthday = Date(day, month, year);
         Streamer *streamer = new Streamer(nickname, birthday, password, user_id);
         streamers.push_back(streamer);
+        streamers_hash_table.insert(streamer); //Part 2
         file.ignore(numeric_limits<streamsize>::max(), '\n');
         while (file.peek() != '\n') {
             string title, lang;
@@ -552,6 +553,7 @@ void StreamZ::addStreamer(const string &nickname, const Date &birthday, const st
 
     Streamer *s1 = new Streamer(nickname, birthday, hashed_password);
     streamers.push_back(s1);
+    streamers_hash_table.insert(s1); //Part 2
 }
 
 /**
@@ -589,6 +591,7 @@ void StreamZ::addViewer(const string &nickname, const Date &birthday, const std:
  * @param min_age the stream's minimum age
  */
 void StreamZ::startPublicStream(Streamer *streamer, const string &title, const Language &lang, unsigned min_age) const {
+    if (!streamer->getAccountStatus()) throw InactiveAccount(); //Part 2
     if (streamer->isActive()) throw AlreadyStreaming();
     if (getNumActiveStreamers() == this->capacity) throw FullCapacity();
     try {
@@ -597,7 +600,7 @@ void StreamZ::startPublicStream(Streamer *streamer, const string &title, const L
     catch (InvalidLanguage &) {
         throw;
     }
-
+    streamer->giveBonus(); //Part 2
 }
 
 /**
@@ -614,6 +617,7 @@ void StreamZ::startPublicStream(Streamer *streamer, const string &title, const L
  */
 void StreamZ::startPrivateStream(Streamer *streamer, const string &title, const Language &lang, unsigned min_age,
                                  const vector<unsigned int> &authorized_viewers) const {
+    if (!streamer->getAccountStatus()) throw InactiveAccount(); //Part 2
     if (streamer->isActive()) throw AlreadyStreaming();
     if (getNumActiveStreamers() == this->capacity) throw FullCapacity();
     try {
@@ -622,6 +626,7 @@ void StreamZ::startPrivateStream(Streamer *streamer, const string &title, const 
     catch (InvalidLanguage &) {
         throw;
     }
+    streamer->giveBonus(); //Part 2
 }
 
 /**

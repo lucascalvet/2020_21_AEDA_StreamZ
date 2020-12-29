@@ -162,6 +162,20 @@ std::vector<Stream *> Streamer::getHistory() const {
     return streaming_history;
 }
 
+
+void Streamer::toggleAccountStatus() {
+    if (!active_account) eligible_for_bonus = true;
+    active_account = !active_account;
+}
+
+void Streamer::giveBonus() {
+    if (!isActive()) throw InactiveUser();
+    if (eligible_for_bonus){
+        s->addBonus();
+        eligible_for_bonus = false;
+    }
+}
+
 /**
  * Add a stream to the streamer's history
  *

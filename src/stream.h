@@ -41,6 +41,7 @@ public:
     void remLike(unsigned id);
     void remDislike(unsigned id);
     bool alreadyLikedOrDisliked(unsigned id);
+    void addBonus(); //Part 2
 };
 
 /**

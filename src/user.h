@@ -34,12 +34,17 @@ public:
 class Streamer : public User {
 private:
     std::vector<Stream *> streaming_history;
+    bool active_account = true; //Part 2
+    bool eligible_for_bonus = false; //Part 2
 public:
     Streamer(const std::string &nickname, const Date &birthday, const std::string &password);
     Streamer(const std::string &nickname, const Date &birthday, const std::string &password, unsigned id);
     ~Streamer();
-    std::string getInfo();
+    std::string getInfo() override;
     std::vector<Stream *> getHistory() const;
+    bool getAccountStatus() const {return active_account;} //Part 2
+    void toggleAccountStatus(); //Part 2
+    void giveBonus();
     void addToHistory(Stream *stream);
     void stopStreaming();
 };
@@ -51,7 +56,7 @@ class Viewer : public User {
 public:
     Viewer(const std::string &nickname, const Date &birthday, const std::string &password);
     Viewer(const std::string &nickname, const Date &birthday, const std::string &password, unsigned id);
-    std::string getInfo();
+    std::string getInfo() override;
     void enterStream(Streamer *streamer);
     void exitStream();
     void likeStream() const;

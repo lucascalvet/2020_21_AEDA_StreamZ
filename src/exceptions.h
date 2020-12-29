@@ -62,6 +62,8 @@ class OrderDoesNotExist : std::exception{};
 
 class ExceededMaxQuantityPerPurchase : std::exception{};
 
-class InvalidPriority: std::exception{};
+class InvalidPriority : std::exception{};
+
+class InactiveAccount : std::exception{};
 
 #endif //STREAMZ_EXCEPTIONS_H

@@ -4,9 +4,24 @@
 #include <vector>
 #include <string>
 #include <map>
+#include <unordered_set>
+#include "bst.h"
 #include "utils.h"
 #include "user.h"
 #include "stream.h"
+#include "donation.h"
+
+struct streamerHash {
+    int operator()(const Streamer *s) const {
+        int hash = 0;
+        for (auto c : s->getName()) hash += c;
+        return hash;
+    }
+
+    bool operator()(const Streamer * s1, const Streamer * s2) const {
+        return s1->getID() == s2->getID() && s1->getName() == s2->getName();
+    }
+};
 
 /**
  * Main class for handling a StreamZ platform
@@ -16,11 +31,14 @@ private:
     Admin *admin;
     static int counter;
     unsigned id;
-    unsigned capacity;   //how many streamers can be active at same time
+    ///how many streamers can be active at the same time
+    unsigned capacity;
+    std::unordered_set<Streamer *, streamerHash, streamerHash> streamers_hash_table;
     std::vector<Streamer *> streamers;
     std::vector<Viewer *> viewers;
     ///A container with the 10 most viewed streams, followed by the 10 most liked streams, sorted in descending order
     std::vector<Stream *> best_streams = std::vector<Stream *>(20, nullptr);
+    BST<Donation> donations = BST<Donation>(Donation("", 0, 1));
 public:
     StreamZ(unsigned capacity, const std::string &nickname, const Date &birthday, const std::string &password);
     explicit StreamZ(const std::string &filename);
@@ -56,6 +74,9 @@ public:
                             const std::vector<unsigned> &authorized_viewers) const;
     void stopStream(Streamer *streamer);
     void stopAllStreams();
+    void makeDonation(const Streamer* strmr, unsigned amnt, unsigned eval);
+    BST<Donation> getDonations() const;
+    vector<Donation> getDonations(unsigned int lower, unsigned int upper, unsigned int n = UINT_MAX);
     bool loginVerifier(const std::string &nickname,const std::string &password) const;
     void save(const std::string &filename) const;
 };

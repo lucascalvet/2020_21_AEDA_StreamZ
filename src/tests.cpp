@@ -238,3 +238,48 @@ TEST(test, BestStreams) {
     EXPECT_DOUBLE_EQ(sz2.getAverageViews(), 21/5.0);
     EXPECT_EQ(sz2.getNumCreatedStreams(), 5);
 }
+
+TEST(test_2, Donations) {
+    Date bd0(1, 1, 1990);
+    StreamZ sz1(20, "admin", bd0, "Admin123");
+    Date bd1(14, 10, 2000);
+    Date bd2(1, 1, 2001);
+    Date bd3(28, 11, 2001);
+    sz1.addStreamer("lucascs", bd1, "Pass123");
+    sz1.addStreamer("sergio", bd2, "Pass123");
+    sz1.addViewer("ze", bd3, "Pass123");
+    Streamer *strmr_lucas = sz1.getStreamerByName("lucascs");
+    Streamer *strmr_sergio = sz1.getStreamerByName("sergio");
+    Viewer *viewer_ze = sz1.getViewerByName("ze");
+    EXPECT_THROW(sz1.makeDonation(strmr_lucas, 5, 6), std::out_of_range);
+    sz1.makeDonation(strmr_lucas, 5, 5);
+    sz1.makeDonation(strmr_lucas, 5, 4);
+    sz1.makeDonation(strmr_lucas, 5, 3);
+    sz1.makeDonation(strmr_lucas, 10, 5);
+    sz1.makeDonation(strmr_lucas, 10, 5);
+    sz1.makeDonation(strmr_lucas, 20, 3);
+    sz1.makeDonation(strmr_sergio, 25, 5);
+    sz1.makeDonation(strmr_sergio, 50, 3);
+    sz1.makeDonation(strmr_sergio, 5, 5);
+    sz1.makeDonation(strmr_sergio, 6, 5);
+    sz1.makeDonation(strmr_sergio, 7, 5);
+    sz1.makeDonation(strmr_sergio, 8, 5);
+    sz1.makeDonation(strmr_sergio, 9, 5);
+    sz1.makeDonation(strmr_sergio, 10, 5);
+    sz1.makeDonation(strmr_sergio, 11, 5);
+    vector<Donation> donations = sz1.getDonations(4, 5, 5);
+    cout << "DONATIONS:" << endl;
+    for (auto donation : donations) cout << donation.getInfo();
+    EXPECT_EQ(donations.size(), 5);
+    EXPECT_EQ(donations.begin()->getAmount(), 25);
+    donations = sz1.getDonations(4, 5, 20);
+    cout << "DONATIONS:" << endl;
+    for (auto donation : donations) cout << donation.getInfo();
+    EXPECT_EQ(donations.size(), 11);
+    donations = sz1.getDonations(3, 5, 5);
+    cout << "DONATIONS:" << endl;
+    for (auto donation : donations) cout << donation.getInfo();
+    EXPECT_EQ(donations.size(), 5);
+    EXPECT_EQ(donations.begin()->getAmount(), 50);
+    EXPECT_EQ(sz1.getDonations(3, 5).size(), 14);
+}

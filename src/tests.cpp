@@ -283,3 +283,39 @@ TEST(test_2, Donations) {
     EXPECT_EQ(donations.begin()->getAmount(), 50);
     EXPECT_EQ(sz1.getDonations(3, 5).size(), 14);
 }
+
+TEST(test_2, Orders) {
+    Date bd0(1, 1, 1990);
+    StreamZ sz1(20, "admin", bd0, "Administrator<3");
+    Date bd1(14, 10, 2000);
+    Date bd3(28, 11, 2001);
+    sz1.addViewer("ze", bd3, "ZeViewer100%");
+    sz1.addViewer("a", bd1, "AaBbCc123");
+    sz1.addViewer("b", bd1, "aa");
+    Viewer *viewer_ze = sz1.getViewerByName("ze");
+    Viewer *viewer_a = sz1.getViewerByName("a");
+    Viewer *viewer_b = sz1.getViewerByName("b");
+
+    sz1.makeOrder(viewer_ze, 2, 2);
+    sz1.makeOrder(viewer_ze, 3, 2);
+    sz1.makeOrder(viewer_ze, 4, 2);
+    sz1.makeOrder(viewer_ze, 2, 1);
+
+    Order empty_order;
+    Order ze_order(2, 1, "ze");
+
+    EXPECT_EQ(sz1.getOrders().size(), 4);
+    EXPECT_EQ(sz1.searchOrder("ze", 2, 3), empty_order);
+    EXPECT_EQ(sz1.searchOrder("ze", 2, 1), ze_order);
+
+    sz1.deleteOrder(viewer_ze, 2, 1);
+    EXPECT_EQ(sz1.getOrders().size(), 3);
+    EXPECT_THROW(sz1.deleteOrder(viewer_ze, 2, 1);, OrderDoesNotExist);
+
+    sz1.changeMaxOrdersPerViewer(2);
+    EXPECT_EQ(sz1.getOrders().size(), 2);
+
+    EXPECT_THROW(Order(2, 6, viewer_a->getName()), InvalidPriority);
+    EXPECT_THROW(sz1.makeOrder(viewer_a, 10, 6), ExceededMaxQuantityPerPurchase);
+    EXPECT_THROW(sz1.makeOrder(viewer_ze, 2, 2), OrderAlreadyExists);
+}

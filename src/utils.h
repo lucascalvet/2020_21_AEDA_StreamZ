@@ -7,6 +7,7 @@
 #define MIN_AGE_STREAMER 15
 #define MIN_AGE_VIEWER 12
 #define VALIDATION_STRING "STREAMZ_FORMATTED_FILE"
+#define MAX_QUANTITY_PER_PURCHASE 5 //arbitrated the value
 
 /// Unsigned type for representing an age
 typedef unsigned Age;

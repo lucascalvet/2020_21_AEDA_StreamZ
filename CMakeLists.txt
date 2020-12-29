@@ -9,7 +9,7 @@ include_directories(lib/googletest-master/googlemock/include)
 include_directories(hashlib++)
 
 add_executable(StreamZ_AEDA_2020_21 main.cpp src/streamz.cpp src/streamz.h src/user.cpp src/user.h src/stream.cpp
-        src/stream.h src/utils.cpp src/utils.h src/donation.cpp src/donation.h
+        src/stream.h src/utils.cpp src/utils.h src/donation.cpp src/donation.h src/order.cpp src/order.h
         src/menu.cpp src/menu.h src/streamz_framework.cpp src/exceptions.h src/streamz_framework.h src/tests.cpp
         hashlib++/hashlibpp.h hashlib++/hl_hashwrapper.h hashlib++/hl_sha2mac.h hashlib++/hl_types.h hashlib++/hl_exception.h
         hashlib++/hl_sha256.cpp hashlib++/hl_sha256.h hashlib++/hl_sha256wrapper.h hashlib++/hl_sha256wrapper.cpp)

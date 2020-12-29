@@ -3,6 +3,7 @@
 #include "exceptions.h"
 #include <limits>
 #include <map>
+#include <set>
 
 using namespace std;
 
@@ -792,4 +793,135 @@ void StreamZ::save(const string &filename) const {
         }
         file << '\n';
     }
+}
+
+/**
+ * Searchs for an order with equal parameters of the ones given
+ *
+ * @param viewer_nickname the viewer nickname associated to the order
+ * @param quantity quantity of the order to be searched
+ * @param priority priority of the order to be searched
+ * @return the order if found, or an empty order if not found
+ */
+Order StreamZ::searchOrder(std::string viewer_nickname, unsigned int quantity, unsigned int priority) {
+    Order empty_order;
+    Order ord_to_found(quantity, priority, viewer_nickname);
+
+    priority_queue<Order> buffer = orders;
+
+    while(!buffer.empty()){
+        Order current_ord = buffer.top();
+        buffer.pop();
+
+        if(current_ord == ord_to_found) return current_ord;
+    }
+
+    return empty_order;
+}
+
+/**
+ * Creates an order and adds it to the orders priority_queue
+ *
+ * @param viewer the viewer associated with that order
+ * @param quantity the quantity of products to buy
+ * @param priority the priority of the purchase
+ */
+void StreamZ::makeOrder(Viewer *viewer, unsigned int quantity, unsigned int priority) {
+    Order empty_order;
+    if(quantity > MAX_QUANTITY_PER_PURCHASE) throw ExceededMaxQuantityPerPurchase();
+
+    if(searchOrder(viewer->getName(), quantity, priority) == empty_order){
+        Order ord(quantity, priority, viewer->getName());
+
+        orders.push(ord);
+    }
+    else{
+        throw OrderAlreadyExists();
+    }
+
+}
+
+/**
+ * Deletes an order from the orders priority_queue
+ *
+ * @param viewer the viewer associated to the order
+ * @param quantity the quantity of product of the order
+ * @param priority the priority of the order
+ */
+void StreamZ::deleteOrder(Viewer *viewer, unsigned int quantity, unsigned int priority) {
+    Order empty_order;
+
+    if(searchOrder(viewer->getName(), quantity, priority) == empty_order){
+        throw OrderDoesNotExist();
+    }
+    else {
+        Order ord(quantity, priority, viewer->getName());
+        vector<Order> auxiliar_vector;
+
+        while(!orders.empty()){
+            if(orders.top() == ord) {
+                orders.pop();
+                continue;
+            }
+            else{
+                auxiliar_vector.push_back(orders.top());
+            }
+            orders.pop();
+        }
+
+        auto it = auxiliar_vector.begin();
+
+        while(it != auxiliar_vector.end()){
+            orders.push((*it));
+            it++;
+        }
+    }
+}
+
+/**
+ * Changes the value of the maximum orders that a viewer can make and it adjusts the queue accordingly
+ *
+ * @param new_limit the value to replace the current value of max_orders_per_viewer
+ */
+void StreamZ::changeMaxOrdersPerViewer(unsigned new_limit) {
+    unsigned old_limit = max_orders_per_viewer;
+    max_orders_per_viewer = new_limit;
+
+    if(old_limit > new_limit) {
+        unsigned counter = 0;
+
+        set<string, greater<string>> unique_nicknames;
+
+        priority_queue<Order> buffer = orders;
+        priority_queue<Order> buffer2 = orders;
+
+        while (!orders.empty()) {
+            unique_nicknames.insert(buffer.top().getViewerNickname());
+            orders.pop();
+        }
+
+        auto it = unique_nicknames.begin();
+
+        while (it != unique_nicknames.end()) {
+            while (!buffer.empty() && counter != new_limit) {
+                if (buffer.top().getViewerNickname() == *it) {
+                    orders.push(buffer.top());
+                    counter++;
+                }
+                buffer.pop();
+            }
+            it++;
+            counter = 0;
+            buffer = buffer2;
+        }
+    }
+}
+
+/**
+ * Get priority_queue of orders in streamz
+ *
+ * @return the orders priority_queue
+ */
+std::priority_queue<Order> StreamZ::getOrders() const {
+    return orders;
 }

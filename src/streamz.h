@@ -5,11 +5,13 @@
 #include <string>
 #include <map>
 #include <unordered_set>
+#include <queue>
 #include "bst.h"
 #include "utils.h"
 #include "user.h"
 #include "stream.h"
 #include "donation.h"
+#include "order.h"
 
 struct streamerHash {
     int operator()(const Streamer *s) const {
@@ -39,6 +41,8 @@ private:
     ///A container with the 10 most viewed streams, followed by the 10 most liked streams, sorted in descending order
     std::vector<Stream *> best_streams = std::vector<Stream *>(20, nullptr);
     BST<Donation> donations = BST<Donation>(Donation("", 0, 1));
+    unsigned max_orders_per_viewer = 5;  //arbitrated the initial value that can be change in the streamz
+    std::priority_queue<Order> orders;
 public:
     StreamZ(unsigned capacity, const std::string &nickname, const Date &birthday, const std::string &password);
     explicit StreamZ(const std::string &filename);
@@ -79,6 +83,12 @@ public:
     vector<Donation> getDonations(unsigned int lower, unsigned int upper, unsigned int n = UINT_MAX);
     bool loginVerifier(const std::string &nickname,const std::string &password) const;
     void save(const std::string &filename) const;
+
+    Order searchOrder(std::string viewer_nickname, unsigned quantity, unsigned priority);
+    void makeOrder(Viewer *viewer, unsigned quantity, unsigned priority);
+    void deleteOrder(Viewer *viewer, unsigned quantity, unsigned priority); //can only make one order with same parameters to know which one to be deleted if wanted
+    void changeMaxOrdersPerViewer(unsigned new_limit);
+    std::priority_queue<Order> getOrders() const;
 };
 
 #endif // STREAMZ_H

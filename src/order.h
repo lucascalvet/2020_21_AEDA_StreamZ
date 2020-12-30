@@ -8,6 +8,7 @@ private:
     std::string viewer_nickname;
     unsigned quantity;
     unsigned priority;
+    unsigned product_id;
 public:
     Order();
     Order(unsigned quantity, unsigned priority, std::string nickname);
@@ -17,6 +18,8 @@ public:
     std::string getInfo() const;
     bool operator<(const Order &o) const;
     bool operator==(const Order &o) const;
+    void setProductId(unsigned id);
+    unsigned getProductId() const;
 };
 
 

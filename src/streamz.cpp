@@ -778,6 +778,11 @@ void StreamZ::makeDonation(const Streamer* strmr, unsigned amnt, unsigned eval) 
     donations.insert(donation);
 }
 
+/**
+ * Get donations BST
+ *
+ * @return the BST of donations
+ */
 BST<Donation> StreamZ::getDonations() const {
     return donations;
 }
@@ -831,14 +836,45 @@ Order StreamZ::searchOrder(std::string viewer_nickname, unsigned int quantity, u
  * @param quantity the quantity of products to buy
  * @param priority the priority of the purchase
  */
-void StreamZ::makeOrder(Viewer *viewer, unsigned int quantity, unsigned int priority) {
+void StreamZ::makeOrder(Viewer *viewer, unsigned int quantity, unsigned int priority, unsigned product_id) {
     Order empty_order;
+    Product empty_product;
+
+    Product prod = getProductById(product_id);
+
+    if(prod == empty_product) throw ProductNotFound();
+
+    if(prod.getStock() < quantity) throw QuantityOverTheStock();
+
     if(quantity > MAX_QUANTITY_PER_PURCHASE) throw ExceededMaxQuantityPerPurchase();
 
     if(searchOrder(viewer->getName(), quantity, priority) == empty_order){
         Order ord(quantity, priority, viewer->getName());
 
+        ord.setProductId(product_id);
+
+        auto it = products.begin();
+
+        while(it != products.end()){
+            if((*it).getId() == product_id) {
+                (*it).setStock((*it).getStock() - quantity);
+                break;
+            }
+            it++;
+        }
+
         orders.push(ord);
+
+        double payment = quantity * prod.getPrice();
+
+        if(payment > viewer->getWalletAmount()) throw NotEnoughCapital();
+
+        //when the order is made the money is taken at the same time and if the user cancels the order the only 50% of the money is sent to him back
+        //the company still loses money (40%) when a user cancels the order because the product is lost
+        streamz_capital += viewer->cashWithdraw(payment);
+
+        if((*it).getStock() == 0) deleteProduct(product_id);
+
     }
     else{
         throw OrderAlreadyExists();
@@ -860,8 +896,16 @@ void StreamZ::deleteOrder(Viewer *viewer, unsigned int quantity, unsigned int pr
         throw OrderDoesNotExist();
     }
     else {
-        Order ord(quantity, priority, viewer->getName());
+        Order ord = searchOrder(viewer->getName(), quantity, priority);
         vector<Order> auxiliar_vector;
+
+        Product prod = getProductById(ord.getProductId());
+
+        double payment = quantity * prod.getPrice() * STREAMZ_CANCELED_ORDER_REPAYMENT_AMOUNT;
+
+        viewer->cashDeposit(payment);
+
+        streamz_capital -= payment;
 
         while(!orders.empty()){
             if(orders.top() == ord) {
@@ -893,6 +937,23 @@ void StreamZ::changeMaxOrdersPerViewer(unsigned new_limit) {
     max_orders_per_viewer = new_limit;
 
     if(old_limit > new_limit) {
+
+        //money part
+        priority_queue<Order> money_buffer = orders;
+
+        while(!money_buffer.empty()){
+            double payment = (money_buffer.top().getQuantity() * getProductById(money_buffer.top().getProductId()).getPrice());
+
+            streamz_capital -= payment;
+
+            Viewer* v = getViewerByName(money_buffer.top().getViewerNickname());
+
+            v->cashDeposit(payment);
+
+            money_buffer.pop();
+        }
+        //end of money part
+
         unsigned counter = 0;
 
         set<string, greater<string>> unique_nicknames;
@@ -919,6 +980,22 @@ void StreamZ::changeMaxOrdersPerViewer(unsigned new_limit) {
             counter = 0;
             buffer = buffer2;
         }
+
+        //money part 2
+        priority_queue<Order> money_buffer2 = orders;
+
+        while(!money_buffer2.empty()){
+            double payment = (money_buffer2.top().getQuantity() * getProductById(money_buffer2.top().getProductId()).getPrice());
+
+            streamz_capital += payment;
+
+            Viewer* v = getViewerByName(money_buffer2.top().getViewerNickname());
+
+            v->cashWithdraw(payment);
+
+            money_buffer2.pop();
+        }
+        //end of money part 2
     }
 }
 
@@ -929,4 +1006,73 @@ void StreamZ::changeMaxOrdersPerViewer(unsigned new_limit) {
  */
 std::priority_queue<Order> StreamZ::getOrders() const {
     return orders;
+}
+
+/**
+ * Get the product by it's id
+ *
+ * @return the product found, and an empty product if not found
+ */
+Product StreamZ::getProductById(unsigned id) {
+    Product empty_product;
+
+    auto it = products.begin();
+
+    while(it != products.end()){
+        if((*it).getId() == id) return (*it);
+        it++;
+    }
+
+    return empty_product;
+}
+
+/**
+ * Sells a product for the streamer passed as parameter, with the parameters passed
+ *
+ * @param streamer the streamer that is selling a product
+ * @param price the price of the product
+ * @param stock the stock of the product
+ */
+void StreamZ::sellProduct(Streamer *streamer, unsigned int price, unsigned int stock) {
+    if (!streamer->getAccountStatus()) throw InactiveAccount();
+
+    Product prod(price, stock);
+
+    double payment = (price * stock) * 0.9;
+
+    streamz_capital -= payment;
+
+    products.push_back(prod);
+
+    streamer->cashDeposit(payment);
+
+
+}
+
+/**
+ * Deletes a product from the products vector
+ *
+ * @param id the id of the product to be deleted
+ */
+void StreamZ::deleteProduct(unsigned id) {
+    auto it = products.begin();
+
+    while(it != products.end()){
+        if((*it).getId() == id) {
+            products.erase(it);
+            return;
+        }
+        it++;
+    }
+
+    throw ProductNotFound();
+}
+
+/**
+ * Get the products vector from streamz
+ *
+ * @return the products vector
+ */
+vector<Product> StreamZ::getProducts() const{
+    return products;
 }

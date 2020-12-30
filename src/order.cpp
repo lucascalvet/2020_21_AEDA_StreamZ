@@ -94,3 +94,21 @@ Order::Order() {
     this->priority = 0;
     this->quantity = 0;
 }
+
+/**
+ * Set the id of the product that is associated to the order
+ *
+ * @param id the id of the product
+ */
+void Order::setProductId(unsigned id) {
+    this->product_id = id;
+}
+
+/**
+ * Get the product's id associated with the order being made
+ *
+ * @return the order product's id
+ */
+unsigned Order::getProductId() const {
+    return product_id;
+}

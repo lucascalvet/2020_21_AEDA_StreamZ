@@ -8,7 +8,10 @@
 #define MIN_AGE_VIEWER 12
 #define VALIDATION_STRING "STREAMZ_FORMATTED_FILE"
 #define LIKES_BONUS 50
-#define MAX_QUANTITY_PER_PURCHASE 5 //arbitrated the value
+#define MAX_QUANTITY_PER_PURCHASE 10 //arbitrated the value
+//values in percentage
+#define STREAMZ_RETAIL_COMISSION 0.1
+#define STREAMZ_CANCELED_ORDER_REPAYMENT_AMOUNT 0.5
 
 /// Unsigned type for representing an age
 typedef unsigned Age;

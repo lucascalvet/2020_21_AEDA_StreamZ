@@ -18,6 +18,7 @@ User::User(const string &nickname, const Date &birthday, const string &password)
     this->nickname = nickname;
     this->birthday = birthday;
     this->password = password;
+    wallet = 0; //Part 2
     id = counter++;
 }
 
@@ -97,6 +98,36 @@ bool User::isActive() const {
 }
 
 /**
+ * Deposits the amount of money passed at parameter to user wallet
+ *
+ * @param amount of money to be deposited
+ *
+ */
+void User::cashDeposit(double amount) {
+    wallet += amount;
+}
+
+/**
+ * Get the user wallet amount
+ *
+ * @return the value of user wallet
+ */
+double User::getWalletAmount() const {
+    return wallet;
+}
+
+/**
+ * Withdraws a determined amount from the user wallet
+ *
+ * @param amount to withdraw from the wallet
+ * @return the value of the wallet after the withdraw
+ */
+double User::cashWithdraw(double amount) {
+    wallet -= amount;
+    return wallet;
+}
+
+/**
  * Construct a streamer object
  *
  * @param nickname the streamer's nickname
@@ -162,12 +193,17 @@ std::vector<Stream *> Streamer::getHistory() const {
     return streaming_history;
 }
 
-
+/**
+ * Activates an account and states if it is eligible for bonus or not
+ */
 void Streamer::toggleAccountStatus() {
     if (!active_account) eligible_for_bonus = true;
     active_account = !active_account;
 }
 
+/**
+ * Gives a bonus of likes to a streamer's stream and changes the eligible for the same
+ */
 void Streamer::giveBonus() {
     if (!isActive()) throw InactiveUser();
     if (eligible_for_bonus){

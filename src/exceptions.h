@@ -66,4 +66,10 @@ class InvalidPriority : std::exception{};
 
 class InactiveAccount : std::exception{};
 
+class ProductNotFound : std::exception{};
+
+class QuantityOverTheStock : std::exception{};
+
+class NotEnoughCapital : std::exception{};
+
 #endif //STREAMZ_EXCEPTIONS_H

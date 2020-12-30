@@ -295,27 +295,49 @@ TEST(test_2, Orders) {
     Viewer *viewer_ze = sz1.getViewerByName("ze");
     Viewer *viewer_a = sz1.getViewerByName("a");
     Viewer *viewer_b = sz1.getViewerByName("b");
+    sz1.addStreamer("lucascs", bd1, "Pass123");
+    sz1.addStreamer("sergio", bd3, "Pass123");
+    Streamer *strmr_lucas = sz1.getStreamerByName("lucascs");
+    Streamer *strmr_sergio = sz1.getStreamerByName("sergio");
 
-    sz1.makeOrder(viewer_ze, 2, 2);
-    sz1.makeOrder(viewer_ze, 3, 2);
-    sz1.makeOrder(viewer_ze, 4, 2);
-    sz1.makeOrder(viewer_ze, 2, 1);
+    viewer_ze->cashDeposit(10000);
+    viewer_a->cashDeposit(100);
+    viewer_b->cashDeposit(10);
+
+    EXPECT_EQ(viewer_ze->getWalletAmount(), 10000);
+
+    sz1.sellProduct(strmr_lucas, 10, 10); //id: 1
+    sz1.sellProduct(strmr_lucas, 11, 10); //id: 2
+    sz1.sellProduct(strmr_lucas, 40, 100); //id: 3
+
+    EXPECT_EQ(sz1.getProducts().size(), 3);
+
+    sz1.makeOrder(viewer_ze, 2, 2, 1);
+    sz1.makeOrder(viewer_ze, 3, 3, 1);
+    sz1.makeOrder(viewer_ze, 3, 2, 1);
+    sz1.makeOrder(viewer_ze, 2, 1, 1); //same as ze_order
+
+    EXPECT_THROW(sz1.makeOrder(viewer_ze, 1, 2, 1), ProductNotFound);
 
     Order empty_order;
     Order ze_order(2, 1, "ze");
 
     EXPECT_EQ(sz1.getOrders().size(), 4);
-    EXPECT_EQ(sz1.searchOrder("ze", 2, 3), empty_order);
+    EXPECT_EQ(sz1.searchOrder("ze", 2, 4), empty_order);
     EXPECT_EQ(sz1.searchOrder("ze", 2, 1), ze_order);
 
     sz1.deleteOrder(viewer_ze, 2, 1);
     EXPECT_EQ(sz1.getOrders().size(), 3);
-    EXPECT_THROW(sz1.deleteOrder(viewer_ze, 2, 1);, OrderDoesNotExist);
+    EXPECT_THROW(sz1.deleteOrder(viewer_ze, 2, 1), OrderDoesNotExist);
 
     sz1.changeMaxOrdersPerViewer(2);
     EXPECT_EQ(sz1.getOrders().size(), 2);
 
+    EXPECT_THROW(sz1.makeOrder(viewer_a, 4, 3, 3);, NotEnoughCapital);
+
+    sz1.makeOrder(viewer_a, 1, 3, 3);
     EXPECT_THROW(Order(2, 6, viewer_a->getName()), InvalidPriority);
-    EXPECT_THROW(sz1.makeOrder(viewer_a, 10, 6), ExceededMaxQuantityPerPurchase);
-    EXPECT_THROW(sz1.makeOrder(viewer_ze, 2, 2), OrderAlreadyExists);
+    EXPECT_THROW(sz1.makeOrder(viewer_a, 11, 6, 3), ExceededMaxQuantityPerPurchase);
+    EXPECT_THROW(sz1.makeOrder(viewer_a, 1, 3, 3), OrderAlreadyExists);
+
 }

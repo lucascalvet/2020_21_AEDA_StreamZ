@@ -12,6 +12,7 @@
 #include "stream.h"
 #include "donation.h"
 #include "order.h"
+#include "product.h"
 
 struct streamerHash {
     int operator()(const Streamer *s) const {
@@ -31,6 +32,7 @@ struct streamerHash {
 class StreamZ {
 private:
     Admin *admin;
+    double streamz_capital = 1000000; //Part 2
     static int counter;
     unsigned id;
     ///how many streamers can be active at the same time
@@ -44,6 +46,7 @@ private:
     BST<Donation> donations = BST<Donation>(Donation("", 0, 1));
     unsigned max_orders_per_viewer = 5;  //arbitrated the initial value that can be change in the streamz
     std::priority_queue<Order> orders;
+    vector<Product> products;
 public:
     StreamZ(unsigned capacity, const std::string &nickname, const Date &birthday, const std::string &password);
     explicit StreamZ(const std::string &filename);
@@ -86,10 +89,16 @@ public:
     BST<Donation> getDonations() const;
     vector<Donation> getDonations(unsigned int lower, unsigned int upper, unsigned int n = UINT_MAX);
     Order searchOrder(std::string viewer_nickname, unsigned quantity, unsigned priority);
-    void makeOrder(Viewer *viewer, unsigned quantity, unsigned priority);
+    void makeOrder(Viewer *viewer, unsigned quantity, unsigned priority, unsigned product_id);
     void deleteOrder(Viewer *viewer, unsigned quantity, unsigned priority); //can only make one order with same parameters to know which one to be deleted if wanted
     void changeMaxOrdersPerViewer(unsigned new_limit);
     std::priority_queue<Order> getOrders() const;
+
+    Product getProductById(unsigned id);
+    void sellProduct(Streamer* streamer, unsigned price, unsigned stock); //the product is automatic sold to streamz end then the streamz resells at higher price
+    void deleteProduct(unsigned id);
+    vector<Product> getProducts() const;
+
 };
 
 #endif // STREAMZ_H

@@ -13,6 +13,7 @@ private:
     std::string password;
     static unsigned counter;
     unsigned id;
+    double wallet; //Part 2
     Date birthday;
 protected:
     std::string nickname;
@@ -26,6 +27,10 @@ public:
     std::string getPassword() const;
     unsigned getID() const;
     bool isActive() const;
+    //Part 2
+    double cashWithdraw(double amount);
+    void cashDeposit(double amount);
+    double getWalletAmount() const;
 };
 
 /**
@@ -69,7 +74,7 @@ public:
 /**
  * Class derived from User, to represent a user of type admin
  */
-class Admin : public User {  //maybe not appropriate because its a framework so the people controling it is the admin
+class Admin : public User {
 public:
     Admin(const std::string &nickname, const Date &birthday, const std::string &password);
     Admin(const std::string &nickname, const Date &birthday, const std::string &password, unsigned id);

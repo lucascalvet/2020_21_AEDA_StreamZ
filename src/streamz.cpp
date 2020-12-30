@@ -1076,3 +1076,18 @@ void StreamZ::deleteProduct(unsigned id) {
 vector<Product> StreamZ::getProducts() const{
     return products;
 }
+
+/**
+ * It enables transactions between users if they want
+ *
+ * @param sender the sender of the money
+ * @param receiver the receiver of the money
+ * @param amount the amount to be sent
+ */
+void StreamZ::sendMoney(User *sender, User *receiver, double amount) {
+    if(sender->getWalletAmount() < amount) throw NotEnoughCapital();
+
+    sender->cashWithdraw(amount);
+
+    receiver->cashDeposit(amount);
+}

@@ -98,7 +98,7 @@ public:
     void sellProduct(Streamer* streamer, unsigned price, unsigned stock); //the product is automatic sold to streamz end then the streamz resells at higher price
     void deleteProduct(unsigned id);
     vector<Product> getProducts() const;
-
+    void sendMoney(User *sender, User *receiver, double amount);
 };
 
 #endif // STREAMZ_H

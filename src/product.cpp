@@ -1,4 +1,5 @@
 #include "product.h"
+#include <sstream>
 
 //static member of product to keep track of the id's
 unsigned Product::counter = 1;
@@ -68,4 +69,17 @@ unsigned Product::getId() const {
  */
 bool Product::operator==(const Product &p) const {
     return id == p.getId();
+}
+
+/**
+ * Get the info of the product
+ *
+ * @return all the info of the product in a string
+ */
+std::string Product::getInfo() const {
+    std::ostringstream info;
+    info << "Price: " << std::to_string(price);
+    info << "\tStock: " << std::to_string(stock);
+    info << "\tId: " << std::to_string(id);
+    return info.str();
 }

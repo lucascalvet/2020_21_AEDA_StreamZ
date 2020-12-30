@@ -1091,3 +1091,45 @@ void StreamZ::sendMoney(User *sender, User *receiver, double amount) {
 
     receiver->cashDeposit(amount);
 }
+
+/**
+ * Prints all the products in the products vector
+ */
+void StreamZ::printAvailableProducts() {
+    auto it = products.begin();
+
+    while(it != products.end()){
+       cout << (*it).getInfo() << endl;
+       it++;
+    }
+}
+
+/**
+ * Print the streamers available in system
+ */
+void StreamZ::printStreamers() {
+    auto it = streamers.begin();
+
+    while(it != streamers.end()){
+        cout << (*it)->getName() << "  id:  " << to_string((*it)->getID()) << endl;
+        it++;
+    }
+}
+
+/**
+ * Deposits the determined amount in the streamz capital
+ *
+ * @param
+ */
+void StreamZ::depositCapitalInStreamz(unsigned value) {
+    streamz_capital += value;
+}
+
+/**
+ * Get the streamz total capital
+ *
+ * @return the streamz total capital
+ */
+double StreamZ::getStreamzCapital() const {
+    return streamz_capital;
+}

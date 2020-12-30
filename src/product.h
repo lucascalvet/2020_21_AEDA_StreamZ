@@ -1,6 +1,8 @@
 #ifndef STREAMZ_AEDA_2020_21_PRODUCT_H
 #define STREAMZ_AEDA_2020_21_PRODUCT_H
 
+#include <string>
+
 class Product {
 private:
     static unsigned counter;
@@ -13,6 +15,7 @@ public:
     unsigned getStock() const;
     unsigned getPrice() const;
     unsigned getId() const;
+    std::string getInfo() const;
     void setStock(unsigned stock);
     bool operator==(const Product &p) const;
 };

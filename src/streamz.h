@@ -99,6 +99,10 @@ public:
     void deleteProduct(unsigned id);
     vector<Product> getProducts() const;
     void sendMoney(User *sender, User *receiver, double amount);
+    void printAvailableProducts();
+    void printStreamers();
+    void depositCapitalInStreamz(unsigned value);
+    double getStreamzCapital() const;
 };
 
 #endif // STREAMZ_H

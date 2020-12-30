@@ -471,8 +471,34 @@ void streamerMenuLoop(Menu streamer_menu, Streamer *s_selected, StreamZ *sz_sele
                 printBestStreams(sz_selected);
                 break;
             }
+                //Sell Product
+            case 6:{
+                unsigned price, stock;
+
+                cout << "Enter the price of your product: ";
+                cin >> price;
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                if (cinFail()){
+                    cout << "Please input a number!" << endl;
+                    break;
+                }
+
+                cout << "Enter the stock you have to sell: ";
+                cin >> stock;
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                if (cinFail()){
+                    cout << "Please input a number!" << endl;
+                    break;
+                }
+
+                sz_selected->sellProduct(s_selected, price, stock);
+
+                cout << "You're product has been successfully sold!" << endl;
+
+                break;
+            }
                 //back
-            case 6: {
+            case 7: {
                 streamer_loop = false;
                 break;
             }
@@ -671,8 +697,142 @@ void viewerMenuLoop(Menu viewer_menu, Viewer *v_selected, StreamZ *sz_selected, 
                 printBestStreams(sz_selected);
                 break;
             }
+                //Make Order
+            case 6:{
+                if(sz_selected->getProducts().empty()) cout << "There are no products for sell!" << endl;
+                else {
+                    unsigned prod_id, quan, pri;
+
+                    sz_selected->printAvailableProducts();
+
+                    cout << "Enter an id: ";
+                    cin >> prod_id;
+
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                    if (!cinFail()) {
+                        cout << "Enter the quantity wanted: ";
+                        cin >> quan;
+                        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                        if (cinFail()){
+                            cout << "Please input a number!" << endl;
+                            break;
+                        }
+
+                        cout << "Enter the priority from 1 to 5: ";
+                        cin >> pri;
+                        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                        if (cinFail() || pri < 1 || pri > 5){
+                            cout << "Please input a number!" << endl;
+                            break;
+                        }
+
+                        try{
+                            sz_selected->makeOrder(v_selected, quan, pri, prod_id);
+                        }
+                        catch (QuantityOverTheStock &e){
+                            cout << "Please choose a quantity below the stock!" << endl;
+                            break;
+                        }
+                        catch (ExceededMaxQuantityPerPurchase &e){
+                            cout << "You exceeded the max quantity per purchase! Quantity has to be below 10" << endl;
+                            break;
+                        }
+                        catch(NotEnoughCapital &e){
+                            cout << "You don't have enough money to do this purchase!" << endl;
+                            break;
+                        }
+                        catch (OrderAlreadyExists &e){
+                            cout << "You have already made a similar order!" << endl;
+                            break;
+                        }
+                        cout << "You're order has been successfully done and the money it has been taken from your wallet!" << endl;
+                    }
+                    else{
+                        cout << "Not inputted a number!!" << endl;
+                    }
+                }
+                break;
+            }
+                //Delete Order
+            case 7:{
+                unsigned quan, pri;
+
+                cout << "Enter the quantity you have inputted: ";
+                cin >> quan;
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                if (cinFail()){
+                    cout << "Please input a number!" << endl;
+                    break;
+                }
+
+                cout << "Enter the priority from 1 to 5: ";
+                cin >> pri;
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                if (cinFail() || pri < 1 || pri > 5){
+                    cout << "Please input a number!" << endl;
+                    break;
+                }
+
+                try{
+                    sz_selected->deleteOrder(v_selected, quan, pri);
+                }
+                catch (OrderDoesNotExist &e) {
+                    cout << "Please input the correct data!" << endl;
+                    break;
+                }
+                cout << "You're order has been successfully deleted and 50% of the money spent was given to back to you!" << endl;
+
+            break;
+            }
+                //Donate
+            case 8:{
+                unsigned id_choice;
+
+                sz_selected->printStreamers();
+
+                cout << "Chose the streamer inputting the id: ";
+                cin >> id_choice;
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                if (cinFail()){
+                    cout << "Please input a number!" << endl;
+                    break;
+                }
+
+                unsigned amount, eval;
+
+                cout << "Enter the amount to donate: ";
+                cin >> amount;
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                if (cinFail()){
+                    cout << "Please input a number!" << endl;
+                    break;
+                }
+
+                cout << "Enter the evaluation of the streamer from 1 to 5: ";
+                cin >> eval;
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                if (cinFail() || eval < 1 || eval > 5){
+                    cout << "Please input a number and in the range!" << endl;
+                    break;
+                }
+
+                if(v_selected->getWalletAmount() < amount){
+                    cout << "Please ensure that you have the enough money in the wallet" << endl;
+                    break;
+                }
+                else{
+                    v_selected->cashWithdraw(amount);
+
+                    sz_selected->depositCapitalInStreamz(amount);
+
+                    sz_selected->makeDonation(sz_selected->getStreamerByID(id_choice), amount, eval);
+                }
+                cout << "You have successfully made the donation!" << endl;
+
+                break;
+            }
                 //back
-            case 6: {
+            case 9: {
                 viewer_loop = false;
                 break;
             }
@@ -717,23 +877,27 @@ void streamzFramework() {
     sub_menu.changeOption(5, "Statistics");
     sub_menu.changeOption(6, "Back");
 
-    Menu streamer_menu("Streamer default title", 7);
+    Menu streamer_menu("Streamer default title", 8);
     streamer_menu.changeOption(0, "Streamer Info");
     streamer_menu.changeOption(1, "Search Streams");
     streamer_menu.changeOption(2, "Start public stream");
     streamer_menu.changeOption(3, "Start private stream");
     streamer_menu.changeOption(4, "Stop stream");
     streamer_menu.changeOption(5, "Best streams");
-    streamer_menu.changeOption(6, "Back");
+    streamer_menu.changeOption(6, "Sell Product"); //Part 2
+    streamer_menu.changeOption(7, "Back");
 
-    Menu viewer_menu("Viewer default title", 7);
+    Menu viewer_menu("Viewer default title", 10);
     viewer_menu.changeOption(0, "Viewer info");
     viewer_menu.changeOption(1, "Search Streams");
     viewer_menu.changeOption(2, "Enter stream");
     viewer_menu.changeOption(3, "Exit stream");
     viewer_menu.changeOption(4, "Stream interactions");
     viewer_menu.changeOption(5, "Best streams");
-    viewer_menu.changeOption(6, "Back");
+    viewer_menu.changeOption(6, "Make Order"); //Part 2
+    viewer_menu.changeOption(7, "Delete Order"); //Part 2
+    viewer_menu.changeOption(8, "Donate"); //Part 2
+    viewer_menu.changeOption(9, "Back");
 
     Menu stats_menu("Admin Statistics", 5);
     stats_menu.changeOption(0, "StreamZ statistics");
@@ -987,6 +1151,8 @@ void streamzFramework() {
                                         //streamz statistics
                                         case 0: {
                                             Language lang = sz_selected->getMostUsedLanguage();
+
+                                            cout << "StreamZ Capital: " << to_string(sz_selected->getStreamzCapital()) << endl;
 
                                             cout << "Most used languages: " << lang << endl;
 

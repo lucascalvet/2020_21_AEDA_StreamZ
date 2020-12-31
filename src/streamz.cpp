@@ -40,9 +40,36 @@ StreamZ::StreamZ(const string &filename) {
     if (validate != VALIDATION_STRING) throw InvalidFile(filename);
     file >> capacity;
     file.get();
+    file >> streamz_capital;
+    file.get();
     string nickname, password;
-    unsigned user_id, day, month, year;
+    unsigned price, amount, eval, user_id, day, month, year;
     char sep;
+    double wallet;
+    while(file.peek() != '\n') {
+        getline(file, nickname, '\t');
+        file >> amount >> eval;
+        Donation d(nickname, amount, eval);
+        donations.insert(d);
+        file.get();
+    }
+    file.get();
+    while (file.peek() != '\n') {
+        file >> user_id >> price >> amount;
+        Product p(user_id, price, amount);
+        products.push_back(p);
+        file.get();
+    }
+    file.get();
+    while (file.peek() != '\n') {
+        getline(file, nickname, '\t');
+        file >> amount >> eval >> user_id;
+        Order o(amount, eval, nickname);
+        o.setProductId(user_id);
+        orders.push(o);
+        file.get();
+    }
+    file.get();
     file >> user_id;
     file.get();
     getline(file, nickname, '\t');
@@ -58,7 +85,9 @@ StreamZ::StreamZ(const string &filename) {
         getline(file, password, '\t');
         file >> day >> sep >> month >> sep >> year;
         birthday = Date(day, month, year);
+        file >> wallet;
         Viewer *viewer = new Viewer(nickname, birthday, password, user_id);
+        viewer->cashDeposit(wallet);
         viewers.push_back(viewer);
         file.ignore(numeric_limits<streamsize>::max(), '\n');
     }
@@ -70,7 +99,9 @@ StreamZ::StreamZ(const string &filename) {
         getline(file, password, '\t');
         file >> day >> sep >> month >> sep >> year;
         birthday = Date(day, month, year);
+        file >> wallet;
         Streamer *streamer = new Streamer(nickname, birthday, password, user_id);
+        streamer->cashDeposit(wallet);
         streamers.push_back(streamer);
         streamers_hash_table.insert(streamer); //Part 2
         file.ignore(numeric_limits<streamsize>::max(), '\n');
@@ -718,18 +749,37 @@ void StreamZ::save(const string &filename) const {
     if (file.fail()) throw InvalidFile(filename);
     file << VALIDATION_STRING << '\n';
     file << this->capacity << '\n';
+    file << this->streamz_capital << '\n';
+    iteratorBST<Donation> donation;
+    for (donation = donations.begin(); donation != donations.end(); donation++) {
+        file << (*donation).getRecipient() << '\t' << (*donation).getAmount() << '\t' << (*donation).getEvaluation() << '\t';
+    }
+    file << '\n';
+    vector<Product>::const_iterator product;
+    for (product = products.begin(); product != products.end(); product++) {
+        file << product->getId() << '\t' << product->getPrice() << '\t' << product->getStock() << '\t';
+    }
+    file << '\n';
+    std::priority_queue<Order> temp = orders;
+    Order order;
+    while (!temp.empty()) {
+        order = temp.top();
+        temp.pop();
+        file << order.getViewerNickname() << '\t' << order.getQuantity() << '\t' << order.getPriority() << '\t' << order.getProductId() << '\t';
+    }
+    file << '\n';
     file << admin->getID() << '\t' << admin->getName() << '\t' << admin->getPassword() << '\t'
          << admin->getBirthday() << '\n';
     vector<Viewer *>::const_iterator viewer;
     for (viewer = viewers.begin(); viewer != viewers.end(); viewer++) {
         file << (*viewer)->getID() << '\t' << (*viewer)->getName() << '\t' << (*viewer)->getPassword() << '\t'
-             << (*viewer)->getBirthday() << '\n';
+             << (*viewer)->getBirthday() << '\t' << (*viewer)->getWalletAmount() << '\n';
     }
     file << '\n';
     vector<Streamer *>::const_iterator streamer;
     for (streamer = streamers.begin(); streamer != streamers.end(); streamer++) {
         file << (*streamer)->getID() << '\t' << (*streamer)->getName() << '\t' << (*streamer)->getPassword() << '\t'
-             << (*streamer)->getBirthday() << '\n';
+             << (*streamer)->getBirthday() << '\t' << (*streamer)->getWalletAmount()<< '\n';
         vector<Stream *> history = (*streamer)->getHistory();
         vector<Stream *>::const_iterator stream;
         for (stream = history.begin(); stream != history.end(); stream++) {
@@ -773,9 +823,15 @@ void StreamZ::save(const string &filename) const {
  * @param amnt the donation's amount
  * @param eval the evaluation given to the streamer
  */
-void StreamZ::makeDonation(const Streamer* strmr, unsigned amnt, unsigned eval) {
-    Donation donation(strmr->getName(), amnt, eval);
-    donations.insert(donation);
+void StreamZ::makeDonation(Streamer* strmr, unsigned amnt, unsigned eval) {
+    try {
+        Donation donation(strmr->getName(), amnt, eval);
+        donations.insert(donation);
+        strmr->cashDeposit(amnt);
+    }
+    catch (out_of_range&) {
+        throw;
+    }
 }
 
 /**
@@ -1038,7 +1094,7 @@ void StreamZ::sellProduct(Streamer *streamer, unsigned int price, unsigned int s
 
     Product prod(price, stock);
 
-    double payment = (price * stock) * 0.9;
+    double payment = (price * stock) * (1 - STREAMZ_RETAIL_COMISSION);
 
     streamz_capital -= payment;
 

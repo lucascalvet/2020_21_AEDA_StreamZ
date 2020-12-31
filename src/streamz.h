@@ -37,14 +37,15 @@ private:
     unsigned id;
     ///how many streamers can be active at the same time
     unsigned capacity;
-    std::unordered_set<Streamer *, streamerHash, streamerHash> streamers_hash_table;
     std::vector<Streamer *> streamers;
     std::vector<Viewer *> viewers;
     ///A container with the 10 most viewed streams, followed by the 10 most liked streams, sorted in descending order
     std::vector<Stream *> best_streams = std::vector<Stream *>(20, nullptr);
 
+    //Part 2
+    std::unordered_set<Streamer *, streamerHash, streamerHash> streamers_hash_table;
     BST<Donation> donations = BST<Donation>(Donation("", 0, 1));
-    unsigned max_orders_per_viewer = 5;  //arbitrated the initial value that can be change in the streamz
+    unsigned max_orders_per_viewer = 5;  //arbitrated the initial value, that can be changed in the streamz
     std::priority_queue<Order> orders;
     vector<Product> products;
 public:
@@ -85,7 +86,8 @@ public:
     bool loginVerifier(const std::string &nickname,const std::string &password) const;
     void save(const std::string &filename) const;
 
-    void makeDonation(const Streamer* strmr, unsigned amnt, unsigned eval);
+    //Part 2
+    void makeDonation(Streamer* strmr, unsigned amnt, unsigned eval);
     BST<Donation> getDonations() const;
     vector<Donation> getDonations(unsigned int lower, unsigned int upper, unsigned int n = UINT_MAX);
     Order searchOrder(std::string viewer_nickname, unsigned quantity, unsigned priority);

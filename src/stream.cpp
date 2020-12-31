@@ -221,7 +221,7 @@ bool Stream::alreadyLikedOrDisliked(unsigned id) {
  * [Part 2] Adds LIKES_BONUS likes, as a bonus
  */
 void Stream::addBonus() {
-    vector<unsigned> bonus(50, 0);
+    vector<unsigned> bonus(LIKES_BONUS, 0);
     viewers_liked.insert(viewers_liked.end(), bonus.begin(), bonus.end());
 }
 

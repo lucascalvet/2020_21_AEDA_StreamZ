@@ -812,19 +812,16 @@ void viewerMenuLoop(Menu viewer_menu, Viewer *v_selected, StreamZ *sz_selected, 
                 cin >> eval;
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
                 if (cinFail() || eval < 1 || eval > 5){
-                    cout << "Please input a number and in the range!" << endl;
+                    cout << "Please input a number from 1 to 5!" << endl;
                     break;
                 }
 
                 if(v_selected->getWalletAmount() < amount){
-                    cout << "Please ensure that you have the enough money in the wallet" << endl;
+                    cout << "Please ensure that you have enough money in your e-wallet" << endl;
                     break;
                 }
                 else{
                     v_selected->cashWithdraw(amount);
-
-                    sz_selected->depositCapitalInStreamz(amount);
-
                     sz_selected->makeDonation(sz_selected->getStreamerByID(id_choice), amount, eval);
                 }
                 cout << "You have successfully made the donation!" << endl;

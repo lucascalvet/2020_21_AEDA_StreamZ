@@ -19,10 +19,23 @@ Product::Product() {
  * @param price the price of the product
  * @param stock the stock of the product available
  */
-Product::Product(unsigned int price, unsigned int stock) {
+Product::Product(unsigned price, unsigned stock) {
     this->price = price;
     this-> stock = stock;
     id = counter++;
+}
+
+/**
+ * Constructor for a product with a custom ID (for when importing from a file)
+ * NEEDS TO HAVE THE LAST ID
+ *
+ * @param id the product's ID
+ * @param price the price of the product
+ * @param stock the stock of the product available
+ */
+Product::Product(unsigned id, unsigned price, unsigned stock) : Product(price, stock) {
+    this->id = id;
+    counter = id++;
 }
 
 /**

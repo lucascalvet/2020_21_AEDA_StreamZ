@@ -12,6 +12,7 @@ private:
 public:
     Product();
     Product(unsigned price, unsigned stock);
+    Product(unsigned id, unsigned price, unsigned stock);
     unsigned getStock() const;
     unsigned getPrice() const;
     unsigned getId() const;

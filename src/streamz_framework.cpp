@@ -497,8 +497,15 @@ void streamerMenuLoop(Menu streamer_menu, Streamer *s_selected, StreamZ *sz_sele
 
                 break;
             }
+            //Deactivate account
+            case 7:{
+                cout << "You have deactivated your account, to activate it back just sign in" << endl;
+                s_selected->toggleAccountStatus();
+                streamer_loop = false;
+                break;
+            }
                 //back
-            case 7: {
+            case 8: {
                 streamer_loop = false;
                 break;
             }
@@ -865,16 +872,17 @@ void streamzFramework() {
     settings.changeOption(2, "Import");
     settings.changeOption(3, "Back");
 
-    Menu sub_menu("StreamZ admin menu default title", 7);
+    Menu sub_menu("StreamZ admin menu default title", 8);
     sub_menu.changeOption(0, "Help");
     sub_menu.changeOption(1, "Create Streamer");
     sub_menu.changeOption(2, "Choose Streamer");
     sub_menu.changeOption(3, "Create Viewer");
     sub_menu.changeOption(4, "Choose Viewer");
     sub_menu.changeOption(5, "Statistics");
-    sub_menu.changeOption(6, "Back");
+    sub_menu.changeOption(6, "Search Streamer by name");
+    sub_menu.changeOption(7, "Back");
 
-    Menu streamer_menu("Streamer default title", 8);
+    Menu streamer_menu("Streamer default title", 9);
     streamer_menu.changeOption(0, "Streamer Info");
     streamer_menu.changeOption(1, "Search Streams");
     streamer_menu.changeOption(2, "Start public stream");
@@ -882,7 +890,8 @@ void streamzFramework() {
     streamer_menu.changeOption(4, "Stop stream");
     streamer_menu.changeOption(5, "Best streams");
     streamer_menu.changeOption(6, "Sell Product"); //Part 2
-    streamer_menu.changeOption(7, "Back");
+    streamer_menu.changeOption(7, "Deactivate account"); //Part 2
+    streamer_menu.changeOption(8, "Back");
 
     Menu viewer_menu("Viewer default title", 10);
     viewer_menu.changeOption(0, "Viewer info");
@@ -1008,6 +1017,12 @@ void streamzFramework() {
                                     Viewer *v_selected = dynamic_cast<Viewer *>(user);
 
                                     if (s_selected != nullptr) {
+                                        if(!s_selected->getAccountStatus()) {
+                                            cout << "Your account was previously deactivated, by signing in now you will activate it again!" << endl;
+                                            cout << "You will also receive 50 likes at your first stream!" << endl;
+
+                                            s_selected->toggleAccountStatus();
+                                        }
                                         streamerMenuLoop(streamer_menu, s_selected, sz_selected);
                                     } else if (v_selected != nullptr) {
                                         viewerMenuLoop(viewer_menu, v_selected, sz_selected, viewer_interaction_menu);
@@ -1094,7 +1109,12 @@ void streamzFramework() {
                                 Streamer *s_selected = sz_selected->getStreamerByID(
                                         input);
 
-                                streamerMenuLoop(streamer_menu, s_selected, sz_selected);
+                                if(!s_selected->getAccountStatus()) {
+                                    cout << "The account is deactivated!" << endl;
+                                }
+                                else{
+                                    streamerMenuLoop(streamer_menu, s_selected, sz_selected);
+                                }
 
                                 break;
                             }
@@ -1208,8 +1228,29 @@ void streamzFramework() {
                                 }
                                 break;
                             }
+                            //Search Streamer by name
+                            case 6:{
+                                string name;
+
+                                cout << "Input the streamer name you want to be searched: ";
+                                cin >> name;
+
+                                if(!cin){
+                                    cout << "Wrong input given!" << endl;
+                                }
+                                else{
+                                    if(sz_selected->getStreamerByName(name) == nullptr){
+                                        cout << "Streamer not found!" << endl;
+                                    }
+                                    else{
+                                        cout << "Streamer found! " << endl;
+                                        cout << sz_selected->getStreamerByName(name)->getInfo() << endl;
+                                    }
+                                }
+                                break;
+                            }
                                 //back
-                            case 6: {
+                            case 7: {
                                 sub_loop = false;
                                 break;
                             }

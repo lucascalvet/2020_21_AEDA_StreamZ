@@ -11,7 +11,7 @@
 #define MAX_QUANTITY_PER_PURCHASE 10 //arbitrated the value
 //values in percentage
 #define STREAMZ_RETAIL_COMISSION 0.1
-#define STREAMZ_CANCELED_ORDER_REPAYMENT_AMOUNT 0.5
+#define STREAMZ_CANCELED_ORDER_REPAYMENT_AMOUNT 0.2
 
 /// Unsigned type for representing an age
 typedef unsigned Age;

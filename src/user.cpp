@@ -215,6 +215,15 @@ std::vector<Stream *> Streamer::getHistory() const {
 }
 
 /**
+ * Get the account status
+ *
+ * @return true for an active account, false otherwise
+ */
+bool Streamer::getAccountStatus() const {
+    return active_account;
+}
+
+/**
  * Activates an account and states if it is eligible for bonus or not
  */
 void Streamer::toggleAccountStatus() {

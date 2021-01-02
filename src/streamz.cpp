@@ -824,9 +824,9 @@ void StreamZ::save(const string &filename) const {
 }
 
 /**
- * Make a donation to a certain streamer with nickname nick
+ * Make a donation to a certain streamer
  *
- * @param nick the streamer's nickname
+ * @param strmr a pointer to the streamer to donate to
  * @param amnt the donation's amount
  * @param eval the evaluation given to the streamer
  */
@@ -842,6 +842,24 @@ void StreamZ::makeDonation(Streamer* strmr, unsigned amnt, unsigned eval) {
 }
 
 /**
+ * Cancel a donation
+ *
+ * @param nick the recipient's nickname
+ * @param amnt the donation's amount
+ * @param eval the evaluation given to the streamer
+ * @return true if the donation was found and deleted, false otherwise
+ */
+bool StreamZ::cancelDonation(const string &nick, unsigned int amnt, unsigned int eval) {
+    Donation d(nick, amnt, eval);
+    Donation f = donations.find(d);
+    if (f == Donation("", 0, 1)) return false;
+    Streamer *s = getStreamerByName(nick);
+    if (s != nullptr) s->cashWithdraw(amnt);
+    donations.remove(f);
+    return true;
+}
+
+/**
  * Get donations BST
  *
  * @return the BST of donations
@@ -852,6 +870,7 @@ BST<Donation> StreamZ::getDonations() const {
 
 /**
  * Get a list with the n biggest donations (if n is specified, otherwise get all donations) with an evaluation between lower and upper
+ *
  * @param lower the lower bound of the evaluation
  * @param upper the upper bound of the evaluation
  * @param n the number of donations to list
@@ -869,7 +888,7 @@ vector<Donation> StreamZ::getDonations(unsigned int lower, unsigned int upper, u
 }
 
 /**
- * Searchs for an order with equal parameters of the ones given
+ * Search for an order with equal parameters of the ones given
  *
  * @param viewer_nickname the viewer nickname associated to the order
  * @param quantity quantity of the order to be searched
@@ -1063,7 +1082,7 @@ void StreamZ::changeMaxOrdersPerViewer(unsigned new_limit) {
 }
 
 /**
- * Get priority_queue of orders in streamz
+ * Get priority_queue of orders in StreamZ
  *
  * @return the orders priority_queue
  */
@@ -1072,7 +1091,7 @@ std::priority_queue<Order> StreamZ::getOrders() const {
 }
 
 /**
- * Get the product by it's id
+ * Get a product by its ID
  *
  * @return the product found, and an empty product if not found
  */
@@ -1182,7 +1201,7 @@ void StreamZ::printStreamers() {
 /**
  * Deposits the determined amount in the streamz capital
  *
- * @param
+ * @param value the amount to be deposited
  */
 void StreamZ::depositCapitalInStreamz(unsigned value) {
     streamz_capital += value;
@@ -1197,6 +1216,11 @@ double StreamZ::getStreamzCapital() const {
     return streamz_capital;
 }
 
+/**
+ * Get streamers with an active account (sorted by name)
+ *
+ * @return streamers with an active account
+ */
 std::vector<Streamer *> StreamZ::getActiveAccountStreamers() {
     vector<Streamer *> result;
     for (auto streamer : streamers_hash_table) {
@@ -1205,6 +1229,11 @@ std::vector<Streamer *> StreamZ::getActiveAccountStreamers() {
     return result;
 }
 
+/**
+ * Get streamers with an inactive account (sorted by name)
+ *
+ * @return streamers with an inactive account
+ */
 std::vector<Streamer *> StreamZ::getInactiveAccountStreamers() {
     vector<Streamer *> result;
     for (auto streamer : streamers_hash_table) {

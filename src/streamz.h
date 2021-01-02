@@ -88,6 +88,7 @@ public:
 
     //Part 2
     void makeDonation(Streamer* strmr, unsigned amnt, unsigned eval);
+    bool cancelDonation(const std::string & nick, unsigned amnt, unsigned eval);
     BST<Donation> getDonations() const;
     vector<Donation> getDonations(unsigned int lower, unsigned int upper, unsigned int n = UINT_MAX);
 

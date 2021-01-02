@@ -49,7 +49,7 @@ public:
     ~Streamer();
     std::string getInfo() override;
     std::vector<Stream *> getHistory() const;
-    bool getAccountStatus() const {return active_account;} //Part 2
+    bool getAccountStatus() const; //Part 2
     void toggleAccountStatus(); //Part 2
     void giveBonus();
     void addToHistory(Stream *stream);

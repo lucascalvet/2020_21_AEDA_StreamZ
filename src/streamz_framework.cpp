@@ -1075,7 +1075,9 @@ void streamzFramework() {
                                 vector<Streamer *>::const_iterator streamer;
                                 for (streamer = streamers.begin(); streamer != streamers.end(); streamer++) {
                                     cout << "Id: " << to_string((*streamer)->getID()) + "  ";
-                                    cout << "Name: " << (*streamer)->getName() << endl;
+                                    cout << "Name: " << (*streamer)->getName();
+                                    if (!(*streamer)->getAccountStatus()) cout << "   INACTIVE";
+                                    cout << endl;
                                 }
                                 cout << endl << "Select the Streamer by its id" << endl;
                                 cout << "--> ";

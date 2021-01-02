@@ -341,8 +341,3 @@ TEST(test_2, Orders) {
     EXPECT_THROW(sz1.makeOrder(viewer_a, 1, 3, 3), OrderAlreadyExists);
 
 }
-
-TEST(test_2, Temp) {
-    StreamZ sz1("STREAMZ_SAMPLE_SET_UPDATE.txt");
-    sz1.save("STREAMZ_SAMPLE_SET_UPDATE_TEST.txt");
-}

@@ -872,7 +872,7 @@ void streamzFramework() {
     settings.changeOption(2, "Import");
     settings.changeOption(3, "Back");
 
-    Menu sub_menu("StreamZ admin menu default title", 8);
+    Menu sub_menu("StreamZ admin menu default title", 11);
     sub_menu.changeOption(0, "Help");
     sub_menu.changeOption(1, "Create Streamer");
     sub_menu.changeOption(2, "Choose Streamer");
@@ -880,7 +880,10 @@ void streamzFramework() {
     sub_menu.changeOption(4, "Choose Viewer");
     sub_menu.changeOption(5, "Statistics");
     sub_menu.changeOption(6, "Search Streamer by name");
-    sub_menu.changeOption(7, "Back");
+    sub_menu.changeOption(7, "List active streamers accounts");
+    sub_menu.changeOption(8, "List inactive streamers accounts");
+    sub_menu.changeOption(9, "Search Donations");
+    sub_menu.changeOption(10, "Back");
 
     Menu streamer_menu("Streamer default title", 9);
     streamer_menu.changeOption(0, "Streamer Info");
@@ -1251,8 +1254,73 @@ void streamzFramework() {
                                 }
                                 break;
                             }
+                            //List active streamers accounts
+                            case 7:{
+                                vector<Streamer*> actives = sz_selected->getActiveAccountStreamers();
+
+                                if(actives.empty()) cout << "There are no active streamer accounts!" << endl;
+                                else{
+                                    auto it = actives.begin();
+
+                                    while(it != actives.end()){
+                                        cout << (*it)->getName() << endl;
+                                        it++;
+                                    }
+                                }
+                                break;
+                            }
+                            //List inactive streamers accounts
+                            case 8:{
+                                vector<Streamer*> inactives = sz_selected->getInactiveAccountStreamers();
+
+                                if(inactives.empty()) cout << "There are no inactive streamer accounts!" << endl;
+                                else{
+                                    auto it = inactives.begin();
+
+                                    while(it != inactives.end()){
+                                        cout << (*it)->getName() << endl;
+                                        it++;
+                                    }
+                                }
+                                break;
+                            }
+                            //Search Donations
+                            case 9:{
+                                unsigned lower = 0, upper = 0, n = 0;
+
+                                cout << "Input how many donations you want to search: " << endl;
+                                cin >> n;
+                                if(!cin){
+                                    cout << "Input a number!!" << endl;
+                                    break;
+                                }
+                                cout << "Input the lower limit of avaliations value: " << endl;
+                                cin >> lower;
+                                if(!cin){
+                                    cout << "Input a number!!" << endl;
+                                    break;
+                                }
+                                cout << "Input the upper limit for avaliations value: " << endl;
+                                cin >> upper;
+                                if(!cin){
+                                    cout << "Input a number!!" << endl;
+                                    break;
+                                }
+                                vector<Donation> donations = sz_selected->getDonations(lower, upper, n);
+
+                                if(donations.empty()) cout << "There are no donations between those values!" << endl;
+                                else{
+                                    auto it = donations.begin();
+
+                                    while(it != donations.end()){
+                                        cout << (*it).getInfo() << endl;
+                                        it++;
+                                    }
+                                }
+                                break;
+                            }
                                 //back
-                            case 7: {
+                            case 10: {
                                 sub_loop = false;
                                 break;
                             }

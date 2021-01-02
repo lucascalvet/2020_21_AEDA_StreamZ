@@ -7,9 +7,11 @@
 int main(int argc, char* argv[]){
     streamzFramework();
 
-    testing::InitGoogleTest(&argc, argv);
-    std::cout << "\n\n----------STREAMZ TESTS----------" << std::endl;
+    //NOTE: In order to run the test comment streamzFramework(); and uncomment google test
 
-    return RUN_ALL_TESTS();
-    //return 0;
+    //testing::InitGoogleTest(&argc, argv);
+    //std::cout << "\n\n----------STREAMZ TESTS----------" << std::endl;
+
+    //return RUN_ALL_TESTS();
+    return 0;
 }

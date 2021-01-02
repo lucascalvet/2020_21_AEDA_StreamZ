@@ -835,8 +835,24 @@ void viewerMenuLoop(Menu viewer_menu, Viewer *v_selected, StreamZ *sz_selected, 
 
                 break;
             }
+            // Deposit cash
+            case 9:{
+                unsigned cash = 0;
+
+                cout << "Input how much money you want to deposit: ";
+                cin >> cash;
+
+                if(!cin){
+                    cout << "Input a number!" << endl;
+                    break;
+                }
+                else{
+                    v_selected->cashDeposit(cash);
+                }
+                break;
+            }
                 //back
-            case 9: {
+            case 10: {
                 viewer_loop = false;
                 break;
             }
@@ -896,7 +912,7 @@ void streamzFramework() {
     streamer_menu.changeOption(7, "Deactivate account"); //Part 2
     streamer_menu.changeOption(8, "Back");
 
-    Menu viewer_menu("Viewer default title", 10);
+    Menu viewer_menu("Viewer default title", 11);
     viewer_menu.changeOption(0, "Viewer info");
     viewer_menu.changeOption(1, "Search Streams");
     viewer_menu.changeOption(2, "Enter stream");
@@ -906,7 +922,8 @@ void streamzFramework() {
     viewer_menu.changeOption(6, "Make Order"); //Part 2
     viewer_menu.changeOption(7, "Delete Order"); //Part 2
     viewer_menu.changeOption(8, "Donate"); //Part 2
-    viewer_menu.changeOption(9, "Back");
+    viewer_menu.changeOption(9, "Deposit cash"); //Part 2
+    viewer_menu.changeOption(10, "Back");
 
     Menu stats_menu("Admin Statistics", 5);
     stats_menu.changeOption(0, "StreamZ statistics");

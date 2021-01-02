@@ -108,6 +108,8 @@ public:
     void depositCapitalInStreamz(unsigned value);
     double getStreamzCapital() const;
 
+    Order proccessOrder();
+
     std::vector<Streamer *> getActiveAccountStreamers();
     std::vector<Streamer *> getInactiveAccountStreamers();
 };

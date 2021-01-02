@@ -298,7 +298,7 @@ string Viewer::getInfo() {
 
     ostringstream info;
     info << User::getInfo();
-    info << "\t" << "Viewing: " << active_status << "\n";
+    info << "\t" << "Viewing: " << active_status << "\tWallet: " << getWalletAmount() << "\n";
     if (isActive()) {
         info << "Stream-> " << s->getInfo() << endl;
     }

@@ -1241,3 +1241,18 @@ std::vector<Streamer *> StreamZ::getInactiveAccountStreamers() {
     }
     return result;
 }
+
+/**
+ * Processes an order
+ *
+ * @return the order at the top of the priority queue
+ */
+Order StreamZ::proccessOrder() {
+    Order ord;
+
+    if(!orders.empty()){
+        ord = orders.top();
+        orders.pop();
+    }
+    return ord;
+}

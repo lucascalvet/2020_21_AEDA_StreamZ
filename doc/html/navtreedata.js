@@ -42,7 +42,8 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"annotated.html"
+"annotated.html",
+"dc/daa/product_8h_source.html"
 ];
 
 var SYNCONMSG = 'clique para desativar a sincronização do painel';

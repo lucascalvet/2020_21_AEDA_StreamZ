@@ -1,6 +1,7 @@
 var searchData=
 [
-  ['printstreams_71',['printStreams',['../d5/d41/class_stream_z.html#a15a0f9358e924559de8f6c52fc4752fe',1,'StreamZ']]],
-  ['privatestream_72',['PrivateStream',['../df/d6f/class_private_stream.html',1,'']]],
-  ['publicstream_73',['PublicStream',['../d3/d3f/class_public_stream.html',1,'']]]
+  ['namealreadyinuse_110',['NameAlreadyInUse',['../d4/df0/class_name_already_in_use.html',1,'']]],
+  ['nominimumage_111',['NoMinimumAge',['../d3/d04/class_no_minimum_age.html',1,'']]],
+  ['notenoughcapital_112',['NotEnoughCapital',['../da/d18/class_not_enough_capital.html',1,'']]],
+  ['notinprivatestream_113',['NotInPrivateStream',['../de/de3/class_not_in_private_stream.html',1,'']]]
 ];

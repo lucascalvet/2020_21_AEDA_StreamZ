@@ -2,6 +2,7 @@ var class_stream =
 [
     [ "Stream", "d1/d51/class_stream.html#a1b682fca0fa5e7083c3e14dbd0791690", null ],
     [ "Stream", "d1/d51/class_stream.html#a729ae3d63e103853fa33e7f22885e623", null ],
+    [ "addBonus", "d1/d51/class_stream.html#a4118478372ed1c9a39980c42a241590e", null ],
     [ "addDislike", "d1/d51/class_stream.html#a04497a7018b52ee2d4fe4764e3e3a337", null ],
     [ "addLike", "d1/d51/class_stream.html#a504f03423b828a8f3bcb586b22c6e8ca", null ],
     [ "addView", "d1/d51/class_stream.html#aa0f3f5e1dfe2ce0057c7f4c5757a8a83", null ],

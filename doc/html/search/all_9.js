@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['menu_67',['Menu',['../d2/db8/class_menu.html',1,'Menu'],['../d2/db8/class_menu.html#af3c64f2f5d489e5bb65350c31a4d1dad',1,'Menu::Menu()']]]
+  ['likestream_105',['likeStream',['../d0/d30/class_viewer.html#a9364209d2f671e088b0b5ffdedd47ca0',1,'Viewer']]],
+  ['loginverifier_106',['loginVerifier',['../d5/d41/class_stream_z.html#a33c172faf8074b4331c7eb0d03a9c5e4',1,'StreamZ']]]
 ];

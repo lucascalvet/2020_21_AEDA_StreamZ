@@ -51,7 +51,7 @@ PROJECT_BRIEF          = "The Best Way To Stream"
 # pixels and the maximum width should not exceed 200 pixels. Doxygen will copy
 # the logo to the output directory.
 
-PROJECT_LOGO           = C:/Users/Lucas/Downloads/streamz_logo75.png
+PROJECT_LOGO           = "C:/Users/Lucas/OneDrive - Universidade do Porto/AEDA/StreamZ_AEDA_2020_21/photos/logo_segunda_parte_75%.png"
 
 # The OUTPUT_DIRECTORY tag is used to specify the (relative or absolute) path
 # into which the generated documentation will be written. If a relative path is

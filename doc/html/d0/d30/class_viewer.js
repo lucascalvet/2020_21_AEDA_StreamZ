@@ -6,7 +6,7 @@ var class_viewer =
     [ "dislikeStream", "d0/d30/class_viewer.html#a0ba3c53a4516d87b4c87a7bd83f49701", null ],
     [ "enterStream", "d0/d30/class_viewer.html#a08bbaef53a53a4eb62f612b125c68b17", null ],
     [ "exitStream", "d0/d30/class_viewer.html#a6bca97511d39913521c98a080d7700a8", null ],
-    [ "getInfo", "d0/d30/class_viewer.html#ad2704ae5ff034ccfe5829cfafefcdcbe", null ],
+    [ "getInfo", "d0/d30/class_viewer.html#ae86d15c4aa119f218cc99d5de18d7b31", null ],
     [ "likeStream", "d0/d30/class_viewer.html#a9364209d2f671e088b0b5ffdedd47ca0", null ],
     [ "remDislikeStream", "d0/d30/class_viewer.html#a966b8400a1f7db225b85b140319ac3fa", null ],
     [ "remLikeStream", "d0/d30/class_viewer.html#a10d93828d32159f8c1fdfbb88eba7858", null ]

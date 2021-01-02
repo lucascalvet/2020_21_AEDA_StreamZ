@@ -24,7 +24,7 @@
 <table cellspacing="0" cellpadding="0">
  <tbody>
  <tr style="height: 56px;">
-  <td id="projectlogo"><img alt="Logo" src="../../streamz_logo75.png"/></td>
+  <td id="projectlogo"><img alt="Logo" src="../../logo_segunda_parte_75%.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">StreamZ
    </div>
@@ -163,6 +163,46 @@ Membros públicos</h2></td></tr>
 <tr class="separator:a33c172faf8074b4331c7eb0d03a9c5e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad057b29a0f481203af6aa78358f54534"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/d41/class_stream_z.html#ad057b29a0f481203af6aa78358f54534">save</a> (const std::string &amp;filename) const</td></tr>
 <tr class="separator:ad057b29a0f481203af6aa78358f54534"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a77a7d78cf6126140605148b24503b808"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/d41/class_stream_z.html#a77a7d78cf6126140605148b24503b808">makeDonation</a> (<a class="el" href="../../d7/dca/class_streamer.html">Streamer</a> *strmr, unsigned amnt, unsigned eval)</td></tr>
+<tr class="separator:a77a7d78cf6126140605148b24503b808"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a388ea70d1df13bd08e3374766bba0881"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/d41/class_stream_z.html#a388ea70d1df13bd08e3374766bba0881">cancelDonation</a> (const std::string &amp;nick, unsigned amnt, unsigned eval)</td></tr>
+<tr class="separator:a388ea70d1df13bd08e3374766bba0881"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9f75a6977f5efb86cade923b32779d02"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d2/dd3/class_b_s_t.html">BST</a>&lt; <a class="el" href="../../d1/de8/class_donation.html">Donation</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/d41/class_stream_z.html#a9f75a6977f5efb86cade923b32779d02">getDonations</a> () const</td></tr>
+<tr class="separator:a9f75a6977f5efb86cade923b32779d02"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3a9a17bd0ceeb560ec63a3a9524f137a"><td class="memItemLeft" align="right" valign="top">vector&lt; <a class="el" href="../../d1/de8/class_donation.html">Donation</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/d41/class_stream_z.html#a3a9a17bd0ceeb560ec63a3a9524f137a">getDonations</a> (unsigned int lower, unsigned int upper, unsigned int n=UINT_MAX)</td></tr>
+<tr class="separator:a3a9a17bd0ceeb560ec63a3a9524f137a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a33e58113db3b806ab37f0dabe410f978"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d1/da7/class_order.html">Order</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/d41/class_stream_z.html#a33e58113db3b806ab37f0dabe410f978">searchOrder</a> (std::string viewer_nickname, unsigned quantity, unsigned priority)</td></tr>
+<tr class="separator:a33e58113db3b806ab37f0dabe410f978"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad447988739c50e8ae73ef99e924ba27b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/d41/class_stream_z.html#ad447988739c50e8ae73ef99e924ba27b">makeOrder</a> (<a class="el" href="../../d0/d30/class_viewer.html">Viewer</a> *viewer, unsigned quantity, unsigned priority, unsigned product_id)</td></tr>
+<tr class="separator:ad447988739c50e8ae73ef99e924ba27b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa1dbead57cefa73d7078d23f0917b5b5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/d41/class_stream_z.html#aa1dbead57cefa73d7078d23f0917b5b5">deleteOrder</a> (<a class="el" href="../../d0/d30/class_viewer.html">Viewer</a> *viewer, unsigned quantity, unsigned priority)</td></tr>
+<tr class="separator:aa1dbead57cefa73d7078d23f0917b5b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac23ac75ccac077e040d583bbac2f500f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/d41/class_stream_z.html#ac23ac75ccac077e040d583bbac2f500f">changeMaxOrdersPerViewer</a> (unsigned new_limit)</td></tr>
+<tr class="separator:ac23ac75ccac077e040d583bbac2f500f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8f0335e086bcdd33d8d3291061d06ddf"><td class="memItemLeft" align="right" valign="top">std::priority_queue&lt; <a class="el" href="../../d1/da7/class_order.html">Order</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/d41/class_stream_z.html#a8f0335e086bcdd33d8d3291061d06ddf">getOrders</a> () const</td></tr>
+<tr class="separator:a8f0335e086bcdd33d8d3291061d06ddf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a72443d0e4cfc1bffdea52653f80b16e4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../dc/d42/class_product.html">Product</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/d41/class_stream_z.html#a72443d0e4cfc1bffdea52653f80b16e4">getProductById</a> (unsigned id)</td></tr>
+<tr class="separator:a72443d0e4cfc1bffdea52653f80b16e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4d0c5253492c344c7d913e22f6ca26a8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/d41/class_stream_z.html#a4d0c5253492c344c7d913e22f6ca26a8">sellProduct</a> (<a class="el" href="../../d7/dca/class_streamer.html">Streamer</a> *streamer, unsigned price, unsigned stock)</td></tr>
+<tr class="separator:a4d0c5253492c344c7d913e22f6ca26a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afe4149b3174a5c34b4412a62397c948c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/d41/class_stream_z.html#afe4149b3174a5c34b4412a62397c948c">deleteProduct</a> (unsigned id)</td></tr>
+<tr class="separator:afe4149b3174a5c34b4412a62397c948c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a954a92e8e4b3954b242d90fc24d123f2"><td class="memItemLeft" align="right" valign="top">vector&lt; <a class="el" href="../../dc/d42/class_product.html">Product</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/d41/class_stream_z.html#a954a92e8e4b3954b242d90fc24d123f2">getProducts</a> () const</td></tr>
+<tr class="separator:a954a92e8e4b3954b242d90fc24d123f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a044d17ba7a7c5e360152f29e17d5ebd2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/d41/class_stream_z.html#a044d17ba7a7c5e360152f29e17d5ebd2">sendMoney</a> (<a class="el" href="../../d7/d23/class_user.html">User</a> *sender, <a class="el" href="../../d7/d23/class_user.html">User</a> *receiver, double amount)</td></tr>
+<tr class="separator:a044d17ba7a7c5e360152f29e17d5ebd2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4fbcd09e22303ff9ad06fd09a4ba46a3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/d41/class_stream_z.html#a4fbcd09e22303ff9ad06fd09a4ba46a3">printAvailableProducts</a> ()</td></tr>
+<tr class="separator:a4fbcd09e22303ff9ad06fd09a4ba46a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a97d495482cb51bf54ce334672a22c412"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/d41/class_stream_z.html#a97d495482cb51bf54ce334672a22c412">printStreamers</a> ()</td></tr>
+<tr class="separator:a97d495482cb51bf54ce334672a22c412"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7bbfbf9771e7d20c2dfb491de0b158d7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/d41/class_stream_z.html#a7bbfbf9771e7d20c2dfb491de0b158d7">depositCapitalInStreamz</a> (unsigned value)</td></tr>
+<tr class="separator:a7bbfbf9771e7d20c2dfb491de0b158d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5c2b3369699080b849007fc0c6fff66b"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/d41/class_stream_z.html#a5c2b3369699080b849007fc0c6fff66b">getStreamzCapital</a> () const</td></tr>
+<tr class="separator:a5c2b3369699080b849007fc0c6fff66b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a79999a7d3db1ea8b86482343da4eebff"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="../../d7/dca/class_streamer.html">Streamer</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/d41/class_stream_z.html#a79999a7d3db1ea8b86482343da4eebff">getActiveAccountStreamers</a> ()</td></tr>
+<tr class="separator:a79999a7d3db1ea8b86482343da4eebff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeb1e04790a261c9479545002ce8dacf6"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="../../d7/dca/class_streamer.html">Streamer</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/d41/class_stream_z.html#aeb1e04790a261c9479545002ce8dacf6">getInactiveAccountStreamers</a> ()</td></tr>
+<tr class="separator:aeb1e04790a261c9479545002ce8dacf6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Membros públicos estáticos</h2></td></tr>
@@ -327,6 +367,187 @@ Membros públicos estáticos</h2></td></tr>
 
 </div>
 </div>
+<a id="a388ea70d1df13bd08e3374766bba0881"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a388ea70d1df13bd08e3374766bba0881">&#9670;&nbsp;</a></span>cancelDonation()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool StreamZ::cancelDonation </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>nick</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned&#160;</td>
+          <td class="paramname"><em>amnt</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned&#160;</td>
+          <td class="paramname"><em>eval</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Cancel a donation</p>
+<dl class="params"><dt>Parâmetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">nick</td><td>the recipient's nickname </td></tr>
+    <tr><td class="paramname">amnt</td><td>the donation's amount </td></tr>
+    <tr><td class="paramname">eval</td><td>the evaluation given to the streamer </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Retorna</dt><dd>true if the donation was found and deleted, false otherwise </dd></dl>
+
+</div>
+</div>
+<a id="ac23ac75ccac077e040d583bbac2f500f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac23ac75ccac077e040d583bbac2f500f">&#9670;&nbsp;</a></span>changeMaxOrdersPerViewer()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void StreamZ::changeMaxOrdersPerViewer </td>
+          <td>(</td>
+          <td class="paramtype">unsigned&#160;</td>
+          <td class="paramname"><em>new_limit</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Changes the value of the maximum orders that a viewer can make and it adjusts the queue accordingly</p>
+<dl class="params"><dt>Parâmetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">new_limit</td><td>the value to replace the current value of max_orders_per_viewer </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="aa1dbead57cefa73d7078d23f0917b5b5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa1dbead57cefa73d7078d23f0917b5b5">&#9670;&nbsp;</a></span>deleteOrder()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void StreamZ::deleteOrder </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="../../d0/d30/class_viewer.html">Viewer</a> *&#160;</td>
+          <td class="paramname"><em>viewer</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned&#160;</td>
+          <td class="paramname"><em>quantity</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned&#160;</td>
+          <td class="paramname"><em>priority</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Deletes an order from the orders priority_queue</p>
+<dl class="params"><dt>Parâmetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">viewer</td><td>the viewer associated to the order </td></tr>
+    <tr><td class="paramname">quantity</td><td>the quantity of product of the order </td></tr>
+    <tr><td class="paramname">priority</td><td>the priority of the order </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="afe4149b3174a5c34b4412a62397c948c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afe4149b3174a5c34b4412a62397c948c">&#9670;&nbsp;</a></span>deleteProduct()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void StreamZ::deleteProduct </td>
+          <td>(</td>
+          <td class="paramtype">unsigned&#160;</td>
+          <td class="paramname"><em>id</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Deletes a product from the products vector</p>
+<dl class="params"><dt>Parâmetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">id</td><td>the id of the product to be deleted </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a7bbfbf9771e7d20c2dfb491de0b158d7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7bbfbf9771e7d20c2dfb491de0b158d7">&#9670;&nbsp;</a></span>depositCapitalInStreamz()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void StreamZ::depositCapitalInStreamz </td>
+          <td>(</td>
+          <td class="paramtype">unsigned&#160;</td>
+          <td class="paramname"><em>value</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Deposits the determined amount in the streamz capital</p>
+<dl class="params"><dt>Parâmetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">value</td><td>the amount to be deposited </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a79999a7d3db1ea8b86482343da4eebff"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a79999a7d3db1ea8b86482343da4eebff">&#9670;&nbsp;</a></span>getActiveAccountStreamers()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; <a class="el" href="../../d7/dca/class_streamer.html">Streamer</a> * &gt; StreamZ::getActiveAccountStreamers </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Get streamers with an active account (sorted by name)</p>
+<dl class="section return"><dt>Retorna</dt><dd>streamers with an active account </dd></dl>
+
+</div>
+</div>
 <a id="a35b7b606ac95473324b75440c9c19038"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a35b7b606ac95473324b75440c9c19038">&#9670;&nbsp;</a></span>getActiveStreamers()</h2>
 
@@ -403,6 +624,69 @@ Membros públicos estáticos</h2></td></tr>
 
 </div>
 </div>
+<a id="a9f75a6977f5efb86cade923b32779d02"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9f75a6977f5efb86cade923b32779d02">&#9670;&nbsp;</a></span>getDonations() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="../../d2/dd3/class_b_s_t.html">BST</a>&lt; <a class="el" href="../../d1/de8/class_donation.html">Donation</a> &gt; StreamZ::getDonations </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Get donations <a class="el" href="../../d2/dd3/class_b_s_t.html">BST</a></p>
+<dl class="section return"><dt>Retorna</dt><dd>the <a class="el" href="../../d2/dd3/class_b_s_t.html">BST</a> of donations </dd></dl>
+
+</div>
+</div>
+<a id="a3a9a17bd0ceeb560ec63a3a9524f137a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3a9a17bd0ceeb560ec63a3a9524f137a">&#9670;&nbsp;</a></span>getDonations() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">vector&lt; <a class="el" href="../../d1/de8/class_donation.html">Donation</a> &gt; StreamZ::getDonations </td>
+          <td>(</td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>lower</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>upper</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>n</em> = <code>UINT_MAX</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Get a list with the n biggest donations (if n is specified, otherwise get all donations) with an evaluation between lower and upper</p>
+<dl class="params"><dt>Parâmetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">lower</td><td>the lower bound of the evaluation </td></tr>
+    <tr><td class="paramname">upper</td><td>the upper bound of the evaluation </td></tr>
+    <tr><td class="paramname">n</td><td>the number of donations to list </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Retorna</dt><dd>a vector with the desired donations </dd></dl>
+
+</div>
+</div>
 <a id="aa410be3135d72f35e935a5da6b1567f0"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aa410be3135d72f35e935a5da6b1567f0">&#9670;&nbsp;</a></span>getID()</h2>
 
@@ -419,6 +703,25 @@ Membros públicos estáticos</h2></td></tr>
 </div><div class="memdoc">
 <p>Get the ID of the <a class="el" href="../../d5/d41/class_stream_z.html">StreamZ</a> platform</p>
 <dl class="section return"><dt>Retorna</dt><dd>the ID of the <a class="el" href="../../d5/d41/class_stream_z.html">StreamZ</a> platform </dd></dl>
+
+</div>
+</div>
+<a id="aeb1e04790a261c9479545002ce8dacf6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeb1e04790a261c9479545002ce8dacf6">&#9670;&nbsp;</a></span>getInactiveAccountStreamers()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; <a class="el" href="../../d7/dca/class_streamer.html">Streamer</a> * &gt; StreamZ::getInactiveAccountStreamers </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Get streamers with an inactive account (sorted by name)</p>
+<dl class="section return"><dt>Retorna</dt><dd>streamers with an inactive account </dd></dl>
 
 </div>
 </div>
@@ -632,6 +935,64 @@ Membros públicos estáticos</h2></td></tr>
 
 </div>
 </div>
+<a id="a8f0335e086bcdd33d8d3291061d06ddf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8f0335e086bcdd33d8d3291061d06ddf">&#9670;&nbsp;</a></span>getOrders()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::priority_queue&lt; <a class="el" href="../../d1/da7/class_order.html">Order</a> &gt; StreamZ::getOrders </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Get priority_queue of orders in <a class="el" href="../../d5/d41/class_stream_z.html">StreamZ</a></p>
+<dl class="section return"><dt>Retorna</dt><dd>the orders priority_queue </dd></dl>
+
+</div>
+</div>
+<a id="a72443d0e4cfc1bffdea52653f80b16e4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a72443d0e4cfc1bffdea52653f80b16e4">&#9670;&nbsp;</a></span>getProductById()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="../../dc/d42/class_product.html">Product</a> StreamZ::getProductById </td>
+          <td>(</td>
+          <td class="paramtype">unsigned&#160;</td>
+          <td class="paramname"><em>id</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Get a product by its ID</p>
+<dl class="section return"><dt>Retorna</dt><dd>the product found, and an empty product if not found </dd></dl>
+
+</div>
+</div>
+<a id="a954a92e8e4b3954b242d90fc24d123f2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a954a92e8e4b3954b242d90fc24d123f2">&#9670;&nbsp;</a></span>getProducts()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">vector&lt; <a class="el" href="../../dc/d42/class_product.html">Product</a> &gt; StreamZ::getProducts </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Get the products vector from streamz</p>
+<dl class="section return"><dt>Retorna</dt><dd>the products vector </dd></dl>
+
+</div>
+</div>
 <a id="ace927acfc105ced963b4f275b1fbee84"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ace927acfc105ced963b4f275b1fbee84">&#9670;&nbsp;</a></span>getStreamerByID()</h2>
 
@@ -738,6 +1099,25 @@ Membros públicos estáticos</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Retorna</dt><dd>the list of streamers streaming the specified streams </dd></dl>
+
+</div>
+</div>
+<a id="a5c2b3369699080b849007fc0c6fff66b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5c2b3369699080b849007fc0c6fff66b">&#9670;&nbsp;</a></span>getStreamzCapital()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double StreamZ::getStreamzCapital </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Get the streamz total capital</p>
+<dl class="section return"><dt>Retorna</dt><dd>the streamz total capital </dd></dl>
 
 </div>
 </div>
@@ -875,6 +1255,134 @@ Membros públicos estáticos</h2></td></tr>
 
 </div>
 </div>
+<a id="a77a7d78cf6126140605148b24503b808"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a77a7d78cf6126140605148b24503b808">&#9670;&nbsp;</a></span>makeDonation()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void StreamZ::makeDonation </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="../../d7/dca/class_streamer.html">Streamer</a> *&#160;</td>
+          <td class="paramname"><em>strmr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned&#160;</td>
+          <td class="paramname"><em>amnt</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned&#160;</td>
+          <td class="paramname"><em>eval</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Make a donation to a certain streamer</p>
+<dl class="params"><dt>Parâmetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">strmr</td><td>a pointer to the streamer to donate to </td></tr>
+    <tr><td class="paramname">amnt</td><td>the donation's amount </td></tr>
+    <tr><td class="paramname">eval</td><td>the evaluation given to the streamer </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ad447988739c50e8ae73ef99e924ba27b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad447988739c50e8ae73ef99e924ba27b">&#9670;&nbsp;</a></span>makeOrder()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void StreamZ::makeOrder </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="../../d0/d30/class_viewer.html">Viewer</a> *&#160;</td>
+          <td class="paramname"><em>viewer</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned&#160;</td>
+          <td class="paramname"><em>quantity</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned&#160;</td>
+          <td class="paramname"><em>priority</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned&#160;</td>
+          <td class="paramname"><em>product_id</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Creates an order and adds it to the orders priority_queue</p>
+<dl class="params"><dt>Parâmetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">viewer</td><td>the viewer associated with that order </td></tr>
+    <tr><td class="paramname">quantity</td><td>the quantity of products to buy </td></tr>
+    <tr><td class="paramname">priority</td><td>the priority of the purchase </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a4fbcd09e22303ff9ad06fd09a4ba46a3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4fbcd09e22303ff9ad06fd09a4ba46a3">&#9670;&nbsp;</a></span>printAvailableProducts()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void StreamZ::printAvailableProducts </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Prints all the products in the products vector </p>
+
+</div>
+</div>
+<a id="a97d495482cb51bf54ce334672a22c412"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a97d495482cb51bf54ce334672a22c412">&#9670;&nbsp;</a></span>printStreamers()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void StreamZ::printStreamers </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Print the streamers available in system </p>
+
+</div>
+</div>
 <a id="a15a0f9358e924559de8f6c52fc4752fe"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a15a0f9358e924559de8f6c52fc4752fe">&#9670;&nbsp;</a></span>printStreams()</h2>
 
@@ -927,6 +1435,136 @@ Membros públicos estáticos</h2></td></tr>
 <dl class="params"><dt>Parâmetros</dt><dd>
   <table class="params">
     <tr><td class="paramname">filename</td><td>the name of the file to save to </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a33e58113db3b806ab37f0dabe410f978"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a33e58113db3b806ab37f0dabe410f978">&#9670;&nbsp;</a></span>searchOrder()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="../../d1/da7/class_order.html">Order</a> StreamZ::searchOrder </td>
+          <td>(</td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>viewer_nickname</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned&#160;</td>
+          <td class="paramname"><em>quantity</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned&#160;</td>
+          <td class="paramname"><em>priority</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Search for an order with equal parameters of the ones given</p>
+<dl class="params"><dt>Parâmetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">viewer_nickname</td><td>the viewer nickname associated to the order </td></tr>
+    <tr><td class="paramname">quantity</td><td>quantity of the order to be searched </td></tr>
+    <tr><td class="paramname">priority</td><td>priority of the order to be searched </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Retorna</dt><dd>the order if found, or an empty order if not found </dd></dl>
+
+</div>
+</div>
+<a id="a4d0c5253492c344c7d913e22f6ca26a8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4d0c5253492c344c7d913e22f6ca26a8">&#9670;&nbsp;</a></span>sellProduct()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void StreamZ::sellProduct </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="../../d7/dca/class_streamer.html">Streamer</a> *&#160;</td>
+          <td class="paramname"><em>streamer</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned&#160;</td>
+          <td class="paramname"><em>price</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned&#160;</td>
+          <td class="paramname"><em>stock</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Sells a product for the streamer passed as parameter, with the parameters passed</p>
+<dl class="params"><dt>Parâmetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">streamer</td><td>the streamer that is selling a product </td></tr>
+    <tr><td class="paramname">price</td><td>the price of the product </td></tr>
+    <tr><td class="paramname">stock</td><td>the stock of the product </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a044d17ba7a7c5e360152f29e17d5ebd2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a044d17ba7a7c5e360152f29e17d5ebd2">&#9670;&nbsp;</a></span>sendMoney()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void StreamZ::sendMoney </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="../../d7/d23/class_user.html">User</a> *&#160;</td>
+          <td class="paramname"><em>sender</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="../../d7/d23/class_user.html">User</a> *&#160;</td>
+          <td class="paramname"><em>receiver</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>amount</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>It enables transactions between users if they want</p>
+<dl class="params"><dt>Parâmetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">sender</td><td>the sender of the money </td></tr>
+    <tr><td class="paramname">receiver</td><td>the receiver of the money </td></tr>
+    <tr><td class="paramname">amount</td><td>the amount to be sent </td></tr>
   </table>
   </dd>
 </dl>

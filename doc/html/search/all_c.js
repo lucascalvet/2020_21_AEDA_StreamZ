@@ -1,7 +1,8 @@
 var searchData=
 [
-  ['remdislike_74',['remDislike',['../d1/d51/class_stream.html#a4474a16fdfef42c00522a59743cadcd3',1,'Stream']]],
-  ['remdislikestream_75',['remDislikeStream',['../d0/d30/class_viewer.html#a966b8400a1f7db225b85b140319ac3fa',1,'Viewer']]],
-  ['remlike_76',['remLike',['../d1/d51/class_stream.html#a8ee8dddd8357cc90f83975b984b9ec8b',1,'Stream']]],
-  ['remlikestream_77',['remLikeStream',['../d0/d30/class_viewer.html#a10d93828d32159f8c1fdfbb88eba7858',1,'Viewer']]]
+  ['operator_3c_114',['operator&lt;',['../d1/da7/class_order.html#a3705ac383f9efb4ff504dbc210e994b9',1,'Order']]],
+  ['operator_3d_3d_115',['operator==',['../d1/da7/class_order.html#a8fe431aaef7848f9cd4ec8173427b2d2',1,'Order::operator==()'],['../dc/d42/class_product.html#a31e7c281fbf08bf2d3202f15a1342e21',1,'Product::operator==()']]],
+  ['order_116',['Order',['../d1/da7/class_order.html',1,'Order'],['../d1/da7/class_order.html#a7b6a660b03708ed5b4e1c4a6dc2a664a',1,'Order::Order()']]],
+  ['orderalreadyexists_117',['OrderAlreadyExists',['../dd/d57/class_order_already_exists.html',1,'']]],
+  ['orderdoesnotexist_118',['OrderDoesNotExist',['../df/d9b/class_order_does_not_exist.html',1,'']]]
 ];

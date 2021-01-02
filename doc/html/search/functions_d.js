@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['test_210',['TEST',['../tests_8cpp.html#ade8e763d8730d7a4b27b54f98ff07792',1,'TEST(test, SaveToFiles):&#160;tests.cpp'],['../tests_8cpp.html#abb3240c242d2972801aef615adbe2f88',1,'TEST(test, StartStopStreams):&#160;tests.cpp']]]
+  ['_7estreamer_314',['~Streamer',['../d7/dca/class_streamer.html#a713b5c47448af40f966d5e641f402af3',1,'Streamer']]],
+  ['_7estreamz_315',['~StreamZ',['../d5/d41/class_stream_z.html#a89e6505efcc9e4bb40b9123f4bed2091',1,'StreamZ']]]
 ];

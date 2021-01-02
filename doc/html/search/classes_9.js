@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['unauthorizedviewer_113',['UnauthorizedViewer',['../d9/d8c/class_unauthorized_viewer.html',1,'']]],
-  ['user_114',['User',['../d7/d23/class_user.html',1,'']]]
+  ['order_184',['Order',['../d1/da7/class_order.html',1,'']]],
+  ['orderalreadyexists_185',['OrderAlreadyExists',['../dd/d57/class_order_already_exists.html',1,'']]],
+  ['orderdoesnotexist_186',['OrderDoesNotExist',['../df/d9b/class_order_does_not_exist.html',1,'']]]
 ];

@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['namealreadyinuse_68',['NameAlreadyInUse',['../d4/df0/class_name_already_in_use.html',1,'']]],
-  ['nominimumage_69',['NoMinimumAge',['../d3/d04/class_no_minimum_age.html',1,'']]],
-  ['notinprivatestream_70',['NotInPrivateStream',['../de/de3/class_not_in_private_stream.html',1,'']]]
+  ['makedonation_107',['makeDonation',['../d5/d41/class_stream_z.html#a77a7d78cf6126140605148b24503b808',1,'StreamZ']]],
+  ['makeorder_108',['makeOrder',['../d5/d41/class_stream_z.html#ad447988739c50e8ae73ef99e924ba27b',1,'StreamZ']]],
+  ['menu_109',['Menu',['../d2/db8/class_menu.html',1,'Menu'],['../d2/db8/class_menu.html#af3c64f2f5d489e5bb65350c31a4d1dad',1,'Menu::Menu()']]]
 ];

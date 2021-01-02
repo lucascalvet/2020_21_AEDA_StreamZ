@@ -24,7 +24,7 @@
 <table cellspacing="0" cellpadding="0">
  <tbody>
  <tr style="height: 56px;">
-  <td id="projectlogo"><img alt="Logo" src="../../streamz_logo75.png"/></td>
+  <td id="projectlogo"><img alt="Logo" src="../../logo_segunda_parte_75%.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">StreamZ
    </div>
@@ -96,42 +96,47 @@ $(document).ready(function(){initNavTree('d5/d60/utils_8h_source.html','../../')
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#define MIN_AGE_STREAMER 15</span></div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#define MIN_AGE_VIEWER 12</span></div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#define VALIDATION_STRING &quot;STREAMZ_FORMATTED_FILE&quot;</span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160; </div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="keyword">typedef</span> <span class="keywordtype">unsigned</span> Age;</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="keyword">typedef</span> std::string Language;</div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#define LIKES_BONUS 50</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#define MAX_QUANTITY_PER_PURCHASE 10 //arbitrated the value</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="comment">//values in percentage</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#define STREAMZ_RETAIL_COMISSION 0.1</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#define STREAMZ_CANCELED_ORDER_REPAYMENT_AMOUNT 0.2</span></div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160; </div>
-<div class="line"><a name="l00019"></a><span class="lineno"><a class="line" href="../../d4/d53/struct_date.html">   19</a></span>&#160;<span class="keyword">struct </span><a class="code" href="../../d4/d53/struct_date.html">Date</a> {</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    <a class="code" href="../../d4/d53/struct_date.html">Date</a>() = <span class="keywordflow">default</span>;</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    <a class="code" href="../../d4/d53/struct_date.html">Date</a>(<span class="keywordtype">unsigned</span> day, <span class="keywordtype">unsigned</span> month, <span class="keywordtype">unsigned</span> year);</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    <span class="keywordtype">unsigned</span> day;</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    <span class="keywordtype">unsigned</span> month;</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    <span class="keywordtype">unsigned</span> year;</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;};</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;Age calculateAge(<span class="keyword">const</span> <a class="code" href="../../d4/d53/struct_date.html">Date</a>&amp; birthday);</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<a class="code" href="../../d4/d53/struct_date.html">Date</a> getCurrentDate();</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="keywordtype">bool</span> operator==(<span class="keyword">const</span> <a class="code" href="../../d4/d53/struct_date.html">Date</a> &amp;date1, <span class="keyword">const</span> <a class="code" href="../../d4/d53/struct_date.html">Date</a> &amp;date2);</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="keywordtype">bool</span> operator&lt;(<span class="keyword">const</span> <a class="code" href="../../d4/d53/struct_date.html">Date</a> &amp;date1, <span class="keyword">const</span> <a class="code" href="../../d4/d53/struct_date.html">Date</a> &amp;date2);</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160; </div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="keywordtype">bool</span> operator&lt;=(<span class="keyword">const</span> <a class="code" href="../../d4/d53/struct_date.html">Date</a> &amp;date1, <span class="keyword">const</span> <a class="code" href="../../d4/d53/struct_date.html">Date</a> &amp;date2);</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;std::ostream&amp; operator&lt;&lt; (std::ostream&amp; out, <span class="keyword">const</span> <a class="code" href="../../d4/d53/struct_date.html">Date</a>&amp; date);</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160; </div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;std::string strToUpper(<span class="keyword">const</span> std::string&amp; str);</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160; </div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="keywordtype">bool</span> passwordStrength(<span class="keyword">const</span> std::string&amp; password, std::string &amp;strength);</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160; </div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="keywordtype">bool</span> sha256Verifier(<span class="keyword">const</span> std::string&amp; hash,<span class="keyword">const</span> std::string&amp; password);</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;std::string sha256Encode(<span class="keyword">const</span> std::string&amp; password);</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; </div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="preprocessor">#endif //STREAMZ_UTILS_H</span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="keyword">typedef</span> <span class="keywordtype">unsigned</span> Age;</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="keyword">typedef</span> std::string Language;</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
+<div class="line"><a name="l00024"></a><span class="lineno"><a class="line" href="../../d4/d53/struct_date.html">   24</a></span>&#160;<span class="keyword">struct </span><a class="code" href="../../d4/d53/struct_date.html">Date</a> {</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    <a class="code" href="../../d4/d53/struct_date.html">Date</a>() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    <a class="code" href="../../d4/d53/struct_date.html">Date</a>(<span class="keywordtype">unsigned</span> day, <span class="keywordtype">unsigned</span> month, <span class="keywordtype">unsigned</span> year);</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    <span class="keywordtype">unsigned</span> day;</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    <span class="keywordtype">unsigned</span> month;</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    <span class="keywordtype">unsigned</span> year;</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;};</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;Age calculateAge(<span class="keyword">const</span> <a class="code" href="../../d4/d53/struct_date.html">Date</a>&amp; birthday);</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160; </div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<a class="code" href="../../d4/d53/struct_date.html">Date</a> getCurrentDate();</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="keywordtype">bool</span> operator==(<span class="keyword">const</span> <a class="code" href="../../d4/d53/struct_date.html">Date</a> &amp;date1, <span class="keyword">const</span> <a class="code" href="../../d4/d53/struct_date.html">Date</a> &amp;date2);</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160; </div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="keywordtype">bool</span> operator&lt;(<span class="keyword">const</span> <a class="code" href="../../d4/d53/struct_date.html">Date</a> &amp;date1, <span class="keyword">const</span> <a class="code" href="../../d4/d53/struct_date.html">Date</a> &amp;date2);</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="keywordtype">bool</span> operator&lt;=(<span class="keyword">const</span> <a class="code" href="../../d4/d53/struct_date.html">Date</a> &amp;date1, <span class="keyword">const</span> <a class="code" href="../../d4/d53/struct_date.html">Date</a> &amp;date2);</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;std::ostream&amp; operator&lt;&lt; (std::ostream&amp; out, <span class="keyword">const</span> <a class="code" href="../../d4/d53/struct_date.html">Date</a>&amp; date);</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; </div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;std::string strToUpper(<span class="keyword">const</span> std::string&amp; str);</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160; </div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="keywordtype">bool</span> passwordStrength(<span class="keyword">const</span> std::string&amp; password, std::string &amp;strength);</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="keywordtype">bool</span> sha256Verifier(<span class="keyword">const</span> std::string&amp; hash,<span class="keyword">const</span> std::string&amp; password);</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160; </div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;std::string sha256Encode(<span class="keyword">const</span> std::string&amp; password);</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; </div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="preprocessor">#endif //STREAMZ_UTILS_H</span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
-<div class="ttc" id="astruct_date_html"><div class="ttname"><a href="../../d4/d53/struct_date.html">Date</a></div><div class="ttdef"><b>Definition:</b> utils.h:19</div></div>
+<div class="ttc" id="astruct_date_html"><div class="ttname"><a href="../../d4/d53/struct_date.html">Date</a></div><div class="ttdef"><b>Definition:</b> utils.h:24</div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>

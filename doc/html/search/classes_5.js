@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['menu_104',['Menu',['../d2/db8/class_menu.html',1,'']]]
+  ['hasnotinteracted_171',['HasNotInteracted',['../d8/d55/class_has_not_interacted.html',1,'']]]
 ];

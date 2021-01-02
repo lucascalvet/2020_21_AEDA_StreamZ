@@ -1,5 +1,19 @@
 var searchData=
 [
-  ['_7estreamer_186',['~Streamer',['../d7/dca/class_streamer.html#a713b5c47448af40f966d5e641f402af3',1,'Streamer']]],
-  ['_7estreamz_187',['~StreamZ',['../d5/d41/class_stream_z.html#a89e6505efcc9e4bb40b9123f4bed2091',1,'StreamZ']]]
+  ['save_297',['save',['../d5/d41/class_stream_z.html#ad057b29a0f481203af6aa78358f54534',1,'StreamZ']]],
+  ['searchorder_298',['searchOrder',['../d5/d41/class_stream_z.html#a33e58113db3b806ab37f0dabe410f978',1,'StreamZ']]],
+  ['sellproduct_299',['sellProduct',['../d5/d41/class_stream_z.html#a4d0c5253492c344c7d913e22f6ca26a8',1,'StreamZ']]],
+  ['sendmoney_300',['sendMoney',['../d5/d41/class_stream_z.html#a044d17ba7a7c5e360152f29e17d5ebd2',1,'StreamZ']]],
+  ['setevaluation_301',['setEvaluation',['../d1/de8/class_donation.html#a7a5b2d487db06b5a25fd2586ee041f46',1,'Donation']]],
+  ['setproductid_302',['setProductId',['../d1/da7/class_order.html#a0b5002783a87833f6fe7af2b979742fd',1,'Order']]],
+  ['setrecipient_303',['setRecipient',['../d1/de8/class_donation.html#a0982e47452a1a0edf8235a044848386c',1,'Donation']]],
+  ['setstock_304',['setStock',['../dc/d42/class_product.html#a06305ffd63aa83ac31dd4e6c11fac81e',1,'Product']]],
+  ['startmenu_305',['startMenu',['../d2/db8/class_menu.html#a1d7274d4dea9acab05bfa3267d19b772',1,'Menu']]],
+  ['startprivatestream_306',['startPrivateStream',['../d5/d41/class_stream_z.html#a11a9b6a8107392f8220c89e65f4fa6a4',1,'StreamZ']]],
+  ['startpublicstream_307',['startPublicStream',['../d5/d41/class_stream_z.html#ad965e4b4f6cb5dfe69391b115aa38b9c',1,'StreamZ']]],
+  ['stopallstreams_308',['stopAllStreams',['../d5/d41/class_stream_z.html#aeb7fceba1f0b1a1cb5a8ecf2ebb2c117',1,'StreamZ']]],
+  ['stopstream_309',['stopStream',['../d5/d41/class_stream_z.html#ad66af5ef4912f88d1626c88109e23948',1,'StreamZ']]],
+  ['stopstreaming_310',['stopStreaming',['../d7/dca/class_streamer.html#aca752367896c74de2238045ca912cb78',1,'Streamer']]],
+  ['streamer_311',['Streamer',['../d7/dca/class_streamer.html#ac7166f3f402a5d9b56a6fa8236e86892',1,'Streamer']]],
+  ['streamz_312',['StreamZ',['../d5/d41/class_stream_z.html#a9077f8c91618517333e09b25c1ab1c8b',1,'StreamZ']]]
 ];

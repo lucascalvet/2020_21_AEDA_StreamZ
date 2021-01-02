@@ -21,6 +21,7 @@ public:
     Stream *s = nullptr;
     User(const std::string &nickname, const Date &birthday, const std::string &password);
     User(const std::string &nickname, const Date &birthday, const std::string &password, unsigned id);
+    User(const std::string &nickname);
     virtual std::string getInfo();
     std::string getName() const;
     Date getBirthday() const;
@@ -42,6 +43,7 @@ private:
     bool active_account = true; //Part 2
     bool eligible_for_bonus = false; //Part 2
 public:
+    Streamer(const std::string &nickname); //Part 2
     Streamer(const std::string &nickname, const Date &birthday, const std::string &password);
     Streamer(const std::string &nickname, const Date &birthday, const std::string &password, unsigned id);
     ~Streamer();

@@ -22,7 +22,7 @@ struct streamerHash {
     }
 
     bool operator()(const Streamer * s1, const Streamer * s2) const {
-        return s1->getID() == s2->getID() && s1->getName() == s2->getName();
+        return s1->getName() == s2->getName();
     }
 };
 
@@ -90,6 +90,7 @@ public:
     void makeDonation(Streamer* strmr, unsigned amnt, unsigned eval);
     BST<Donation> getDonations() const;
     vector<Donation> getDonations(unsigned int lower, unsigned int upper, unsigned int n = UINT_MAX);
+
     Order searchOrder(std::string viewer_nickname, unsigned quantity, unsigned priority);
     void makeOrder(Viewer *viewer, unsigned quantity, unsigned priority, unsigned product_id);
     void deleteOrder(Viewer *viewer, unsigned quantity, unsigned priority); //can only make one order with same parameters to know which one to be deleted if wanted
@@ -105,6 +106,9 @@ public:
     void printStreamers();
     void depositCapitalInStreamz(unsigned value);
     double getStreamzCapital() const;
+
+    std::vector<Streamer *> getActiveAccountStreamers();
+    std::vector<Streamer *> getInactiveAccountStreamers();
 };
 
 #endif // STREAMZ_H

@@ -24,6 +24,7 @@ User::User(const string &nickname, const Date &birthday, const string &password)
 
 /**
  * Construct a user object with a defined id (for when importing from a file)
+ * NEEDS TO HAVE THE LAST ID
  *
  * @param nickname the user's nickname
  * @param birthday the user's date of birth
@@ -34,6 +35,7 @@ User::User(const string &nickname, const Date &birthday, const string &password,
                                                                                                          birthday,
                                                                                                          password) {
     this->id = id;
+    counter = id++;
 }
 
 /**
@@ -150,6 +152,25 @@ Streamer::Streamer(const string &nickname, const Date &birthday, const string &p
         nickname,
         birthday,
         password, id) {
+}
+
+/**
+ * Construct a user object (just a mockup object for searching purposes)
+ * @param nickname the user's nickname
+ */
+User::User(const string &nickname) {
+    this->nickname = nickname;
+    this->birthday = Date(1, 1, 1900);
+    this->password = "";
+    wallet = 0;
+    id = 0;
+}
+
+/**
+ * Construct a streamer object (just a mockup object for searching purposes)
+ * @param nickname the streamer's nickname
+ */
+Streamer::Streamer(const std::string &nickname) : User(nickname){
 }
 
 /**

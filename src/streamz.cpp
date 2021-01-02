@@ -332,12 +332,19 @@ Streamer *StreamZ::getStreamerByID(unsigned user_id) const {
  * @return a pointer to the streamer, a nullptr if the nickname is invalid
  */
 Streamer *StreamZ::getStreamerByName(const string &nickname) const {
+    //Part 2
+    Streamer find(nickname);
+    auto it = streamers_hash_table.find(&find);
+    if (it == streamers_hash_table.end()) return nullptr;
+    return *it;
+
+    /* Part 1
     vector<Streamer *>::const_iterator streamer;
     for (streamer = streamers.begin(); streamer != streamers.end(); streamer++) {
         if ((*streamer)->getName() == nickname)
             return *streamer;
     }
-    return nullptr;
+    return nullptr;*/
 }
 
 /**
@@ -1164,9 +1171,9 @@ void StreamZ::printAvailableProducts() {
  * Print the streamers available in system
  */
 void StreamZ::printStreamers() {
-    auto it = streamers.begin();
+    auto it = streamers_hash_table.begin();
 
-    while(it != streamers.end()){
+    while(it != streamers_hash_table.end()){
         cout << (*it)->getName() << "  id:  " << to_string((*it)->getID()) << endl;
         it++;
     }
@@ -1188,4 +1195,20 @@ void StreamZ::depositCapitalInStreamz(unsigned value) {
  */
 double StreamZ::getStreamzCapital() const {
     return streamz_capital;
+}
+
+std::vector<Streamer *> StreamZ::getActiveAccountStreamers() {
+    vector<Streamer *> result;
+    for (auto streamer : streamers_hash_table) {
+        if (streamer->getAccountStatus()) result.push_back(streamer);
+    }
+    return result;
+}
+
+std::vector<Streamer *> StreamZ::getInactiveAccountStreamers() {
+    vector<Streamer *> result;
+    for (auto streamer : streamers_hash_table) {
+        if (!streamer->getAccountStatus()) result.push_back(streamer);
+    }
+    return result;
 }

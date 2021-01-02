@@ -45,6 +45,7 @@ var class_stream_z =
     [ "makeOrder", "d5/d41/class_stream_z.html#ad447988739c50e8ae73ef99e924ba27b", null ],
     [ "printAvailableProducts", "d5/d41/class_stream_z.html#a4fbcd09e22303ff9ad06fd09a4ba46a3", null ],
     [ "printStreamers", "d5/d41/class_stream_z.html#a97d495482cb51bf54ce334672a22c412", null ],
+    [ "proccessOrder", "d5/d41/class_stream_z.html#ad5cf88c849339ba2a943ddf6aeb560a0", null ],
     [ "save", "d5/d41/class_stream_z.html#ad057b29a0f481203af6aa78358f54534", null ],
     [ "searchOrder", "d5/d41/class_stream_z.html#a33e58113db3b806ab37f0dabe410f978", null ],
     [ "sellProduct", "d5/d41/class_stream_z.html#a4d0c5253492c344c7d913e22f6ca26a8", null ],

@@ -43,7 +43,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "annotated.html",
-"dc/daa/product_8h_source.html"
+"dc/d42/class_product.html#af1b51f0f743e19bf24d6b38585959fa0"
 ];
 
 var SYNCONMSG = 'clique para desativar a sincronização do painel';

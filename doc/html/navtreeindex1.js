@@ -1,5 +1,6 @@
 var NAVTREEINDEX1 =
 {
+"dc/d42/class_product.html#af1b51f0f743e19bf24d6b38585959fa0":[0,0,31,4],
 "dc/daa/product_8h_source.html":[1,0,0,5],
 "dd/d57/class_order_already_exists.html":[0,0,28],
 "de/d82/streamz__framework_8h_source.html":[1,0,0,8],
